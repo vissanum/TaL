@@ -1,0 +1,60 @@
+# Configuración general:
+# Git intentará detectar si un archivo es de texto.
+# Si es de texto, normalizará los finales de línea a LF en el repositorio.
+# Al hacer checkout, Git usará LF para los finales de línea en la copia de trabajo.
+# Esto promueve la consistencia de finales de línea LF en todo el proyecto.
+* text=auto eol=lf
+
+# Asegurar que estos tipos de archivo siempre tengan finales de línea LF
+# y sean tratados como texto.
+*.rs text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.vue text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.svg text eol=lf
+*.sh text eol=lf
+Dockerfile text eol=lf
+LICENSE text eol=lf
+*.txt text eol=lf
+
+# Para archivos específicos de Windows que DEBEN tener CRLF (si los hubiera)
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Marcar explícitamente los tipos de archivo binarios comunes.
+# Esto evita que Git intente modificar sus finales de línea o generar diffs textuales.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
+
+# Si vas a versionar modelos de IA (ej. GGUF) en el repo (generalmente no para modelos grandes):
+*.gguf binary
+*.onnx binary
+#*.bin binary # Cuidado con este si tienes otros .bin que sean texto
+
+# Otros formatos binarios que puedan surgir:
+*.wasm binary
+*.dll binary
+*.exe binary
+*.so binary
+*.dylib binary
+*.jar binary
+*.zip binary
+*.gz binary
+*.tar binary
+*.pdf binary

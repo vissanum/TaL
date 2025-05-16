@@ -1,137 +1,36 @@
-![](docs/public/combine.webp)
+# TaL (Tu asistente Local)
 
-# AI as Workspace
+**TaL es una aplicación de escritorio para interactuar con modelos de Inteligencia Artificial, diseñada con un fuerte enfoque en la privacidad del usuario y la capacidad de ejecución local.**
 
-![](https://badge.mcpx.dev?type=client 'MCP Client') ![](https://badge.mcpx.dev?type=client&features=resources,prompts,tools 'MCP client with features')
+> [!NOTE]
+> Este proyecto se encuentra actualmente en **desarrollo activo**. Las funcionalidades descritas pueden estar en proceso de implementación y la aplicación aún no está lista para uso general.
 
-A better AI client
+## ✨ Sobre TaL
 
-[Website](https://aiaw.app) - [Download](https://github.com/NitroRCr/AIaW/releases/latest) - [Docs](https://docs.aiaw.app/) - [Self-hosting Guide](https://docs.aiaw.app/self-host/) - [简体中文](README.zh-CN.md)
+TaL (Tu asistente Local) tiene como objetivo ser un asistente de IA versátil y seguro para tu escritorio. Está siendo construido utilizando:
 
-## Features Overview
+* **Backend:** Rust
+* **Framework de Aplicación:** Tauri v2
+* **Frontend:** Quasar v2 (con Vue 3 y TypeScript)
 
-### Consistent Experience Across All Platforms
+Características planeadas incluyen la interacción con modelos de IA tanto locales como remotos, y capacidades de Retrieval-Augmented Generation (RAG) para trabajar con tus propios documentos.
 
-- Supported platforms: Windows, Linux, Mac OS, Android, Web (PWA)
-- Multiple AI providers: OpenAI, Anthropic, Google, DeepSeek, xAI, Azure, etc.
+## 🚀 Estado Actual
 
-### Conversation Interface
+* Configuración inicial del repositorio y flujo de trabajo Git completados.
+* Planificación de las primeras fases de desarrollo en curso.
 
-- User input preview
-- Modifications and regenerations presented as branches
-- Customizable keyboard shortcuts
-- Quick scrolling to the beginning/end of a message
+## 🛣️ Próximos Pasos
 
-<img src="https://fs.krytro.com/aiaw/dialog.webp" width="600">
+El desarrollo se centrará en:
+1.  Establecer la estructura base del proyecto (backend y frontend).
+2.  Implementar la comunicación inicial entre el frontend y el backend.
+3.  Comenzar el desarrollo de las funcionalidades clave.
 
-### Multiple Workspaces
+## Licencia
 
-- Create multiple workspaces to separate conversations by themes
-- Group workspaces into folders; supports nesting
-- Create multiple assistants within a workspace or global assistants
+TaL se distribuye bajo la licencia BSD 3-Clause. Ver el archivo `LICENSE` para más detalles.
+Este proyecto se basa en AIaW, también licenciado bajo BSD 3-Clause.
+---
 
-<img src="docs/usage/res/workspace-list.png" width="378">
-
-### Data Storage
-
-- Data is stored locally first, accessible offline and loads instantly
-- Cloud synchronization available after login for cross-device syncing
-- Multi-window collaboration: open multiple tabs in the same browser with responsive data synchronization
-
-### Design Details
-
-- Support for text files (code, csv, etc.) as attachments; AI can see file contents and names without occupying display space
-- For large text blocks, use Ctrl + V **outside the input box** to paste as an attachment; prevents large content from cluttering the display
-
-<img src="https://fs.krytro.com/aiaw/text-item.webp" width="600">
-
-- Quote content from previous messages to user inputs for targeted follow-up questions
-- Select multiple lines of message text to copy the original Markdown
-
-<img src="https://fs.krytro.com/aiaw/text-selection.webp" width="600">
-
-- Automatically wrap code pasted from VSCode in code blocks with language specification
-
-<img src="https://fs.krytro.com/aiaw/paste-code.webp" width="600">
-
-### [MCP Protocol](https://docs.aiaw.app/usage/mcp.html)
-
-- Support for MCP Tools, Prompts, Resources
-- STDIO and SSE connection methods
-- Install MCP-type plugins from the plugin marketplace or manually add MCP servers
-
-### Web Search
-
-- Web search based on SearXNG, ready to use out of the box.
-- Also provides the functionality to crawl web content via URL.
-- Supports concurrent search and concurrent crawling.
-
-### [Artifacts](https://docs.aiaw.app/usage/artifacts.html)
-
-- Convert any part of assistant responses into Artifacts
-- User-editable with version control and code highlighting
-- Control assistant read/write permissions for Artifacts
-- Open multiple Artifacts simultaneously
-
-<img src="https://fs.krytro.com/aiaw/convert-artifact.webp" width="600">
-
-### [Plugin System](https://docs.aiaw.app/usage/plugins.html)
-
-- Built-in calculator, [document parsing, video parsing](https://docs.aiaw.app/usage/file-parse.html), image generation plugins
-- Install additional plugins from the marketplace
-- Configure Gradio applications as plugins; compatible with some LobeChat plugins
-- Plugins are more than just tool calling
-
-![](docs/public/plugin-market.png)
-
-### Lightweight and High Performance
-
-- Quick startup with no waiting
-- Smooth conversation switching
-
-<img src="https://fs.krytro.com/aiaw/switch-dialog.webp" width="600">
-
-### [Dynamic Prompts](https://docs.aiaw.app/usage/prompt-vars.html)
-
-- Create prompt variables using template syntax for dynamic, reusable prompts
-- Extract repetitive parts into workspace variables for prompt reusability
-
-<img src="docs/usage/res/assistant-prompt-vars.png" width="378">
-
-### Additional Features
-
-Assistant marketplace, dark mode, customizable theme colors, and more
-
-## LightHouse
-
-| Desktop | Mobile |
-| :-----: | :----: |
-| ![](docs/public/lighthouse_score_desktop.png) | ![](docs/public/lighthouse_score_mobile.png) |
-
-## Related Projects
-
-- [New API](https://github.com/Calcium-Ion/new-api): AI model interface management and distribution system, supporting various large models with OpenAI-compatible format
-
-## Install the dependencies
-```bash
-pnpm i
-```
-
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
-
-### Lint the files
-```bash
-pnpm lint
-```
-
-### Build the app for production
-```bash
-# SPA
-quasar build
-
-# PWA
-quasar build -m pwa
-```
+*Este README se actualizará a medida que el proyecto TaL avance.*

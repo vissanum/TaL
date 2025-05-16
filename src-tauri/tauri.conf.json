@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "AI as Workspace",
-  "version": "1.7.0",
-  "identifier": "app.aiaw",
+  "productName": "Tu asistente Local",
+  "version": "0.1.0",
+  "identifier": "com.tuasistentelocal.app",
   "build": {
     "frontendDist": "../dist/spa",
     "devUrl": "http://localhost:9005",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "AI as Workspace",
+        "title": "Tu asistente Local",
         "width": 1150,
         "height": 750,
         "resizable": true,
@@ -43,9 +43,9 @@
   },
   "plugins": {
     "updater": {
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDU4M0M5QTM1MDEwQzVERDEKUldUUlhRd0JOWm84V0hHekl0d09jaG1WRTRTbUgrTDhkWmFnK2RGWnRBY3RoaFJiTElZTDB6djQK",
+      "pubkey": "pendiente_de_generar",
       "endpoints": [
-        "https://github.com/NitroRCr/AIaW/releases/latest/download/latest.json"
+        "https://github.com/vissanum/TaL/releases/latest/download/latest.json"
       ]
     }
   }

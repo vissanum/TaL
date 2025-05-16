@@ -38,11 +38,17 @@ yarn-error.log*
 # Deploy config
 /deploy
 
-# Dexie cloud
-/dexie-cloud.json
-/dexie-cloud.key
-
 # Vitepress
 /docs/.vitepress/cache
 /docs/.vitepress/dist
 .aider*
+
+# Tauri build artifacts (optional but good practice)
+# src-tauri/target/release/bundle/ # Covered by src-tauri/.gitignore's /target/
+# Specific bundle types if generated outside src-tauri/target
+*.msi
+*.app
+*.dmg
+*.AppImage
+*.deb
+*.rpm

@@ -1,10 +1,10 @@
 [package]
-name = "aiaw"
+name = "tal_app"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
+description = "Backend de la aplicación TaL (Tu asistente Local)"
+authors = ["Vissanum<vissanumweb@gmail.com>"]
+license = "BSD-3-Clause license"
+repository = "https://github.com/vissanum/TaL"
 edition = "2021"
 rust-version = "1.77.2"
 

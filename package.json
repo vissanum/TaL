@@ -1,9 +1,9 @@
 {
-  "name": "aiaw",
-  "version": "1.7.0",
-  "description": "精心设计的 AI (LLM) 客户端。全功能，轻量级；支持多工作区、插件系统、跨平台、本地优先+实时云同步",
-  "productName": "AI as Workspace",
-  "author": "NitroRCr <i@krytro.com>",
+  "name": "tal",
+  "version": "0.1.0",
+  "description": "TaL (Tu asistente Local): Aplicación de escritorio (Tauri v2, Rust, Quasar/Vue3) con IA local/remota, RAG y foco en privacidad.",
+  "productName": "Tu asistente Local",
+  "author": "Vissanum <vissanumweb@gmail.com>",
   "type": "module",
   "private": true,
   "scripts": {
