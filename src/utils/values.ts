@@ -1,18 +1,7 @@
 import { createOpenAI } from '@ai-sdk/openai'
 import { Model, ProviderType } from './types'
 import { Object, String } from '@sinclair/typebox'
-import { createAnthropic } from '@ai-sdk/anthropic'
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible'
-import { createOpenRouter } from '@openrouter/ai-sdk-provider'
-import { createGoogleGenerativeAI } from '@ai-sdk/google'
-import { createAzure } from '@ai-sdk/azure'
-import { createMistral } from '@ai-sdk/mistral'
-import { createXai } from '@ai-sdk/xai'
-import { createTogetherAI } from '@ai-sdk/togetherai'
-import { createCohere } from '@ai-sdk/cohere'
-import { createGroq } from '@ai-sdk/groq'
-import { createOllama } from 'ollama-ai-provider'
-import { createDeepSeek } from '@ai-sdk/deepseek'
 import { i18n } from 'src/boot/i18n'
 import { fetch } from './platform-api'
 
@@ -54,51 +43,6 @@ const ProviderTypes: ProviderType[] = [
     }
   },
   {
-    name: 'azure',
-    label: 'Azure',
-    avatar: { type: 'svg', name: 'microsoft-c' },
-    settings: Object({
-      ...commonSettings,
-      resourceName: String({ title: t('values.resourceName') }),
-      apiVersion: String({ title: t('values.apiVersion') })
-    }),
-    initialSettings: {},
-    constructor: createAzure
-  },
-  {
-    name: 'anthropic',
-    label: 'Anthropic',
-    avatar: { type: 'svg', name: 'anthropic' },
-    settings: Object({
-      ...commonSettings,
-      baseURL: String({ title: t('values.apiAddress'), description: t('values.defaultAnthropicAddress'), default: OfficialBaseURLs.anthropic })
-    }),
-    initialSettings: {},
-    constructor: createAnthropic,
-    getModelList: async (settings) => {
-      const baseURL = settings.baseURL || OfficialBaseURLs.anthropic
-      const resp = await fetch(`${baseURL}/models`, {
-        headers: {
-          'x-api-key': settings.apiKey,
-          'anthropic-version': '2023-06-01'
-        }
-      })
-      const { data } = await resp.json()
-      return data.map(m => m.id)
-    }
-  },
-  {
-    name: 'google',
-    label: 'Google',
-    avatar: { type: 'svg', name: 'google-c' },
-    settings: Object({
-      ...commonSettings,
-      baseURL: String({ title: t('values.apiAddress'), description: t('values.defaultGoogleAddress'), default: OfficialBaseURLs.google })
-    }),
-    initialSettings: {},
-    constructor: createGoogleGenerativeAI
-  },
-  {
     name: 'openai-compatible',
     label: t('values.openaiCompatible'),
     avatar: { type: 'svg', name: 'openai' },
@@ -118,82 +62,6 @@ const ProviderTypes: ProviderType[] = [
       const { data } = await resp.json()
       return data.map(m => m.id)
     }
-  },
-  {
-    name: 'openrouter',
-    label: 'OpenRouter',
-    avatar: { type: 'svg', name: 'openrouter' },
-    settings: Object(commonSettings),
-    initialSettings: {},
-    constructor: createOpenRouter,
-    getModelList: async (settings) => {
-      const baseURL = settings.baseURL || OfficialBaseURLs.openrouter
-      const resp = await fetch(`${baseURL}/models`, {
-        headers: {
-          Authorization: `Bearer ${settings.apiKey}`
-        }
-      })
-      const { data } = await resp.json()
-      return data.map(m => m.id)
-    }
-  },
-  {
-    name: 'deepseek',
-    label: 'DeepSeek',
-    avatar: { type: 'svg', name: 'deepseek-c' },
-    settings: Object(commonSettings),
-    initialSettings: {},
-    constructor: createDeepSeek
-  },
-  {
-    name: 'mistral',
-    label: 'Mistral',
-    avatar: { type: 'svg', name: 'mistral-c' },
-    settings: Object(commonSettings),
-    initialSettings: {},
-    constructor: createMistral
-  },
-  {
-    name: 'xai',
-    label: 'xAI',
-    avatar: { type: 'svg', name: 'grok' },
-    settings: Object(commonSettings),
-    initialSettings: {},
-    constructor: createXai
-  },
-  {
-    name: 'togetherai',
-    label: 'Together.ai',
-    avatar: { type: 'svg', name: 'togetherai-c' },
-    settings: Object(commonSettings),
-    initialSettings: {},
-    constructor: createTogetherAI
-  },
-  {
-    name: 'cohere',
-    label: 'Cohere',
-    avatar: { type: 'svg', name: 'cohere-c' },
-    settings: Object(commonSettings),
-    initialSettings: {},
-    constructor: createCohere
-  },
-  {
-    name: 'groq',
-    label: 'Groq',
-    avatar: { type: 'svg', name: 'groq' },
-    settings: Object(commonSettings),
-    initialSettings: {},
-    constructor: createGroq
-  },
-  {
-    name: 'ollama',
-    label: 'Ollama',
-    avatar: { type: 'svg', name: 'ollama' },
-    settings: Object({
-      baseURL: String({ title: t('values.apiAddress'), default: OfficialBaseURLs.ollama })
-    }),
-    initialSettings: {},
-    constructor: createOllama
   }
 ]
 
