@@ -3,9 +3,9 @@ import { Dark } from 'quasar'
 import { useUserPerfsStore } from 'src/stores/user-perfs'
 import { useUiStateStore } from 'src/stores/ui-state'
 import { watchEffect } from 'vue'
-import { IsCapacitor } from 'src/utils/platform-api'
-import { StatusBar, Style } from '@capacitor/status-bar'
-import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support'
+// import { IsCapacitor } from 'src/utils/platform-api'
+// import { StatusBar, Style } from '@capacitor/status-bar'
+// import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support'
 
 export function useSetTheme() {
   const uiStateStore = useUiStateStore()
@@ -92,8 +92,8 @@ export function useSetTheme() {
       document.documentElement.style.setProperty(`--a-${key}`, hexFromArgb(colors[key]))
     })
     document.querySelector('meta[name="theme-color"]').setAttribute('content', hexFromArgb(colors['sur-c']))
-    IsCapacitor && StatusBar.setStyle({ style: Dark.isActive ? Style.Dark : Style.Light })
-    IsCapacitor && EdgeToEdge.setBackgroundColor({ color: hexFromArgb(colors['sur-c']) })
+    // IsCapacitor && StatusBar.setStyle({ style: Dark.isActive ? Style.Dark : Style.Light })
+    // IsCapacitor && EdgeToEdge.setBackgroundColor({ color: hexFromArgb(colors['sur-c']) })
     uiStateStore.colors = colors
   })
 }

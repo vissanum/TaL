@@ -42,7 +42,7 @@ const timePlugin: Plugin = {
 }
 
 const calculatorPrompt =
-`Use this tool to evaluate mathetical expressions. The calculator is based on the \`expr-eval\` js library.
+  `Use this tool to evaluate mathetical expressions. The calculator is based on the \`expr-eval\` js library.
 
 Examples:
 
@@ -70,7 +70,7 @@ Examples:
 `
 
 const calculatorExpressionPrompt =
-`### Expression Syntax ###
+  `### Expression Syntax ###
 
 The parser accepts a pretty basic grammar. It's similar to normal JavaScript
 expressions, but is more math-oriented. For example, the \`^\` operator is
@@ -430,9 +430,16 @@ function buildMcpPlugin(dump: McpPluginDump, available: boolean): Plugin {
               contentBuffer: base64ToArrayBuffer(content.data),
               mimeType: content.mimeType
             }
-          } else {
-            // type: 'resource'
-            return resourceToResultItem(content.resource, content.resource.uri)
+          } else { // Asumimos que este 'else' corresponde a content.type === 'resource'
+            // Hacemos una aserción de tipo para content.resource
+            // Es importante que el tipo real de content.resource en runtime coincida con esta aserción.
+            const resource = content.resource as { uri: string; text?: string; blob?: string; mimeType?: string;[key: string]: any }
+
+            // Verificamos explícitamente 'uri' antes de usarla, aunque la aserción la incluye.
+            // 'name?' en resourceToResultItem espera un string o undefined.
+            const nameForResourceItem = resource?.uri
+
+            return resourceToResultItem(resource, nameForResourceItem)
           }
         })
       }
@@ -710,7 +717,7 @@ const fluxPlugin: Plugin = buildGradioPlugin(fluxPluginManifest, true)
 fluxPlugin.type = 'builtin'
 
 const emotionsPrompt =
-`在回答中，你可以使用 html img 标签插入表情包，使回答更可爱、富有情感。
+  `在回答中，你可以使用 html img 标签插入表情包，使回答更可爱、富有情感。
 设置 width="{{ displayWidth }}"，以避免显示得太大。
 
 可用的表情：
