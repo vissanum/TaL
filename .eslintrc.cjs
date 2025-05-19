@@ -34,7 +34,8 @@ module.exports = {
     'plugin:vue/vue3-strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
     // 'plugin:vue/vue3-recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
 
-    'standard'
+    'standard',
+    'eslint-config-prettier'
 
   ],
 
@@ -49,15 +50,12 @@ module.exports = {
   ],
 
   globals: {
-    ga: 'readonly', // Google Analytics
-    cordova: 'readonly',
     __statics: 'readonly',
     __QUASAR_SSR__: 'readonly',
     __QUASAR_SSR_SERVER__: 'readonly',
     __QUASAR_SSR_CLIENT__: 'readonly',
     __QUASAR_SSR_PWA__: 'readonly',
     process: 'readonly',
-    Capacitor: 'readonly',
     chrome: 'readonly'
   },
 
@@ -101,7 +99,7 @@ module.exports = {
     'space-before-function-paren': 'off',
     'no-prototype-builtins': 'off',
 
-    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
     'no-redeclare': 'off',
     '@typescript-eslint/no-redeclare': 'error',
 

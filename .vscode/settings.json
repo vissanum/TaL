@@ -1,36 +1,53 @@
+// .vscode/settings.json
 {
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "editor.codeActionsOnSave": [
-    "source.fixAll.eslint"
-  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // Prettier como global por defecto
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit" // Usar "explicit" o true. "explicit" significa que solo se ejecuta si hay una acción de guardado configurada.
+  },
   "eslint.validate": [
     "javascript",
     "javascriptreact",
     "typescript",
     "vue"
   ],
+  "eslint.format.enable": false, // Deshabilitar el formateo de ESLint si Prettier lo maneja.
   "typescript.tsdk": "node_modules/typescript/lib",
-  "[vue]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
   "vue.complete.casing.tags": "autoKebab",
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
+  "vue.server.hybridMode": "auto", // Asegúrate de que esto es lo deseado para Volar.
+  "rust-analyzer.initializeStopped": true,
+  // Formateadores específicos por lenguaje
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "vue.server.hybridMode": "auto",
-  "eslint.format.enable": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[scss]": {
-    "editor.defaultFormatter": "vscode.css-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "rust-analyzer.initializeStopped": true,
-  "java.server.launchMode": "LightWeight",
-  "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
+  "[rust]": { // Para Rust, rust-analyzer es el formateador (usa rustfmt)
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
   }
 }

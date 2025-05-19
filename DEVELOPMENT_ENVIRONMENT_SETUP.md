@@ -103,15 +103,14 @@ Tauri CLI es necesario para desarrollar y compilar aplicaciones Tauri.
         {
           // Formateo
           "editor.formatOnSave": true,
-          "editor.defaultFormatter": "esbenp.prettier-vscode", // Para archivos frontend
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
           "[rust]": {
             "editor.defaultFormatter": "rust-lang.rust-analyzer",
             "editor.formatOnSave": true
           },
           // ESLint
           "eslint.validate": ["javascript", "typescript", "vue"],
-          // Otras configuraciones útiles
-          "files.eol": "\n", // Consistencia en finales de línea
+          "files.eol": "\n",
           "search.exclude": {
             "**/node_modules": true,
             "**/dist": true,
@@ -153,28 +152,26 @@ Tauri CLI es necesario para desarrollar y compilar aplicaciones Tauri.
     pnpm install
     ```
 
-3.  **Verificación inicial:**
-    * **Backend (Rust):**
+### 3. Verificación Inicial
 
-        ```bash
-        cargo check       # Verifica el código Rust sin compilar
-        cargo clippy --  # Linter para Rust (corrige advertencias comunes)
-        # cargo test      # Ejecuta pruebas de Rust
-        ```
+* **Backend (Rust - ejecutar en el directorio `src-tauri`):**
+    ```bash
+    cargo check
+    cargo clippy --all-targets -- -D warnings
+    # cargo test
+    ```
 
-    * **Frontend (Quasar/Vue/TS):**
+* **Frontend (Quasar/Vue/TS - ejecutar en el directorio raíz del proyecto):**
+    ```bash
+    pnpm vue-tsc --noEmit
+    pnpm lint
+    # pnpm test:unit
+    ```
 
-        ```bash
-        pnpm typecheck  # Verifica tipos de TypeScript
-        # pnpm lint       # Linter para el frontend
-        # pnpm test:unit  # Ejecuta pruebas unitarias del frontend
-        ```
-
-    * **Aplicación Tauri:**
-
-        ```bash
-        pnpm tauri dev # Inicia la aplicación en modo desarrollo
-        ```
+* **Aplicación Tauri (ejecutar en el directorio raíz del proyecto):**
+    ```bash
+    pnpm tauri dev
+    ```
 
 ## Internacionalización (i18n)
 
