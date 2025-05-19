@@ -15,18 +15,6 @@ TaL (Tu asistente Local) tiene como objetivo ser un asistente de IA versátil y 
 
 Características planeadas incluyen la interacción con modelos de IA tanto locales como remotos, y capacidades de Retrieval-Augmented Generation (RAG) para trabajar con tus propios documentos.
 
-## 🚀 Estado Actual
-
-* Configuración inicial del repositorio y flujo de trabajo Git completados.
-* Planificación de las primeras fases de desarrollo en curso.
-
-## 🛣️ Próximos Pasos
-
-El desarrollo se centrará en:
-1.  Establecer la estructura base del proyecto (backend y frontend).
-2.  Implementar la comunicación inicial entre el frontend y el backend.
-3.  Comenzar el desarrollo de las funcionalidades clave.
-
 ## Licencia
 
 TaL se distribuye bajo la licencia BSD 3-Clause. Ver el archivo `LICENSE` para más detalles.
