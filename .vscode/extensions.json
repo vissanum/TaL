@@ -1,9 +1,12 @@
+// .vscode/extensions.json
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
     "vue.volar",
-    "wayou.vscode-todo-highlight"
+    "esbenp.prettier-vscode",
+    "wayou.vscode-todo-highlight",
+    "rust-lang.rust-analyzer"
   ],
   "unwantedRecommendations": [
     "octref.vetur",

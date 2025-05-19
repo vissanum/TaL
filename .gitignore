@@ -28,10 +28,8 @@ quasar.config.*.temporary.compiled*
 .env.*
 !.env.example
 !.env.template
-# Ya tenías .env.local*, esta forma es un poco más genérica y permite .env.development, .env.production, etc.
-# manteniendo la posibilidad de versionar un .env.example
 
-# Python (si src-backend o scripts similares se mantienen temporalmente)
+# Python
 __pycache__/
 *.pyc
 *.pyo
@@ -53,7 +51,8 @@ coverage.xml
 .installed.cfg
 *.egg
 
-# Tauri build artifacts (generados en src-tauri/target/release/bundle/ pero pueden copiarse)
+# Tauri build artifacts
+dist/
 *.msi
 *.msix
 *.app
@@ -65,7 +64,7 @@ coverage.xml
 *.tar.gz
 *.7z
 
-# VitePress (si los docs están en este repo)
+# VitePress
 /docs/.vitepress/cache/
 /docs/.vitepress/dist/
 
