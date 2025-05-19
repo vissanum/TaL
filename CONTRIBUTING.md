@@ -59,7 +59,7 @@ Utilizamos un flujo de trabajo basado en ramas (Git Flow simplificado).
         ```
     2.  Crea tu nueva rama de trabajo:
         ```bash
-        git checkout -b <nombre_de_tu_rama> # Siguiendo la convención
+        git checkout -b <nombre_de_tu_rama>
         ```
     3.  Realiza tus cambios, haciendo **commits atómicos y descriptivos** frecuentemente. Utiliza la [Convención de Mensajes de Commit](#convencion-de-mensajes-de-commit).
     4.  Sube tu rama de trabajo a GitHub regularmente:
