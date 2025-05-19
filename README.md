@@ -17,7 +17,7 @@ Características planeadas incluyen la interacción con modelos de IA tanto loca
 
 ## Licencia
 
-TaL se distribuye bajo la licencia BSD 3-Clause. Ver el archivo `LICENSE` para más detalles.
+TaL se distribuye bajo la licencia BSD 3-Clause. Ver el archivo [`LICENSE`](https://github.com/vissanum/TaL/blob/develop/LICENSE) para más detalles.
 Este proyecto se basa en AIaW, también licenciado bajo BSD 3-Clause.
 ---
 
