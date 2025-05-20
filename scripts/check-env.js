@@ -55,6 +55,18 @@ function checkCommand(toolName, command, versionRegex = null) {
     ) {
       version = rawOutput.split(' ')[1]
     } else if (
+      toolName.includes('Rust (cargo)') &&
+      rawOutput.startsWith('cargo')
+    ) {
+      version = rawOutput.split(' ')[1]
+    } else if (
+      toolName.includes('Rust (rustfmt)') &&
+      rawOutput.startsWith('rustfmt')
+    ) {
+      const match = rawOutput.match(/^rustfmt\s+([\d.]+-[a-zA-Z]+)/)
+      if (match) version = match[1]
+      else version = rawOutput.split(' ')[1]
+    } else if (
       toolName.includes('Tauri CLI') &&
       rawOutput.includes('tauri-cli')
     ) {
@@ -146,6 +158,8 @@ checkCommand('Node.js (actual)', 'node --version', '^20\\.')
 checkCommand('pnpm', 'pnpm --version', '^10\\.')
 checkCommand('Rust (rustc)', 'rustc --version', '^1\\.(8[6-9]|[9-9]\\d*)\\.')
 checkCommand('Rust (cargo)', 'cargo --version', '^1\\.(8[6-9]|[9-9]\\d*)\\.')
+checkCommand('Rust (cargo)', 'cargo --version', '^1\\.(8[6-9]|[9-9]\\d*)\\.')
+checkCommand('Rust (rustfmt)', 'rustfmt --version', '^1\\.')
 
 console.log('-------------------------------------------------')
 console.log(

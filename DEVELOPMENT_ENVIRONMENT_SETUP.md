@@ -52,6 +52,17 @@ El backend de TaL está escrito en Rust.
     rustup update
     ```
 
+  - Asegúrate de tener el toolchain `stable` como predeterminado y actualizado (ej. `rustc 1.86.x`, `cargo 1.86.x`). También asegúrate de que componentes como `rustfmt` estén instalados:
+    ```bash
+    rustup default stable
+    rustup update
+    rustup component add rustfmt # Asegura que rustfmt está instalado
+    # Verifica las versiones (opcional aquí, el script check-env lo hará)
+    # rustc --version
+    # cargo --version
+    # rustfmt --version
+    ```
+
 - **Componentes adicionales (Targets de compilación):**
 
   - Para compilar para diferentes plataformas, podrías necesitar añadir targets específicos. Por ejemplo, para cross-compilar:
@@ -77,7 +88,7 @@ Tauri CLI es necesario para desarrollar y compilar aplicaciones Tauri.
 
 Tauri CLI se gestiona como una dependencia de desarrollo del proyecto a través de pnpm. Normalmente no necesitarás instalarlo globalmente si ejecutas los comandos a través de pnpm.:
 
-- Verifica la instalación (Deberías ver una salida similar a tauri-cli 2.x.x, ej. tauri-cli 2.5.0):
+- Verifica la instalación (Deberías ver una salida similar a tauri-cli 2.x.x, ej. tauri-cli 2.7.0):
 
   ```bash
   pnpm tauri --version
@@ -306,19 +317,19 @@ Para ayudarte a verificar rápidamente si tu entorno de desarrollo cumple con lo
   _(Opcionalmente, si le has dado permisos de ejecución y el shebang `#!/usr/bin/env node` funciona en tu sistema: `./scripts/check-env.js`)_
 
 - **Propósito:**
-  El script verificará la presencia y las versiones de herramientas clave como Git, Node.js, nvm, pnpm, Rust (rustc, cargo), Tauri CLI y algunas dependencias de sistema comunes para Linux.
+  El script verificará la presencia y las versiones de herramientas clave como Git, Node.js, nvm, pnpm, Rust (rustc, cargo, rustfmt), Tauri CLI y algunas dependencias de sistema comunes para Linux.
   Mostrará `OK` si una herramienta se encuentra y cumple con un patrón de versión esperado (si se define), o `FALLO`/`NO ENCONTRADO` en caso contrario. Para las dependencias de sistema en Linux, indicará si están instaladas.
 
   Utiliza este script si encuentras problemas al compilar o ejecutar el proyecto para obtener una primera pista sobre posibles problemas de configuración del entorno.
 
-### 3. Verificación Inicial
+### 10. Verificación Inicial
 
 - **Backend (Rust - ejecutar en el directorio `src-tauri`):**
 
   ```bash
-  cargo check
-  cargo clippy --all-targets -- -D warnings
-  # cargo test
+  pnpm check:rust
+  pnpm lint:rust
+  # pnpm test:rust
   ```
 
 - **Frontend (Quasar/Vue/TS - ejecutar en el directorio raíz del proyecto):**
