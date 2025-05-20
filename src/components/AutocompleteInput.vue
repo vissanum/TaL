@@ -10,14 +10,8 @@
     hide-dropdown-icon
     :input-debounce="0"
   >
-    <template
-      v-if="$slots.option"
-      #option="slot"
-    >
-      <slot
-        name="option"
-        v-bind="slot"
-      />
+    <template v-if="$slots.option" #option="slot">
+      <slot name="option" v-bind="slot" />
     </template>
   </q-select>
 </template>

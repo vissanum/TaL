@@ -1,8 +1,5 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
+  <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card style="width: min(90vw, 400px)">
       <q-card-section>
         <div class="text-h6">
@@ -18,11 +15,7 @@
             class="grow"
             @keyup.enter="onDialogOK(model)"
           />
-          <hct-preview-circle
-            m-1
-            :hue="model"
-            :size="48"
-          />
+          <hct-preview-circle m-1 :hue="model" :size="48" />
         </div>
         <div mt-2>
           <hue-slider v-model="model" />
@@ -55,15 +48,14 @@ import HueSlider from './HueSlider.vue'
 const props = defineProps({
   value: {
     type: Number,
-    required: true
-  }
+    required: true,
+  },
 })
 
 const model = ref(props.value)
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent()
 </script>

@@ -1,38 +1,39 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
+name: Reporte de Bug para TaL
+about: Ayúdanos a mejorar TaL creando un reporte de bug.
+title: '[BUG] - '
+labels: 'bug, necesita-triage'
 assignees: ''
-
 ---
 
-<!-- Please use English or 中文 -->
+**Antes de enviar este issue:**
 
-**Before you submit**
-- [ ] I have read the [Common Issues](https://docs.aiaw.app/usage/common-issues.html) and ensured this issue is not covered there.
-- [ ] I have searched the existing issues and this is not a duplicate.
+- [ ] He leído la documentación relevante (si existe) y me he asegurado de que este problema no esté cubierto allí. (Ej. futuras "Common Issues" de TaL)
+- [ ] He buscado en los issues existentes y este no es un duplicado.
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**Describe el bug**
+Una descripción clara y concisa de qué es el bug.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**Pasos para reproducir el comportamiento**
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+1. Ir a '...'
+2. Hacer clic en '....'
+3. Navegar hasta '....'
+4. Ver el error
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Comportamiento esperado**
+Una descripción clara y concisa de lo que esperabas que sucediera.
 
-**Environment**
- - Platform: [e.g. Windows, Android, Web]
- - Version: [e.g. v1.4.15; Tip: Click the logo in the upper left corner to check the version]
- - Browser/Webview version: [e.g. Chrome 131]
+**Capturas de pantalla**
+Si aplica, añade capturas de pantalla para ayudar a explicar tu problema.
 
-**Additional context**
-Add any other context about the problem here.
+**Entorno de desarrollo/uso:**
+
+- **Plataforma TaL:** [ej. Windows 10, Linux Mint 22.1, macOS Sonoma, Web (si aplica en el futuro)]
+- **Versión de TaL:** [ej. v0.1.0; Consejo: Revisa la sección "Acerca de" o el `package.json` / `tauri.conf.json`]
+- **Versión de Navegador/Webview (si aplica):** [ej. Chrome 120, Edge 120, Safari 17]
+- **Versión de Rust (si es relevante para el bug):** (`rustc --version`)
+- **Versión de Node.js (si es relevante para el bug):** (`node --version`)
+
+**Contexto Adicional (Opcional)**
+Añade cualquier otro contexto sobre el problema aquí (logs de la consola, configuración específica, etc.).

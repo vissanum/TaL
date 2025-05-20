@@ -1,8 +1,5 @@
 <template>
-  <q-field
-    @focus="onFocus"
-    @blur="onBlur"
-  >
+  <q-field @focus="onFocus" @blur="onBlur">
     <template #control>
       <div v-if="text">
         {{ text }}
@@ -17,12 +14,22 @@ import { computed } from 'vue'
 
 const model = defineModel<ShortcutKey>()
 const listener = (ev: KeyboardEvent) => {
-  if (['ControlLeft', 'ShiftLeft', 'AltLeft', 'ControlRight', 'ShiftRight', 'AltRight'].includes(ev.code)) return
+  if (
+    [
+      'ControlLeft',
+      'ShiftLeft',
+      'AltLeft',
+      'ControlRight',
+      'ShiftRight',
+      'AltRight',
+    ].includes(ev.code)
+  )
+    return
   model.value = {
     key: ev.code,
     withCtrl: ev.ctrlKey,
     withShift: ev.shiftKey,
-    withAlt: ev.altKey
+    withAlt: ev.altKey,
   }
   ev.preventDefault()
 }

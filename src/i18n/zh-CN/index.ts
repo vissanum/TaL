@@ -9,5 +9,5 @@ export default {
   ...composables,
   ...pages,
   ...views,
-  ...others
+  ...others,
 }

@@ -2,7 +2,7 @@
   <q-list>
     <q-item
       v-if="accept === 'folder'"
-      :class="{ 'route-active': selected === '$root'}"
+      :class="{ 'route-active': selected === '$root' }"
       clickable
       item-rd
       dense
@@ -31,7 +31,9 @@ defineProps<{
 
 const workspacesStore = useWorkspacesStore()
 
-const rootItems = computed(() => workspacesStore.workspaces.filter(item => item.parentId === '$root'))
+const rootItems = computed(() =>
+  workspacesStore.workspaces.filter((item) => item.parentId === '$root')
+)
 
 const selected = defineModel<string>()
 </script>

@@ -5,13 +5,13 @@ const FormattingReenabled: LanguageModelV1Middleware = {
     const prompt = params.prompt
     prompt.unshift({
       role: 'system',
-      content: 'Formatting re-enabled'
+      content: 'Formatting re-enabled',
     })
     return {
       ...params,
-      prompt
+      prompt,
     }
-  }
+  },
 }
 
 const AuthropicCors: LanguageModelV1Middleware = {
@@ -20,10 +20,10 @@ const AuthropicCors: LanguageModelV1Middleware = {
       ...params,
       headers: {
         ...params.headers,
-        'anthropic-dangerous-direct-browser-access': 'true'
-      }
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
     }
-  }
+  },
 }
 
 // Used for debugging only
@@ -64,17 +64,14 @@ export const LogMiddleware: LanguageModelV1Middleware = {
       flush() {
         console.log('doStream finished')
         console.log(`generated text: ${generatedText}`)
-      }
+      },
     })
 
     return {
       stream: stream.pipeThrough(transformStream),
-      ...rest
+      ...rest,
     }
-  }
+  },
 }
 
-export {
-  FormattingReenabled,
-  AuthropicCors
-}
+export { FormattingReenabled, AuthropicCors }

@@ -2,7 +2,13 @@ import { MdPreviewProps } from 'md-editor-v3'
 import { defineStore } from 'pinia'
 import { Dark, extend } from 'quasar'
 import { persistentReactive } from 'src/composables/persistent-reactive'
-import { Avatar, Model, PlatformEnabled, Provider, ShortcutKey } from 'src/utils/types'
+import {
+  Avatar,
+  Model,
+  PlatformEnabled,
+  Provider,
+  ShortcutKey,
+} from 'src/utils/types'
 import { models } from 'src/utils/values'
 import { watchEffect } from 'vue'
 
@@ -54,13 +60,13 @@ export const useUserPerfsStore = defineStore('user-perfs', () => {
     darkMode: 'auto',
     themeHue: 300,
     provider: null,
-    model: models.find(m => m.name === 'gpt-4.1'),
+    model: models.find((m) => m.name === 'gpt-4.1'),
     systemProvider: null,
-    systemModel: models.find(m => m.name === 'gpt-4o-mini'),
+    systemModel: models.find((m) => m.name === 'gpt-4o-mini'),
     userAvatar: {
       type: 'text',
       text: 'U',
-      hue: 300
+      hue: 300,
     },
     commonModelOptions: [
       'gpt-4.1',
@@ -71,7 +77,7 @@ export const useUserPerfsStore = defineStore('user-perfs', () => {
       'gemini-1.5-pro',
       'gemini-2.0-flash',
       'deepseek-chat',
-      'deepseek-reasoner'
+      'deepseek-reasoner',
     ],
     autoGenTitle: true,
     sendKey: 'ctrl+enter',
@@ -104,7 +110,7 @@ export const useUserPerfsStore = defineStore('user-perfs', () => {
     mdAutoFoldThreshold: null,
     streamingLockBottom: true,
     messageCatalog: true,
-    showWarnings: false
+    showWarnings: false,
   }
   const [perfs, ready] = persistentReactive('#user-perfs', { ...defaultPerfs })
   watchEffect(() => {

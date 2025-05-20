@@ -26,6 +26,7 @@ For the development of Gradio applications, please refer to the documentation of
 The following uses the built-in "Image Generation: FLUX" plugin as an example to introduce the configuration file format of Gradio plugins:
 
 ::: code-group
+
 ```json [Configuration File]
 {
   "id": "hf-000000000000000000000001",
@@ -37,10 +38,13 @@ The following uses the built-in "Image Generation: FLUX" plugin as an example to
     "icon": "sym_o_palette",
     "hue": 80
   },
-  "endpoints": [/* Omitted, will be introduced later */],
+  "endpoints": [
+    /* Omitted, will be introduced later */
+  ],
   "noRoundtrip": true
 }
 ```
+
 ```typescript [TS Type Definition]
 interface GradioPluginManifest {
   id: string
@@ -56,6 +60,7 @@ interface GradioPluginManifest {
   homepage?: string
 }
 ```
+
 :::
 
 - `id`: The ID of the plugin; the ID of each plugin must be different
@@ -66,10 +71,12 @@ interface GradioPluginManifest {
 - `avatar`: The icon of the plugin; [Specific instructions](#avatar)
 - `endpoints`: The interface definition of the plugin; tool calls/file parsers/information acquisition are all defined here; [Specific instructions](#endpoints)
 - `baseURL`: The address of the Gradio application. For Gradio applications hosted on HF Spaces, there are two ways to write it:
+
   - Path: such as `black-forest-labs/FLUX.1-schnell`
   - Link: such as `https://black-forest-labs-flux-1-schnell.hf.space`
 
   Both formats are acceptable. However, since mainland China blocks the HuggingFace main site but does not block `*.hf.space`, we recommend **always using the latter method** (that is, using a link) to avoid users in mainland China from being unable to call the plugin. By observing the two formats, it is not difficult to find that the corresponding link can be obtained by simply rewriting the path.
+
 - `noRoundtrip`: Optional; by default, after calling the tool, the LLM will be called again with the call result to generate an answer based on the call result. However, since this is an image generation plugin, there is no need for the assistant to continue answering after the image is generated, so set it to `true` to disable this behavior.
 - `author`: Optional; the author of the plugin
 - `homepage`: Optional; the homepage of the plugin/author
@@ -79,6 +86,7 @@ interface GradioPluginManifest {
 The `avatar` attribute specifies the default icon of the plugin; it supports different types of icons
 
 ::: code-group
+
 ```json [Example: Icon]
 {
   "type": "icon",
@@ -86,18 +94,21 @@ The `avatar` attribute specifies the default icon of the plugin; it supports dif
   "hue": 80
 }
 ```
+
 ```json [Example: Text]
 {
   "type": "text",
   "text": "🍉"
 }
 ```
+
 ```json [Example: Image Link]
 {
   "type": "url",
   "url": "https://url.to.my/image.avif"
 }
 ```
+
 ```typescript [TS Type Definition]
 interface TextAvatar {
   type: 'text'
@@ -116,6 +127,7 @@ interface IconAvatar {
 }
 type Avatar = TextAvatar | UrlAvatar | IconAvatar
 ```
+
 :::
 
 For `icon` type icons, you can select an icon from [Material Symbols](https://fonts.google.com/icons), write the icon name in underscore format, and add the `sym_o_` prefix. For example, for an icon named `Photo Camera`, the `icon` attribute value is `sym_o_photo_camera`.
@@ -131,6 +143,7 @@ You can add the `hue` attribute to display the background color; you can select 
 `endpoints` defines the interfaces that the plugin can call. Gradio type plugins call the interfaces of Gradio applications. Click "Use via API" at the bottom of the HF Space page to see the interface and parameters of the application.
 
 `endpoint` can be defined as the following three types:
+
 - `tool`: Tool call
 - `fileparser`: File parser
 - `info`: Information acquisition
@@ -187,15 +200,12 @@ The "Image Generation: FLUX" plugin only defines one tool call interface:
         "type": "float"
       }
     ],
-    "outputIdxs": [
-      0
-    ],
-    "showComponents": [
-      "image"
-    ]
+    "outputIdxs": [0],
+    "showComponents": ["image"]
   }
 ]
 ```
+
 ```typescript [TS Type Definition]
 interface GradioManifestFileparser {
   type: 'fileparser'
@@ -223,8 +233,12 @@ interface GradioManifestInfo {
   inputs: GradioApiInput[]
   outputIdxs: number[]
 }
-type GradioManifestEndpoint = GradioManifestFileparser | GradioManifestTool | GradioManifestInfo
+type GradioManifestEndpoint =
+  | GradioManifestFileparser
+  | GradioManifestTool
+  | GradioManifestInfo
 ```
+
 :::
 
 #### Tool Call
@@ -239,6 +253,7 @@ For `endpoint` of type tool, there are the following attributes:
 - `inputs`: Defines the input parameters of the interface; [Specific instructions](#inputs)
 - `outputIdxs`: Select the index array of the return value of the Gradio interface; for example, if the value is `[0]`, only the item with index `0` (that is, the first item) in the return value is selected as the only item in the tool call result array. It is an array, which means that if the interface has multiple return values, you can select multiple items as the call result.
 - `showComponents`: Optional; defines the components used to display each item of the call result to the user. Available components are:
+
   - `textbox`: Used to display text;
   - `markdown`: Used to display markdown formatted text
   - `image`: Used to display images
@@ -254,6 +269,7 @@ For `endpoint` of type tool, there are the following attributes:
 `inputs` defines the input parameters of the interface
 
 ::: code-group
+
 ```json [Example Value]
 [
   {
@@ -296,6 +312,7 @@ For `endpoint` of type tool, there are the following attributes:
   }
 ]
 ```
+
 ```typescript [TS Type Definition]
 interface GradioFixedInput {
   name: string
@@ -317,8 +334,12 @@ interface GradioRequiredInput {
   paramType: 'required'
   type: string
 }
-type GradioApiInput = GradioFixedInput | GradioOptionalInput | GradioRequiredInput
+type GradioApiInput =
+  | GradioFixedInput
+  | GradioOptionalInput
+  | GradioRequiredInput
 ```
+
 :::
 
 - `name`: The name of the parameter in the Gradio application interface
@@ -334,6 +355,7 @@ type GradioApiInput = GradioFixedInput | GradioOptionalInput | GradioRequiredInp
 The element of `endpoints` can also be a file parser (`fileparser`); take the file parser of the "Speech Recognition: Whisper" plugin as an example:
 
 ::: code-group
+
 ```json [Example Value]
 {
   "type": "fileparser",
@@ -344,9 +366,7 @@ The element of `endpoints` can also be a file parser (`fileparser`); take the fi
     {
       "name": "audio",
       "type": "file",
-      "mimeTypes": [
-        "audio/*"
-      ],
+      "mimeTypes": ["audio/*"],
       "paramType": "file"
     },
     {
@@ -357,11 +377,10 @@ The element of `endpoints` can also be a file parser (`fileparser`); take the fi
       "value": "transcribe"
     }
   ],
-  "outputIdxs": [
-    0
-  ]
+  "outputIdxs": [0]
 }
 ```
+
 ```typescript [TS Type Definition]
 interface GradioFileInput {
   name: string
@@ -382,7 +401,10 @@ interface GradioFixedInput {
   value
   description?: string
 }
-type GradioFileparserInput = GradioFileInput | GradioRangeInput | GradioFixedInput
+type GradioFileparserInput =
+  | GradioFileInput
+  | GradioRangeInput
+  | GradioFixedInput
 interface GradioManifestFileparser {
   type: 'fileparser'
   name: string
@@ -392,6 +414,7 @@ interface GradioManifestFileparser {
   outputIdxs: number[]
 }
 ```
+
 :::
 
 It has the following attributes:
@@ -467,6 +490,7 @@ You can use `infos.info_a[0].contentText` and similar formats in `prompt` to acc
 You can define the variables of the plugin through `promptVars`. The variables can be used in the `prompt` of the plugin; the values ​​of the variables can be changed on the plugin function page. Using variables allows users to fine-tune the prompts of the plugin.
 
 ::: code-group
+
 ```json [Example Value]
 [
   {
@@ -478,6 +502,7 @@ You can define the variables of the plugin through `promptVars`. The variables c
   }
 ]
 ```
+
 ```typescript [TS Type Definition]
 type PromptVarValue = string | number | boolean | string[]
 interface PromptVar {
@@ -489,22 +514,23 @@ interface PromptVar {
   default?: PromptVarValue
 }
 ```
+
 :::
 
 In addition, there are several "general prompt variables" that can be used in the `prompt` of the plugin:
 
-| Variable Name | Content | Example Value |
-| ----- | ---- | ---- |
-| _currentTime | Current time | "Tue Dec 10 2024 17:22:11 GMT+0800 (China Standard Time)" |
-| _userLanguage | User language `navigator.language` | "zh-CN" |
-| _workspaceId | Workspace ID | "1ielm0e6n464itr2ps" |
-| _workspaceName | Workspace name | "Example Workspace" |
-| _assistantId | Assistant ID | "1ielm0e6n464itssd3" |
-| _assistantName | Assistant name | "Default Assistant" |
-| _dialogId | Dialogue ID | "1ielm5fg6464ittksm" |
-| _modelId | Model ID | "gpt-4o" |
-| _isDarkMode | Whether the current mode is dark mode | false |
-| _platform | Platform information based on the user's platform | Quasar's Platform object. See [here](https://quasar.dev/options/platform-detection#properties) for details |
+| Variable Name   | Content                                           | Example Value                                                                                              |
+| --------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| \_currentTime   | Current time                                      | "Tue Dec 10 2024 17:22:11 GMT+0800 (China Standard Time)"                                                  |
+| \_userLanguage  | User language `navigator.language`                | "zh-CN"                                                                                                    |
+| \_workspaceId   | Workspace ID                                      | "1ielm0e6n464itr2ps"                                                                                       |
+| \_workspaceName | Workspace name                                    | "Example Workspace"                                                                                        |
+| \_assistantId   | Assistant ID                                      | "1ielm0e6n464itssd3"                                                                                       |
+| \_assistantName | Assistant name                                    | "Default Assistant"                                                                                        |
+| \_dialogId      | Dialogue ID                                       | "1ielm5fg6464ittksm"                                                                                       |
+| \_modelId       | Model ID                                          | "gpt-4o"                                                                                                   |
+| \_isDarkMode    | Whether the current mode is dark mode             | false                                                                                                      |
+| \_platform      | Platform information based on the user's platform | Quasar's Platform object. See [here](https://quasar.dev/options/platform-detection#properties) for details |
 
 ### Prompt-Only Plugins
 

@@ -9,6 +9,7 @@ Consider a custom service provider configured as shown in the figure:
 ![Configure Custom Provider](res/custom-provider.webp)
 
 The effect is:
+
 - For `gemini-2.0-flash` and `gemini-2.0-pro-exp` models, use the Google service provider
 - For the `qwen-2.5-7b` model, use the OpenAI format service provider `api.silliconflow.cn`, and remap the model name to `Qwen/Qwen2.5-7B-Instruct`
 - For other models, use the fallback service provider (OpenAI format `api.aiaw.app`)

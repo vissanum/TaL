@@ -1,20 +1,29 @@
 import { liveQuery, type Subscription } from 'dexie'
-import { shallowRef, getCurrentScope, onScopeDispose, watch, type ShallowRef, type WatchOptions } from 'vue'
+import {
+  shallowRef,
+  getCurrentScope,
+  onScopeDispose,
+  watch,
+  type ShallowRef,
+  type WatchOptions,
+} from 'vue'
 
-type Value<T, I> = I extends undefined ? T | undefined : T | I;
+type Value<T, I> = I extends undefined ? T | undefined : T | I
 
 type UseDexieLiveQueryWithDepsOptions<I, Immediate> = {
-  onError?: (error) => void;
-  initialValue?: I;
-} & WatchOptions<Immediate>;
+  onError?: (error) => void
+  initialValue?: I
+} & WatchOptions<Immediate>
 
 type UseDexieLiveQueryOptions<I> = {
-  onError?: (error) => void;
-  initialValue?: I;
-};
+  onError?: (error) => void
+  initialValue?: I
+}
 
 function tryOnScopeDispose(fn: () => void) {
-  if (getCurrentScope()) { onScopeDispose(fn) }
+  if (getCurrentScope()) {
+    onScopeDispose(fn)
+  }
 }
 
 export function useLiveQueryWithDeps<
@@ -38,12 +47,12 @@ export function useLiveQueryWithDeps<
     const observable = liveQuery(() => querier(...data))
 
     subscription = observable.subscribe({
-      next: result => {
+      next: (result) => {
         value.value = result
       },
-      error: error => {
+      error: (error) => {
         onError?.(error)
-      }
+      },
     })
   }
 
@@ -63,10 +72,7 @@ export function useLiveQueryWithDeps<
   return value as ShallowRef<Value<T, I>>
 }
 
-export function useLiveQuery<
-  T,
-  I = undefined,
->(
+export function useLiveQuery<T, I = undefined>(
   querier: () => T | Promise<T>,
   options: UseDexieLiveQueryOptions<I> = {}
 ): ShallowRef<Value<T, I>> {
@@ -82,12 +88,12 @@ export function useLiveQuery<
     const observable = liveQuery(querier)
 
     subscription = observable.subscribe({
-      next: result => {
+      next: (result) => {
         value.value = result
       },
-      error: error => {
+      error: (error) => {
         onError?.(error)
-      }
+      },
     })
   }
 

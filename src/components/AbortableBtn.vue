@@ -6,10 +6,7 @@
     :text-color="loading ? 'on-sec-c' : 'on-pri'"
   >
     <q-spinner v-if="loading" />
-    <q-icon
-      :name="icon"
-      v-else
-    />
+    <q-icon :name="icon" v-else />
     <span ml-2>{{ loading ? $t('abortableBtn.stop') : label }}</span>
   </q-btn>
 </template>

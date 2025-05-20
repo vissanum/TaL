@@ -1,13 +1,7 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
+  <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card style="width: min(90vw, 500px)">
-      <a-tip
-        tip-key="mcp-stdio-platform"
-        v-if="!IsTauri"
-      >
+      <a-tip tip-key="mcp-stdio-platform" v-if="!IsTauri">
         {{ $t('addMcpPluginDialog.stdioPlatformTip') }}
       </a-tip>
       <q-card-section p-0>
@@ -18,26 +12,14 @@
           indicator-color="primary"
           v-if="IsTauri"
         >
-          <q-tab
-            name="stdio"
-            :label="$t('addMcpPluginDialog.stdio')"
-          />
-          <q-tab
-            name="sse"
-            :label="$t('addMcpPluginDialog.sse')"
-          />
+          <q-tab name="stdio" :label="$t('addMcpPluginDialog.stdio')" />
+          <q-tab name="sse" :label="$t('addMcpPluginDialog.sse')" />
         </q-tabs>
 
         <q-separator />
 
-        <q-tab-panels
-          v-model="type"
-          animated
-        >
-          <q-tab-panel
-            name="stdio"
-            p-0
-          >
+        <q-tab-panels v-model="type" animated>
+          <q-tab-panel name="stdio" p-0>
             <q-list mt-2>
               <q-item>
                 <q-item-section>
@@ -49,11 +31,7 @@
                   </q-item-label>
                 </q-item-section>
                 <q-item-section side>
-                  <a-input
-                    v-model="title"
-                    dense
-                    class="w-150px"
-                  />
+                  <a-input v-model="title" dense class="w-150px" />
                 </q-item-section>
               </q-item>
               <q-item>
@@ -83,18 +61,11 @@
                   </q-item-label>
                 </q-item-section>
                 <q-item-section side>
-                  <a-input
-                    v-model="stdioOptions.cwd"
-                    dense
-                    class="w-200px"
-                  />
+                  <a-input v-model="stdioOptions.cwd" dense class="w-200px" />
                 </q-item-section>
               </q-item>
               <q-separator spaced />
-              <q-item-label
-                header
-                py-2
-              >
+              <q-item-label header py-2>
                 {{ $t('addMcpPluginDialog.envVars') }}
               </q-item-label>
               <vars-input
@@ -102,16 +73,13 @@
                 :input-props="{
                   dense: true,
                   clearale: true,
-                  placeholder: $t('addMcpPluginDialog.inputVarsPlaceholder')
+                  placeholder: $t('addMcpPluginDialog.inputVarsPlaceholder'),
                 }"
               />
             </q-list>
           </q-tab-panel>
 
-          <q-tab-panel
-            name="sse"
-            p-0
-          >
+          <q-tab-panel name="sse" p-0>
             <q-list mt-2>
               <q-item>
                 <q-item-section>
@@ -123,10 +91,7 @@
                   </q-item-label>
                 </q-item-section>
                 <q-item-section side>
-                  <a-input
-                    v-model="title"
-                    dense
-                  />
+                  <a-input v-model="title" dense />
                 </q-item-section>
               </q-item>
               <q-item>
@@ -134,10 +99,7 @@
                   {{ $t('addMcpPluginDialog.url') }}
                 </q-item-section>
                 <q-item-section side>
-                  <a-input
-                    v-model="sseOptions.url"
-                    dense
-                  />
+                  <a-input v-model="sseOptions.url" dense />
                 </q-item-section>
               </q-item>
             </q-list>
@@ -182,17 +144,17 @@ const title = ref('')
 const stdioOptions = reactive({
   command: '',
   cwd: undefined,
-  env: {}
+  env: {},
 })
 const sseOptions = reactive({
-  url: ''
+  url: '',
 })
 
-const valid = computed(() => type.value === 'stdio' ? stdioOptions.command : sseOptions.url)
+const valid = computed(() =>
+  type.value === 'stdio' ? stdioOptions.command : sseOptions.url
+)
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const loading = ref(false)
 const { install } = useInstallPlugin()
@@ -203,22 +165,27 @@ function add() {
   const manifest: McpPluginManifest = {
     id: hash53(type.value === 'stdio' ? stdioOptions.command : sseOptions.url),
     title: title.value,
-    transport: type.value === 'stdio'
-      ? { type: 'stdio', ...toRaw(stdioOptions) }
-      : { type: 'sse', ...toRaw(sseOptions) }
+    transport:
+      type.value === 'stdio'
+        ? { type: 'stdio', ...toRaw(stdioOptions) }
+        : { type: 'sse', ...toRaw(sseOptions) },
   }
-  install(manifest).then(() => {
-    onDialogOK()
-  }).catch(err => {
-    console.error(err)
-    $q.notify({
-      message: `${t('addMcpPluginDialog.installFailed')}: ${err.message}`,
-      color: 'negative'
+  install(manifest)
+    .then(() => {
+      onDialogOK()
     })
-  }).finally(() => {
-    loading.value = false
-  })
+    .catch((err) => {
+      console.error(err)
+      $q.notify({
+        message: `${t('addMcpPluginDialog.installFailed')}: ${err.message}`,
+        color: 'negative',
+      })
+    })
+    .finally(() => {
+      loading.value = false
+    })
 }
 
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent()
 </script>

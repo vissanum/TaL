@@ -20,10 +20,7 @@
     </template>
     <template #default>
       <dialog-list />
-      <search-dialog
-        v-model="showSearchDialog"
-        :workspace-id
-      />
+      <search-dialog v-model="showSearchDialog" :workspace-id />
     </template>
   </q-expansion-item>
 </template>

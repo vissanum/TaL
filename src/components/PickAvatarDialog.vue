@@ -1,12 +1,6 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
-    <q-card
-      flex
-      :class="{ 'flex-col': $q.screen.lt.sm }"
-    >
+  <q-dialog ref="dialogRef" @hide="onDialogHide">
+    <q-card flex :class="{ 'flex-col': $q.screen.lt.sm }">
       <div>
         <q-tabs
           v-model="tab"
@@ -15,30 +9,15 @@
           indicator-color="primary"
           align="justify"
         >
-          <q-tab
-            name="ai"
-            :label="$t('pickAvatarDialog.ai')"
-          />
-          <q-tab
-            name="icon"
-            :label="$t('pickAvatarDialog.icon')"
-          />
-          <q-tab
-            name="text"
-            :label="$t('pickAvatarDialog.text')"
-          />
-          <q-tab
-            name="image"
-            :label="$t('pickAvatarDialog.image')"
-          />
+          <q-tab name="ai" :label="$t('pickAvatarDialog.ai')" />
+          <q-tab name="icon" :label="$t('pickAvatarDialog.icon')" />
+          <q-tab name="text" :label="$t('pickAvatarDialog.text')" />
+          <q-tab name="image" :label="$t('pickAvatarDialog.image')" />
         </q-tabs>
 
         <q-separator />
 
-        <q-tab-panels
-          v-model="tab"
-          animated
-        >
+        <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="ai">
             <avatar-panel
               :title="$t('pickAvatarDialog.aiCompany')"
@@ -62,11 +41,7 @@
             />
           </q-tab-panel>
 
-          <q-tab-panel
-            name="icon"
-            max-h="400px"
-            of-y-auto
-          >
+          <q-tab-panel name="icon" max-h="400px" of-y-auto>
             <avatar-panel
               :items="presetAvatars.icons"
               @select="select($event, true)"
@@ -91,24 +66,19 @@
       </div>
       <q-separator :vertical="!$q.screen.lt.sm" />
       <div flex="~ col">
-        <q-list
-          min-w="220px"
-          mt-2
-        >
+        <q-list min-w="220px" mt-2>
           <q-item>
-            <q-item-section>{{ $t('pickAvatarDialog.preview') }}</q-item-section>
-            <q-item-section
-              side
-              text-on-sur
-            >
-              <a-avatar
-                :avatar="selected"
-                size="48px"
-              />
+            <q-item-section>{{
+              $t('pickAvatarDialog.preview')
+            }}</q-item-section>
+            <q-item-section side text-on-sur>
+              <a-avatar :avatar="selected" size="48px" />
             </q-item-section>
           </q-item>
           <q-item>
-            <q-item-section>{{ $t('pickAvatarDialog.showBackground') }}</q-item-section>
+            <q-item-section>{{
+              $t('pickAvatarDialog.showBackground')
+            }}</q-item-section>
             <q-item-section side>
               <q-toggle
                 :model-value="typeof selected.hue === 'number'"
@@ -126,11 +96,7 @@
           </q-item>
         </q-list>
         <q-space />
-        <div
-          flex
-          mt-2
-          p-2
-        >
+        <div flex mt-2 p-2>
           <q-space />
           <q-btn
             :label="$t('pickAvatarDialog.cancel')"
@@ -168,13 +134,11 @@ import { db } from 'src/utils/db'
 import { materialSymbols } from 'src/utils/values'
 
 const props = defineProps<{
-  defaultTab: string,
+  defaultTab: string
   model: Avatar
 }>()
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const tab = ref(props.defaultTab)
 
@@ -203,7 +167,7 @@ const presetAvatars = {
     { type: 'svg', name: 'google' },
     { type: 'svg', name: 'alibaba' },
     { type: 'svg', name: 'huggingface' },
-    { type: 'svg', name: 'aiaw' }
+    { type: 'svg', name: 'aiaw' },
   ] as Avatar[],
   colorSvgs: [
     { type: 'svg', name: 'claude-c' },
@@ -218,7 +182,7 @@ const presetAvatars = {
     { type: 'svg', name: 'huggingface-c' },
     { type: 'svg', name: 'microsoft-c' },
     { type: 'svg', name: 'togetherai-c' },
-    { type: 'svg', name: 'cohere-c' }
+    { type: 'svg', name: 'cohere-c' },
   ] as Avatar[],
   definitelyAIs: [
     { type: 'url', url: '/ai-avatars/alice.webp', title: 'AL-1S' },
@@ -234,9 +198,13 @@ const presetAvatars = {
     { type: 'url', url: '/ai-avatars/cyberlife.png', title: 'CyberLife' },
     { type: 'url', url: '/ai-avatars/android.webp', title: 'Android' },
     { type: 'url', url: '/ai-avatars/detroit.webp', title: 'Detroit' },
-    { type: 'url', url: '/ai-avatars/33.avif', title: '33' }
+    { type: 'url', url: '/ai-avatars/33.avif', title: '33' },
   ] as Avatar[],
-  icons: materialSymbols.map(icon => ({ type: 'icon', icon: `sym_o_${icon}`, title: icon })) as Avatar[]
+  icons: materialSymbols.map((icon) => ({
+    type: 'icon',
+    icon: `sym_o_${icon}`,
+    title: icon,
+  })) as Avatar[],
 }
 
 function toggleHue(value: boolean) {
@@ -248,7 +216,11 @@ function setText(text: string) {
 async function onImageInput(file: File) {
   const blob = await cropSquareBlob(file, 96)
   const id = genId()
-  await db.avatarImages.add({ id, contentBuffer: await blob.arrayBuffer(), mimeType: file.type })
+  await db.avatarImages.add({
+    id,
+    contentBuffer: await blob.arrayBuffer(),
+    mimeType: file.type,
+  })
   selected.value = { type: 'image', imageId: id }
 }
 watch(selected, (to, from) => {
@@ -257,5 +229,6 @@ watch(selected, (to, from) => {
   }
 })
 
-const { dialogRef, onDialogCancel, onDialogHide, onDialogOK } = useDialogPluginComponent()
+const { dialogRef, onDialogCancel, onDialogHide, onDialogOK } =
+  useDialogPluginComponent()
 </script>

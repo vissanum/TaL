@@ -1,7 +1,10 @@
 import { useQuasar } from 'quasar'
 import SaveDialog from 'src/components/SaveDialog.vue'
 import { db } from 'src/utils/db'
-import { restoreArtifactChanges, saveArtifactChanges } from 'src/utils/functions'
+import {
+  restoreArtifactChanges,
+  saveArtifactChanges,
+} from 'src/utils/functions'
 import { Artifact } from 'src/utils/types'
 
 export function useCloseArtifact() {
@@ -11,10 +14,12 @@ export function useCloseArtifact() {
       $q.dialog({
         component: SaveDialog,
         componentProps: {
-          name: artifact.name
-        }
+          name: artifact.name,
+        },
       }).onOk((save: boolean) => {
-        const changes = save ? saveArtifactChanges(artifact) : restoreArtifactChanges(artifact)
+        const changes = save
+          ? saveArtifactChanges(artifact)
+          : restoreArtifactChanges(artifact)
         db.artifacts.update(artifact.id, { open: false, ...changes })
       })
     } else {

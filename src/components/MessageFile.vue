@@ -19,7 +19,7 @@ import { computed } from 'vue'
 import { codeExtensions } from 'src/utils/values'
 
 const props = defineProps<{
-  file: StoredItem,
+  file: StoredItem
   removable?: boolean
 }>()
 
@@ -30,8 +30,8 @@ function viewFile() {
   $q.dialog({
     component: ViewFileDialog,
     componentProps: {
-      file: props.file
-    }
+      file: props.file,
+    },
   })
 }
 

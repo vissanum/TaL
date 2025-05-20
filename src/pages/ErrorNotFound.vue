@@ -1,13 +1,7 @@
 <template>
   <transition name="fade">
-    <q-page-container
-      v-if="show"
-    >
-      <q-page
-        flex
-        items-center
-        pos-relative
-      >
+    <q-page-container v-if="show">
+      <q-page flex items-center pos-relative>
         <q-btn
           flat
           round
@@ -34,7 +28,7 @@ import { ref, onMounted } from 'vue'
 import { useUiStateStore } from 'src/stores/ui-state'
 
 const props = defineProps<{
-  timeout?: number,
+  timeout?: number
   drawerToggle?: boolean
 }>()
 
@@ -47,5 +41,4 @@ onMounted(() => {
     show.value = true
   }, props.timeout ?? 200)
 })
-
 </script>

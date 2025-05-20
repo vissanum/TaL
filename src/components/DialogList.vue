@@ -1,15 +1,7 @@
 <template>
   <q-list>
-    <q-item
-      clickable
-      @click="addItem"
-      text-sec
-      item-rd
-    >
-      <q-item-section
-        avatar
-        min-w-0
-      >
+    <q-item clickable @click="addItem" text-sec item-rd>
+      <q-item-section avatar min-w-0>
         <q-icon name="sym_o_add_comment" />
       </q-item-section>
       <q-item-section>
@@ -20,7 +12,10 @@
       v-for="dialog in [...dialogs].reverse()"
       :key="dialog.id"
       clickable
-      :to="{ path: `/workspaces/${workspace.id}/dialogs/${dialog.id}`, query: $route.query }"
+      :to="{
+        path: `/workspaces/${workspace.id}/dialogs/${dialog.id}`,
+        query: $route.query,
+      }"
       active-class="bg-sec-c text-on-sec-c"
       item-rd
       min-h="40px"
@@ -28,9 +23,7 @@
       <q-item-section>
         {{ dialog.name }}
       </q-item-section>
-      <q-menu
-        context-menu
-      >
+      <q-menu context-menu>
         <q-list style="min-width: 100px">
           <menu-item
             icon="sym_o_edit"
@@ -40,12 +33,20 @@
           <menu-item
             icon="sym_o_auto_fix"
             :label="$t('dialogList.summarizeDialog')"
-            @click="$router.push(`/workspaces/${workspace.id}/dialogs/${dialog.id}#genTitle`)"
+            @click="
+              $router.push(
+                `/workspaces/${workspace.id}/dialogs/${dialog.id}#genTitle`
+              )
+            "
           />
           <menu-item
             icon="sym_o_content_copy"
             :label="$t('dialogList.copyContent')"
-            @click="$router.push(`/workspaces/${workspace.id}/dialogs/${dialog.id}#copyContent`)"
+            @click="
+              $router.push(
+                `/workspaces/${workspace.id}/dialogs/${dialog.id}#copyContent`
+              )
+            "
           />
           <menu-item
             icon="sym_o_move_item"
@@ -96,11 +97,11 @@ function renameItem({ id, name }) {
       model: name,
       type: 'text',
       label: t('dialogList.title'),
-      isValid: v => v.trim() && v !== name
+      isValid: (v) => v.trim() && v !== name,
     },
     cancel: true,
-    ...dialogOptions
-  }).onOk(newName => {
+    ...dialogOptions,
+  }).onOk((newName) => {
     db.dialogs.update(id, { name: newName.trim() })
   })
 }
@@ -108,9 +109,9 @@ function moveItem({ id }) {
   $q.dialog({
     component: SelectWorkspaceDialog,
     componentProps: {
-      accept: 'workspace'
-    }
-  }).onOk(workspaceId => {
+      accept: 'workspace',
+    },
+  }).onOk((workspaceId) => {
     db.dialogs.update(id, { workspaceId })
   })
 }
@@ -122,9 +123,9 @@ function deleteItem({ id, name }) {
     ok: {
       label: t('dialogList.deleteConfirmOk'),
       color: 'err',
-      flat: true
+      flat: true,
     },
-    ...dialogOptions
+    ...dialogOptions,
   }).onOk(() => {
     db.transaction('rw', db.dialogs, db.messages, db.items, async () => {
       await db.dialogs.delete(id)

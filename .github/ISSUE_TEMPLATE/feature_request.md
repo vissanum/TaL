@@ -1,25 +1,23 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: enhancement
+name: Solicitud de Nueva Funcionalidad para TaL
+about: Sugiere una idea para este proyecto.
+title: '[FEATURE] - '
+labels: 'enhancement, necesita-discusion'
 assignees: ''
-
 ---
 
-<!-- Please use English or 中文 -->
+**Antes de enviar este issue:**
 
-**Before you submit**
-- [ ] I have searched the existing issues and this is not a duplicate.
+- [ ] He buscado en los issues existentes y esta no es una solicitud duplicada.
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**¿Tu solicitud de funcionalidad está relacionada con un problema? Por favor, descríbelo.**
+Una descripción clara y concisa de cuál es el problema. Ej. "Siempre me siento frustrado cuando [...]"
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**Describe la solución que te gustaría**
+Una descripción clara y concisa de lo que quieres que suceda.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**Describe las alternativas que has considerado**
+Una descripción clara y concisa de cualquier solución o funcionalidad alternativa que hayas considerado.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Contexto Adicional (Opcional)**
+Añade cualquier otro contexto o capturas de pantalla sobre la solicitud de funcionalidad aquí.

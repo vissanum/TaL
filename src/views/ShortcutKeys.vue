@@ -1,19 +1,12 @@
 <template>
-  <view-common-header
-    @toggle-drawer="$emit('toggle-drawer')"
-    back-to="."
-  >
+  <view-common-header @toggle-drawer="$emit('toggle-drawer')" back-to=".">
     <q-toolbar-title>
       {{ $t('shortcutKeysView.keyboardShortcuts') }}
     </q-toolbar-title>
   </view-common-header>
   <q-page-container>
     <q-page :style-fn="pageFhStyle">
-      <q-list
-        py-2
-        max-w="1000px"
-        mx-a
-      >
+      <q-list py-2 max-w="1000px" mx-a>
         <q-item>
           <q-item-section>
             <q-item-label>
@@ -240,6 +233,6 @@ defineEmits(['toggle-drawer'])
 const inputProps = {
   dense: true,
   filled: true,
-  class: 'min-w-150px'
+  class: 'min-w-150px',
 }
 </script>

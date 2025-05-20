@@ -1,6 +1,18 @@
 import Dexie from 'dexie'
 import { defaultAvatar, genId } from './functions'
-import { Workspace, Folder, Dialog, Message, Assistant, Artifact, StoredReactive, InstalledPlugin, AvatarImage, StoredItem, CustomProvider } from './types'
+import {
+  Workspace,
+  Folder,
+  Dialog,
+  Message,
+  Assistant,
+  Artifact,
+  StoredReactive,
+  InstalledPlugin,
+  AvatarImage,
+  StoredItem,
+  CustomProvider,
+} from './types'
 import { AssistantDefaultPrompt, ExampleWsIndexContent } from './templates'
 import dexieCloud, { DexieCloudTable } from 'dexie-cloud-addon'
 import { DexieDBURL } from './config'
@@ -26,7 +38,7 @@ if (DexieDBURL) {
     databaseUrl: DexieDBURL,
     requireAuth: false,
     customLoginGui: true,
-    nameSuffix: false
+    nameSuffix: false,
   })
 }
 db.version(6).stores({
@@ -40,7 +52,7 @@ db.version(6).stores({
   reactives: 'key',
   avatarImages: 'id',
   items: 'id, type, dialogId',
-  providers: 'id'
+  providers: 'id',
 })
 
 const defaultModelSettings = {
@@ -49,7 +61,7 @@ const defaultModelSettings = {
   presencePenalty: 0,
   frequencyPenalty: 0,
   maxSteps: 4,
-  maxRetries: 1
+  maxRetries: 1,
 }
 
 const { t } = i18n.global
@@ -71,8 +83,8 @@ db.on.populate.subscribe(() => {
       listOpen: {
         assistants: true,
         artifacts: false,
-        dialogs: true
-      }
+        dialogs: true,
+      },
     } as Workspace)
     db.assistants.add({
       id: initialAssistantId,
@@ -87,30 +99,30 @@ db.on.populate.subscribe(() => {
       modelSettings: { ...defaultModelSettings },
       plugins: {},
       promptRole: 'system',
-      stream: true
+      stream: true,
     })
     db.reactives.add({
       key: '#user-data',
       value: {
-        lastWorkspaceId: initialWorkspaceId
-      }
+        lastWorkspaceId: initialWorkspaceId,
+      },
     })
   }, false)
 })
 
 // Migration
-db.assistants.hook('reading', assistant => {
+db.assistants.hook('reading', (assistant) => {
   assistant.promptRole ??= 'system'
   assistant.stream ??= true
   return assistant
 })
 // Migration to v1.4
-db.workspaces.hook('reading', workspace => {
+db.workspaces.hook('reading', (workspace) => {
   if (workspace.type === 'workspace') {
     workspace.listOpen ??= {
       assistants: true,
       artifacts: false,
-      dialogs: true
+      dialogs: true,
     }
   }
   return workspace

@@ -12,11 +12,14 @@ const OfficialBaseURLs = {
   anthropic: 'https://api.anthropic.com/v1',
   google: 'https://generativelanguage.googleapis.com/v1beta',
   ollama: 'http://localhost:11434/api',
-  openrouter: 'https://openrouter.ai/api/v1'
+  openrouter: 'https://openrouter.ai/api/v1',
 }
 const commonSettings = {
-  baseURL: String({ title: t('values.apiAddress'), description: t('values.defaultServiceAddress') }),
-  apiKey: String({ title: 'API Key', format: 'password' })
+  baseURL: String({
+    title: t('values.apiAddress'),
+    description: t('values.defaultServiceAddress'),
+  }),
+  apiKey: String({ title: 'API Key', format: 'password' }),
 }
 const ProviderTypes: ProviderType[] = [
   {
@@ -25,9 +28,19 @@ const ProviderTypes: ProviderType[] = [
     avatar: { type: 'svg', name: 'openai' },
     settings: Object({
       ...commonSettings,
-      baseURL: String({ title: t('values.apiAddress'), description: t('values.defaultOpenAIAddress'), default: OfficialBaseURLs.openai }),
-      organization: String({ title: t('values.organization'), description: t('values.optional') }),
-      project: String({ title: t('values.project'), description: t('values.optional') })
+      baseURL: String({
+        title: t('values.apiAddress'),
+        description: t('values.defaultOpenAIAddress'),
+        default: OfficialBaseURLs.openai,
+      }),
+      organization: String({
+        title: t('values.organization'),
+        description: t('values.optional'),
+      }),
+      project: String({
+        title: t('values.project'),
+        description: t('values.optional'),
+      }),
     }),
     initialSettings: { compatibility: 'strict' },
     constructor: createOpenAI,
@@ -35,12 +48,12 @@ const ProviderTypes: ProviderType[] = [
       const baseURL = settings.baseURL || OfficialBaseURLs.openai
       const resp = await fetch(`${baseURL}/models`, {
         headers: {
-          Authorization: `Bearer ${settings.apiKey}`
-        }
+          Authorization: `Bearer ${settings.apiKey}`,
+        },
       })
       const { data } = await resp.json()
-      return data.map(m => m.id)
-    }
+      return data.map((m) => m.id)
+    },
   },
   {
     name: 'openai-compatible',
@@ -48,31 +61,40 @@ const ProviderTypes: ProviderType[] = [
     avatar: { type: 'svg', name: 'openai' },
     settings: Object({
       ...commonSettings,
-      baseURL: String({ title: t('values.apiAddress'), description: t('values.required') })
+      baseURL: String({
+        title: t('values.apiAddress'),
+        description: t('values.required'),
+      }),
     }),
     initialSettings: {},
     constructor: createOpenAICompatible,
     getModelList: async (settings) => {
       const baseURL = settings.baseURL
       const resp = await fetch(`${baseURL}/models`, {
-        headers: settings.apiKey ? {
-          Authorization: `Bearer ${settings.apiKey}`
-        } : {}
+        headers: settings.apiKey
+          ? {
+              Authorization: `Bearer ${settings.apiKey}`,
+            }
+          : {},
       })
       const { data } = await resp.json()
-      return data.map(m => m.id)
-    }
-  }
+      return data.map((m) => m.id)
+    },
+  },
 ]
 
 const InputTypes = {
   textOnly: { user: [], assistant: [], tool: [] },
   commonVision: { user: ['image/*'], assistant: [], tool: [] },
   claudeVision: { user: ['image/*'], assistant: [], tool: ['image/*'] },
-  claudePdf: { user: ['image/*', 'application/pdf'], assistant: [], tool: ['image/*'] },
+  claudePdf: {
+    user: ['image/*', 'application/pdf'],
+    assistant: [],
+    tool: ['image/*'],
+  },
   audioPreview: { user: ['audio/*'], assistant: [], tool: [] },
   default: { user: ['image/*'], assistant: [], tool: [] },
-  gemini2: { user: ['image/*', 'audio/*'], assistant: [], tool: [] }
+  gemini2: { user: ['image/*', 'audio/*'], assistant: [], tool: [] },
 }
 const models: Model[] = [
   { name: 'o4-mini', inputTypes: InputTypes.commonVision },
@@ -98,7 +120,10 @@ const models: Model[] = [
   { name: 'gpt-4o-2024-05-13', inputTypes: InputTypes.commonVision },
   { name: 'chatgpt-4o-latest', inputTypes: InputTypes.commonVision },
   { name: 'gpt-4o-audio-preview', inputTypes: InputTypes.audioPreview },
-  { name: 'gpt-4o-audio-preview-2024-10-01', inputTypes: InputTypes.audioPreview },
+  {
+    name: 'gpt-4o-audio-preview-2024-10-01',
+    inputTypes: InputTypes.audioPreview,
+  },
   { name: 'gpt-4-turbo', inputTypes: InputTypes.commonVision },
   { name: 'gpt-4-turbo-2024-04-09', inputTypes: InputTypes.commonVision },
   { name: 'gpt-4o-mini', inputTypes: InputTypes.commonVision },
@@ -116,7 +141,10 @@ const models: Model[] = [
   { name: 'gemini-2.5-flash-preview-04-17', inputTypes: InputTypes.gemini2 },
   { name: 'gemini-2.0-flash', inputTypes: InputTypes.gemini2 },
   { name: 'gemini-2.0-flash-exp', inputTypes: InputTypes.gemini2 },
-  { name: 'gemini-2.0-flash-thinking-exp', inputTypes: InputTypes.commonVision },
+  {
+    name: 'gemini-2.0-flash-thinking-exp',
+    inputTypes: InputTypes.commonVision,
+  },
   { name: 'gemini-1.5-pro', inputTypes: InputTypes.commonVision },
   { name: 'gemini-1.5-flash', inputTypes: InputTypes.commonVision },
   { name: 'deepseek-chat', inputTypes: InputTypes.textOnly },
@@ -137,15 +165,32 @@ const models: Model[] = [
   { name: 'grok-3-mini', inputTypes: InputTypes.textOnly },
   { name: 'grok-3-mini-beta', inputTypes: InputTypes.textOnly },
   { name: 'grok-3-mini-fast', inputTypes: InputTypes.textOnly },
-  { name: 'grok-3-mini-fast-beta', inputTypes: InputTypes.textOnly }
+  { name: 'grok-3-mini-fast-beta', inputTypes: InputTypes.textOnly },
 ]
-const modelOptions = models.map(m => m.name)
+const modelOptions = models.map((m) => m.name)
 const dialogOptions = {
-  color: 'primary'
+  color: 'primary',
 }
 
-const mdPreviewThemes = ['default', 'vuepress', 'github', 'mk-cute', 'smart-blue', 'cyanosis', 'arknights']
-const mdCodeThemes = ['atom', 'ally', 'github', 'gradient', 'kimbie', 'paraiso', 'qtcreator', 'stackoverflow']
+const mdPreviewThemes = [
+  'default',
+  'vuepress',
+  'github',
+  'mk-cute',
+  'smart-blue',
+  'cyanosis',
+  'arknights',
+]
+const mdCodeThemes = [
+  'atom',
+  'ally',
+  'github',
+  'gradient',
+  'kimbie',
+  'paraiso',
+  'qtcreator',
+  'stackoverflow',
+]
 
 const codeExtensions = [
   'abap',
@@ -1146,7 +1191,7 @@ const codeExtensions = [
   'wisp',
   'prg',
   'ch',
-  'prw'
+  'prw',
 ]
 
 const materialSymbols = [
@@ -1696,7 +1741,7 @@ const materialSymbols = [
   'travel',
   'escalator',
   'airline_seat_individual_suite',
-  'chalet'
+  'chalet',
 ]
 
 export {
@@ -1708,5 +1753,5 @@ export {
   codeExtensions,
   materialSymbols,
   mdPreviewThemes,
-  mdCodeThemes
+  mdCodeThemes,
 }

@@ -26,11 +26,13 @@ export function useSubscriptionNotify() {
         $q.notify({
           message: t('subscriptionNotify.evalExpired'),
           color: 'negative',
-          actions: [{
-            label: t('subscriptionNotify.ok'),
-            handler: subscribe,
-            textColor: 'on-err'
-          }]
+          actions: [
+            {
+              label: t('subscriptionNotify.ok'),
+              handler: subscribe,
+              textColor: 'on-err',
+            },
+          ],
         })
         data.evalExpiredNotified = true
       } else if (user.value.license.evalDaysLeft <= 1) {
@@ -38,11 +40,13 @@ export function useSubscriptionNotify() {
           message: t('subscriptionNotify.evalExpiring'),
           color: 'inv-sur',
           textColor: 'inv-on-sur',
-          actions: [{
-            label: t('subscriptionNotify.subscribe'),
-            handler: subscribe,
-            textColor: 'inv-pri'
-          }]
+          actions: [
+            {
+              label: t('subscriptionNotify.subscribe'),
+              handler: subscribe,
+              textColor: 'inv-pri',
+            },
+          ],
         })
       }
     } else if (user.value.license.type === 'prod') {
@@ -52,11 +56,13 @@ export function useSubscriptionNotify() {
         $q.notify({
           message: t('subscriptionNotify.prodExpired'),
           color: 'negative',
-          actions: [{
-            label: t('subscriptionNotify.renewal'),
-            handler: subscribe,
-            textColor: 'on-err'
-          }]
+          actions: [
+            {
+              label: t('subscriptionNotify.renewal'),
+              handler: subscribe,
+              textColor: 'on-err',
+            },
+          ],
         })
         data.prodExpiredNotifiedTimestamp = validUntil.getTime()
       } else if (validUntil.getTime() - Date.now() <= 1000 * 60 * 60 * 24 * 2) {
@@ -64,14 +70,18 @@ export function useSubscriptionNotify() {
           message: t('subscriptionNotify.prodExpiring'),
           color: 'inv-sur',
           textColor: 'inv-on-sur',
-          actions: [{
-            label: t('subscriptionNotify.renewal'),
-            handler: subscribe,
-            textColor: 'inv-pri'
-          }]
+          actions: [
+            {
+              label: t('subscriptionNotify.renewal'),
+              handler: subscribe,
+              textColor: 'inv-pri',
+            },
+          ],
         })
       }
     }
   }
-  until(() => store.ready).toBeTruthy().then(notify)
+  until(() => store.ready)
+    .toBeTruthy()
+    .then(notify)
 }

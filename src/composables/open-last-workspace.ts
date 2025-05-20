@@ -14,9 +14,15 @@ export function useOpenLastWorkspace() {
     const wsId = userDataStore.data.lastWorkspaceId
     if (!wsId) return
     await until(() => workspacesStore.workspaces.length).toBeTruthy()
-    const workspace = workspacesStore.workspaces.find(item => item.id === wsId) as Workspace
+    const workspace = workspacesStore.workspaces.find(
+      (item) => item.id === wsId
+    ) as Workspace
     const dialogId = workspace?.lastDialogId
-    router.push(dialogId ? `/workspaces/${wsId}/dialogs/${dialogId}` : `/workspaces/${wsId}`)
+    router.push(
+      dialogId
+        ? `/workspaces/${wsId}/dialogs/${dialogId}`
+        : `/workspaces/${wsId}`
+    )
   }
   return { openLastWorkspace }
 }

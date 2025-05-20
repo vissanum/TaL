@@ -14,10 +14,11 @@ export default {
     cancel: '取消',
     install: '安装',
     installFailed: '安装失败',
-    stdioPlatformTip: '仅桌面版支持 STDIO 类型 MCP 插件，当前平台仅支持 SSE 类型'
+    stdioPlatformTip:
+      '仅桌面版支持 STDIO 类型 MCP 插件，当前平台仅支持 SSE 类型',
   },
   abortableBtn: {
-    stop: '停止'
+    stop: '停止',
   },
   artifactsExpansion: {
     searchPlaceholder: '搜索 Artifacts...',
@@ -28,11 +29,11 @@ export default {
     selectFile: '选择文件',
     createArtifact: '创建 Artifact',
     name: '名称',
-    nonTextFile: '非文本文件：{name}'
+    nonTextFile: '非文本文件：{name}',
   },
   dialogsExpansion: {
     search: '搜索对话',
-    dialogs: '对话'
+    dialogs: '对话',
   },
   artifactItemMenu: {
     save: '保存',
@@ -42,19 +43,19 @@ export default {
     delete: '删除',
     deleteConfirmTitle: '删除 Artifact',
     deleteConfirmMessage: '确定要删除 Artifact「{name}」吗？',
-    deleteConfirmOk: '删除'
+    deleteConfirmOk: '删除',
   },
   addInfoBtn: {
     attachment: '附件',
-    parameter: '参数'
+    parameter: '参数',
   },
   accountBtn: {
     account: '账号',
-    login: '登录'
+    login: '登录',
   },
   copyBtn: {
     title: '复制',
-    copyFailed: '复制失败'
+    copyFailed: '复制失败',
   },
   convertArtifactDialog: {
     title: '转换为 Artifact',
@@ -63,11 +64,11 @@ export default {
     reserveOriginal: '保留原文',
     cancel: '取消',
     autoName: '自动命名',
-    ok: '确定'
+    ok: '确定',
   },
   aTip: {
     tip: 'TIP',
-    dismiss: '不再提示'
+    dismiss: '不再提示',
   },
   assistantsExpansion: {
     assistants: '助手',
@@ -77,18 +78,18 @@ export default {
     delete: '删除',
     deleteConfirmTitle: '删除助手',
     deleteConfirmMessage: '确定要删除助手「{name}」吗？',
-    createAssistant: '新建助手'
+    createAssistant: '新建助手',
   },
   customProviders: {
     delete: '删除',
     deleteProvider: '删除服务商',
     deleteConfirm: '确定要删除服务商「{name}」吗？',
     createProvider: '新建服务商',
-    setAsDefault: '设为默认'
+    setAsDefault: '设为默认',
   },
   assistantItem: {
     unselected: '未选择',
-    global: '全局'
+    global: '全局',
   },
   importDataDialog: {
     title: '导入用户数据',
@@ -99,18 +100,18 @@ export default {
     cancel: '取消',
     import: '导入',
     importSuccess: '导入成功',
-    importFailed: '导入失败：{message}'
+    importFailed: '导入失败：{message}',
   },
   imageInputArea: {
     clickToSelect: '点击选择图片',
     dragHere: '拖拽到此处',
-    paste: '或者 Ctrl+V 粘贴'
+    paste: '或者 Ctrl+V 粘贴',
   },
   hueSliderDialog: {
     title: '选取颜色',
     hue: 'Hue',
     cancel: '取消',
-    ok: '确定'
+    ok: '确定',
   },
   dialogList: {
     createDialog: '新建对话',
@@ -123,12 +124,12 @@ export default {
     delete: '删除',
     deleteConfirmTitle: '删除对话',
     deleteConfirmMessage: '确定要删除对话「{name}」吗？',
-    deleteConfirmOk: '删除'
+    deleteConfirmOk: '删除',
   },
   darkSwitchBtn: {
     switchToDark: '切换至深色',
     switchToLight: '切换至浅色',
-    switchToAuto: '切换至自动'
+    switchToAuto: '切换至自动',
   },
   messageInfoDialog: {
     userMessageInfo: '用户消息信息',
@@ -140,17 +141,17 @@ export default {
     tokenUsage: 'Token 开销',
     prompt: '提示：',
     completion: '补全：',
-    ok: '确定'
+    ok: '确定',
   },
   installPluginBtn: {
     installed: '已安装',
     install: '安装',
-    installFailed: '安装失败：'
+    installFailed: '安装失败：',
   },
   installedPlugins: {
     uninstallPlugin: '卸载插件',
     uninstallConfirm: '确定要卸载插件「{title}」吗？',
-    uninstall: '卸载'
+    uninstall: '卸载',
   },
   messageItem: {
     quote: '引用',
@@ -171,8 +172,9 @@ export default {
     fold: '折叠',
     reasoningContent: '思考内容',
     deleteBranch: '删除分支',
-    deleteBranchMessage: '确定要删除此消息分支吗？此条消息和所属的后续消息将会被删除。',
-    delete: '删除'
+    deleteBranchMessage:
+      '确定要删除此消息分支吗？此条消息和所属的后续消息将会被删除。',
+    delete: '删除',
   },
   parseFilesDialog: {
     parseFiles: '解析文件',
@@ -180,7 +182,7 @@ export default {
     cancel: '取消',
     parse: '解析',
     parser: '解析器',
-    parseFailed: '"{file}" 解析失败: {error}'
+    parseFailed: '"{file}" 解析失败: {error}',
   },
   modelInputItems: {
     model: '模型',
@@ -188,13 +190,13 @@ export default {
     multimodalCapabilitiesCaption: '修改模型的多模态能力配置',
     userInputTypes: '用户输入支持类型',
     assistantMessageTypes: '助手消息支持类型',
-    toolResultTypes: '工具结果支持类型'
+    toolResultTypes: '工具结果支持类型',
   },
   platformEnabledInput: {
     alwaysEnabled: '始终启用',
     desktopOnly: '仅桌面端',
     mobileOnly: '仅移动端',
-    alwaysDisabled: '始终禁用'
+    alwaysDisabled: '始终禁用',
   },
   pickAvatarDialog: {
     ai: 'AI',
@@ -210,28 +212,29 @@ export default {
     cancel: '取消',
     confirm: '确定',
     textLabel: '文字',
-    textHint: '支持 Emoji'
+    textHint: '支持 Emoji',
   },
   payDialog: {
     pay: '支付',
-    refreshAfterPay: '支付完成后，点击「已完成支付」以刷新数据。若没有跳转支付，请手动复制支付链接，并在浏览器中打开',
+    refreshAfterPay:
+      '支付完成后，点击「已完成支付」以刷新数据。若没有跳转支付，请手动复制支付链接，并在浏览器中打开',
     cancel: '取消',
     paymentLink: '复制支付链接',
-    completePayment: '已完成支付'
+    completePayment: '已完成支付',
   },
   saveDialog: {
     title: '保存修改',
     message: '是否保存对「{name}」的修改？',
     cancel: '取消',
     dontSave: '不保存',
-    save: '保存'
+    save: '保存',
   },
   jsonInputDialog: {
     cancel: '取消',
-    ok: '确定'
+    ok: '确定',
   },
   providerInputItems: {
-    provider: '服务商'
+    provider: '服务商',
   },
   promptVarItem: {
     variableName: '变量名',
@@ -245,20 +248,20 @@ export default {
     number: '数字',
     toggle: '开关',
     select: '选择',
-    multiSelect: '多选'
+    multiSelect: '多选',
   },
   promptVarEditor: {
-    addVariable: '添加变量'
+    addVariable: '添加变量',
   },
   pluginTypeBadge: {
     builtin: '内置',
     lobechat: 'Lobe',
     gradio: 'Gradio',
-    mcp: 'MCP'
+    mcp: 'MCP',
   },
   textareaDialog: {
     cancel: '取消',
-    confirm: '确定'
+    confirm: '确定',
   },
   subscribeDialog: {
     title: '订阅云同步服务',
@@ -268,29 +271,29 @@ export default {
     transactionFee: '手续费',
     amountDue: '应付金额',
     cancel: '取消',
-    order: '下单'
+    order: '下单',
   },
   selectWorkspaceDialog: {
     selectWorkspace: '选择工作区',
     selectFolder: '选择文件夹',
     cancel: '取消',
-    confirm: '确定'
+    confirm: '确定',
   },
   selectFileBtn: {
     clickToSelect: '点击选择文件',
     dragHere: '拖拽到此处',
-    paste: '或者 Ctrl+V 粘贴'
+    paste: '或者 Ctrl+V 粘贴',
   },
   viewFileDialog: {
     fileSize: '文件大小',
     fileType: '文件类型',
     copy: '复制',
     download: '下载',
-    ok: '确定'
+    ok: '确定',
   },
   varsInput: {
     addVariable: '添加变量',
-    variableName: '变量名'
+    variableName: '变量名',
   },
   topupDialog: {
     title: '模型服务充值',
@@ -300,25 +303,25 @@ export default {
     transactionFee: '手续费',
     payableAmount: '应付金额',
     cancel: '取消',
-    order: '下单'
+    order: '下单',
   },
   payMethodItem: {
     paymentMethod: '支付方式',
     wxpay: '微信支付',
-    stripe: '银行卡'
+    stripe: '银行卡',
   },
   toolContent: {
     toolCall: '工具调用',
     callParams: '调用参数',
     callResult: '调用结果',
-    errorMessage: '错误信息'
+    errorMessage: '错误信息',
   },
   workspaceNav: {
     workspace: '工作区',
-    folder: '文件夹'
+    folder: '文件夹',
   },
   workspaceListSelect: {
-    root: '根目录'
+    root: '根目录',
   },
   workspaceListItem: {
     rename: '重命名',
@@ -326,34 +329,34 @@ export default {
     newWorkspace: '新建工作区',
     newFolder: '新建文件夹',
     moveTo: '移动至',
-    delete: '删除'
+    delete: '删除',
   },
   modelOptionsBtn: {
     modelOptions: '模型选项',
     reasoningEffort: '推理力度',
-    useSearchGrounding: '使用搜索'
+    useSearchGrounding: '使用搜索',
   },
   subproviderInput: {
-    modelList: '模型列表'
+    modelList: '模型列表',
   },
   getModelList: {
     getModelList: '获取模型列表',
     selectModels: '选择模型',
-    getModelListFailed: '获取模型列表失败'
+    getModelListFailed: '获取模型列表失败',
   },
   modelDragSortDialog: {
     title: '拖动排序',
     sortByName: '按名称排序',
     cancel: '取消',
-    confirm: '确定'
+    confirm: '确定',
   },
   searchDialog: {
     placeholder: '搜索对话消息...',
     noResults: '没有找到相关结果...',
     workspace: '工作区',
-    global: '全局'
+    global: '全局',
   },
   enablePluginsMenu: {
-    moreInfo: '更多信息'
-  }
+    moreInfo: '更多信息',
+  },
 }

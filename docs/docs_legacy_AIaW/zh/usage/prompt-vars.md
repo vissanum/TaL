@@ -17,6 +17,7 @@
 「变量名」是在提示词模板中使用变量时用的名称；「标签」是对话时变量值输入框的标签；
 
 变量「类型」与JS数据类型的对应关系如下：
+
 - 文本：string
 - 数字：number
 - 开关：boolean
@@ -55,18 +56,18 @@
 
 此外，还有几个提供当前信息的**通用内置变量**：
 
-| 变量名 | 内容 | 示例值 |
-| ----- | ---- | ---- |
-| _currentTime | 当前时间 | "Tue Dec 10 2024 17:22:11 GMT+0800 (中国标准时间)" |
-| _userLanguage | 用户语言 `navigator.language` | "zh-CN" |
-| _workspaceId | 工作区 ID | "1ielm0e6n464itr2ps" |
-| _workspaceName | 工作区名称 | "示例工作区" |
-| _assistantId | 助手 ID | "1ielm0e6n464itssd3" |
-| _assistantName | 助手名称 | "默认助手" |
-| _dialogId | 对话 ID | "1ielm5fg6464ittksm" |
-| _modelId | 模型 ID | "gpt-4o" |
-| _isDarkMode | 当前是否为深色模式 | false |
-| _platform | 根据用户使用的平台信息 | quasar 的 Platform 对象。详见[这里](https://quasar.dev/options/platform-detection#properties) |
+| 变量名          | 内容                          | 示例值                                                                                        |
+| --------------- | ----------------------------- | --------------------------------------------------------------------------------------------- |
+| \_currentTime   | 当前时间                      | "Tue Dec 10 2024 17:22:11 GMT+0800 (中国标准时间)"                                            |
+| \_userLanguage  | 用户语言 `navigator.language` | "zh-CN"                                                                                       |
+| \_workspaceId   | 工作区 ID                     | "1ielm0e6n464itr2ps"                                                                          |
+| \_workspaceName | 工作区名称                    | "示例工作区"                                                                                  |
+| \_assistantId   | 助手 ID                       | "1ielm0e6n464itssd3"                                                                          |
+| \_assistantName | 助手名称                      | "默认助手"                                                                                    |
+| \_dialogId      | 对话 ID                       | "1ielm5fg6464ittksm"                                                                          |
+| \_modelId       | 模型 ID                       | "gpt-4o"                                                                                      |
+| \_isDarkMode    | 当前是否为深色模式            | false                                                                                         |
+| \_platform      | 根据用户使用的平台信息        | quasar 的 Platform 对象。详见[这里](https://quasar.dev/options/platform-detection#properties) |
 
 之所以叫「通用」内置变量，是因为这些变量在插件的提示词模板中也可以使用。详见[插件系统](plugins)。
 
@@ -81,4 +82,3 @@
 ## XML 标签
 
 在上面的示例和默认的提示词模板中，我们都使用了 `<role_prompt>...</role_prompt>` 这样的 XML 标签。这不是必须的，但使用 XML 确实是使复杂提示词结构清晰的好方法。对于简单的提示词，使用 Markdown 语法甚至是纯文本就足够了，但当提示词的层次嵌套变得复杂时，就可以使用 XML 清晰地划分各部分，以便模型准确地理解。
-

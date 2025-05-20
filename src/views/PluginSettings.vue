@@ -1,17 +1,11 @@
 <template>
-  <view-common-header
-    @toggle-drawer="$emit('toggle-drawer')"
-    back-to="."
-  >
+  <view-common-header @toggle-drawer="$emit('toggle-drawer')" back-to=".">
     <q-toolbar-title>
       {{ $t('pluginSettings.title') }}
     </q-toolbar-title>
   </view-common-header>
   <q-page-container v-if="plugin">
-    <q-page
-      bg-sur
-      pb-2
-    >
+    <q-page bg-sur pb-2>
       <q-list v-if="pluginsStore.ready">
         <q-item-label header>
           {{ $t('pluginSettings.info') }}
@@ -41,24 +35,14 @@
         <q-item v-if="plugin.homepage">
           <q-item-section>{{ $t('pluginSettings.homepage') }}</q-item-section>
           <q-item-section side>
-            <a
-              pri-link
-              :href="plugin.homepage"
-              target="_blank"
-            >
+            <a pri-link :href="plugin.homepage" target="_blank">
               {{ plugin.homepage }}
             </a>
           </q-item-section>
         </q-item>
-        <q-item
-          clickable
-          @click="pickAvatar"
-        >
+        <q-item clickable @click="pickAvatar">
           <q-item-section>{{ $t('pluginSettings.icon') }}</q-item-section>
-          <q-item-section
-            side
-            text-on-sur
-          >
+          <q-item-section side text-on-sur>
             <a-avatar :avatar="data[id].avatar" />
           </q-item-section>
         </q-item>
@@ -74,10 +58,7 @@
               </div>
             </q-item-section>
           </q-item>
-          <q-item
-            v-for="fp of plugin.fileparsers"
-            :key="fp.name"
-          >
+          <q-item v-for="fp of plugin.fileparsers" :key="fp.name">
             <q-item-section avatar>
               <q-item-label>{{ fp.name }}</q-item-label>
               <q-item-label caption>
@@ -136,7 +117,9 @@ defineEmits(['toggle-drawer'])
 const pluginsStore = usePluginsStore()
 const { data } = pluginsStore
 
-const plugin = computed(() => pluginsStore.plugins.find(p => p.id === props.id))
+const plugin = computed(() =>
+  pluginsStore.plugins.find((p) => p.id === props.id)
+)
 
 const $q = useQuasar()
 function pickAvatar() {
@@ -144,14 +127,18 @@ function pickAvatar() {
     component: PickAvatarDialog,
     componentProps: {
       model: data[props.id].avatar,
-      defaultTab: 'icon'
-    }
-  }).onOk(avatar => {
+      defaultTab: 'icon',
+    },
+  }).onOk((avatar) => {
     data[props.id].avatar = avatar
   })
 }
 
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
-useSetTitle(computed(() => plugin.value && `${t('pluginSettings.title')} - ${plugin.value.title}`))
+useSetTitle(
+  computed(
+    () => plugin.value && `${t('pluginSettings.title')} - ${plugin.value.title}`
+  )
+)
 </script>

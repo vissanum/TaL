@@ -10,7 +10,7 @@ export default {
     mcpPluginGuide: '使用指南',
     search: '搜索',
     loadError: '加载插件列表失败',
-    retry: '重试'
+    retry: '重试',
   },
   assistantView: {
     header: '助手设置',
@@ -64,7 +64,7 @@ export default {
     exportToFile: '导出为文件',
     exportToClipboard: '导出到剪贴板',
     effectScopeTip: '助手设置的作用域为当前助手，全局的服务商/默认模型设置在',
-    settingsPage: '设置页面'
+    settingsPage: '设置页面',
   },
   assistantsMarket: {
     title: '助手市场',
@@ -80,14 +80,14 @@ export default {
     formatError: '助手数据格式错误',
     addError: '添加失败',
     added: '已添加',
-    importError: '导入失败'
+    importError: '导入失败',
   },
   editArtifact: {
     language: '语言',
     edit: '编辑',
     preview: '预览',
     readable: '可读',
-    writable: '可写'
+    writable: '可写',
   },
   pluginAdjust: {
     infoProvider: '信息提供',
@@ -98,10 +98,10 @@ export default {
     globalSettingsTip: '提示：插件的全局设置在',
     pluginSettings: '插件设置',
     noConfigurableItems: '这个插件没有可配置的项目',
-    pluginFunction: '插件功能'
+    pluginFunction: '插件功能',
   },
   workspaceIndex: {
-    title: '工作区主页'
+    title: '工作区主页',
   },
   workspaceSettings: {
     title: '工作区设置',
@@ -109,7 +109,7 @@ export default {
     avatar: '工作区图标',
     homeContent: '主页内容',
     variables: '工作区变量',
-    inputPlaceholder: '输入变量内容...'
+    inputPlaceholder: '输入变量内容...',
   },
   pluginSettings: {
     title: '插件设置',
@@ -122,7 +122,7 @@ export default {
     fileParsing: '文件解析',
     enable: '启用',
     mimeType: 'MIME 类型',
-    settings: '设置'
+    settings: '设置',
   },
   dialogView: {
     model: '模型',
@@ -134,16 +134,17 @@ export default {
     settings: '设置',
     noobAlert: {
       title: '是否需要新建对话？',
-      message: '一个新用户常见的误区是，始终在一个对话中提问，即使问题之间没有关联。\n实际上，当你问一个与前文无关的新问题时，就应该新建一个对话，以避免上下文的累计导致输入开销不断增大',
+      message:
+        '一个新用户常见的误区是，始终在一个对话中提问，即使问题之间没有关联。\n实际上，当你问一个与前文无关的新问题时，就应该新建一个对话，以避免上下文的累计导致输入开销不断增大',
       okBtn: '我会新建一个对话',
-      cancelBtn: '我知道这些，无需提醒'
+      cancelBtn: '我知道这些，无需提醒',
     },
     errors: {
       setAssistant: '请设置助手',
       configModel: '请配置服务商、模型或者登录',
       loadPluginList: '加载插件列表失败',
       genTitle: '总结对话失败，请检查系统助手设置',
-      insufficientQuota: '模型服务额度不足'
+      insufficientQuota: '模型服务额度不足',
     },
     enabledPlugins: '已启用插件',
     messageTokens: '上条消息 Token 消耗',
@@ -163,22 +164,26 @@ export default {
     callPluginInfoFailed: '调用插件信息失败：{message}',
     pluginPromptParseFailed: '插件「{title}」提示词模板解析失败',
     promptParseFailed: '提示词解析失败，请检查助手提示词模板',
-    plugins: '插件'
+    plugins: '插件',
   },
   settingsView: {
     title: '设置',
     defaultProviderHeader: '默认服务商',
     customProvider: '自定义服务商',
-    customProviderCaption: '通过创建自定义服务商，你可以混合使用多个服务商的不同模型',
+    customProviderCaption:
+      '通过创建自定义服务商，你可以混合使用多个服务商的不同模型',
     shareLinkLabel: '分享链接',
-    shareLinkCaption: '用于分享你的服务商设置。其他人打开链接后，会自动应用此设置',
+    shareLinkCaption:
+      '用于分享你的服务商设置。其他人打开链接后，会自动应用此设置',
     copyLinkLabel: '复制链接',
-    noProviderConfigured: '当前未配置默认服务商，将默认使用我们提供的模型服务。详见',
+    noProviderConfigured:
+      '当前未配置默认服务商，将默认使用我们提供的模型服务。详见',
     accountPage: '账号',
     pageSuffix: '页面',
     defaultModelHeader: '默认模型',
     systemAssistantHeader: '系统助手',
-    systemAssistantCaption: '用于总结对话标题、提取 Artifacts。如果留空，则使用默认服务商设置',
+    systemAssistantCaption:
+      '用于总结对话标题、提取 Artifacts。如果留空，则使用默认服务商设置',
     featureHeader: '功能',
     operationHeader: '操作',
     autoSummarizeTitle: '自动总结对话标题',
@@ -188,7 +193,8 @@ export default {
     codePasteOptimize: '代码粘贴优化',
     codePasteCaption: '粘贴从 VSCode 复制的代码时，自动用 markdown 代码块包裹',
     quickScrollButton: '快速滚动按钮',
-    quickScrollCaption: '在对话右下角显示快速滚动按钮。关闭后，你仍然可以使用键盘快捷键滚动',
+    quickScrollCaption:
+      '在对话右下角显示快速滚动按钮。关闭后，你仍然可以使用键盘快捷键滚动',
     autoFocusInput: '自动聚焦对话输入框',
     autoLockBottom: '生成时自动锁定底部',
     messageContentCatalog: '消息内容目录',
@@ -227,17 +233,18 @@ export default {
     dark: '深色',
     exportFailed: '导出失败',
     auto: '自动',
-    language: '语言'
+    language: '语言',
   },
   customProvider: {
     title: '编辑服务商',
     name: '名称',
     icon: '图标',
     fallbackProvider: '回落服务商',
-    fallbackProviderCaption: '当使用的模型不匹配所有子服务商的模型时，则会使用回落服务商',
+    fallbackProviderCaption:
+      '当使用的模型不匹配所有子服务商的模型时，则会使用回落服务商',
     subproviders: '子服务商',
     addSubprovider: '添加子服务商',
-    removeSubprovider: '删除子服务商'
+    removeSubprovider: '删除子服务商',
   },
   shortcutKeysView: {
     keyboardShortcuts: '键盘快捷键',
@@ -258,6 +265,6 @@ export default {
     createDialog: '新建对话',
     searchDialog: '搜索对话',
     editArtifacts: '编辑 Artifacts',
-    saveArtifact: '保存 Artifact'
-  }
+    saveArtifact: '保存 Artifact',
+  },
 }

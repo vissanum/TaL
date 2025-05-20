@@ -10,7 +10,7 @@ export default {
     mcpPluginGuide: '使用指南',
     search: '搜尋',
     loadError: '載入插件列表失敗',
-    retry: '重試'
+    retry: '重試',
   },
   assistantView: {
     header: '助手設定',
@@ -64,7 +64,7 @@ export default {
     exportToFile: '導出為檔案',
     exportToClipboard: '導出到剪貼簿',
     effectScopeTip: '助手設定的作用域為當前助手，全域的服務商/預設模型設定在',
-    settingsPage: '設定頁面'
+    settingsPage: '設定頁面',
   },
   assistantsMarket: {
     title: '助手市場',
@@ -80,14 +80,14 @@ export default {
     formatError: '助手資料格式錯誤',
     addError: '新增失敗',
     added: '已新增',
-    importError: '導入失敗'
+    importError: '導入失敗',
   },
   editArtifact: {
     language: '語言',
     edit: '編輯',
     preview: '預覽',
     readable: '可讀',
-    writable: '可寫'
+    writable: '可寫',
   },
   pluginAdjust: {
     infoProvider: '資訊提供',
@@ -98,10 +98,10 @@ export default {
     globalSettingsTip: '提示：插件的全域設定在',
     pluginSettings: '插件設定',
     noConfigurableItems: '這個插件沒有可設定的項目',
-    pluginFunction: '插件功能'
+    pluginFunction: '插件功能',
   },
   workspaceIndex: {
-    title: '工作區主頁'
+    title: '工作區主頁',
   },
   workspaceSettings: {
     title: '工作區設定',
@@ -109,7 +109,7 @@ export default {
     avatar: '工作區圖示',
     homeContent: '主頁內容',
     variables: '工作區變數',
-    inputPlaceholder: '輸入變數內容...'
+    inputPlaceholder: '輸入變數內容...',
   },
   pluginSettings: {
     title: '插件設定',
@@ -122,7 +122,7 @@ export default {
     fileParsing: '檔案解析',
     enable: '啟用',
     mimeType: 'MIME 類型',
-    settings: '設定'
+    settings: '設定',
   },
   dialogView: {
     model: '模型',
@@ -134,16 +134,17 @@ export default {
     settings: '設定',
     noobAlert: {
       title: '是否需要新建對話？',
-      message: '一個新使用者常見的誤區是，始終在一個對話中提問，即使問題之間沒有關聯。\n實際上，當你問一個與前文無關的新問題時，就應該新建一個對話，以避免上下文的累積導致輸入開銷不斷增大',
+      message:
+        '一個新使用者常見的誤區是，始終在一個對話中提問，即使問題之間沒有關聯。\n實際上，當你問一個與前文無關的新問題時，就應該新建一個對話，以避免上下文的累積導致輸入開銷不斷增大',
       okBtn: '我會新建一個對話',
-      cancelBtn: '我知道這些，無需提醒'
+      cancelBtn: '我知道這些，無需提醒',
     },
     errors: {
       setAssistant: '請設定助手',
       configModel: '請配置服務商、模型或者登入',
       loadPluginList: '載入插件列表失敗',
       genTitle: '總結對話失敗，請檢查系統助手設定',
-      insufficientQuota: '模型服務額度不足'
+      insufficientQuota: '模型服務額度不足',
     },
     enabledPlugins: '已啟用插件',
     messageTokens: '上條訊息 Token 消耗',
@@ -163,22 +164,26 @@ export default {
     callPluginInfoFailed: '呼叫插件資訊失敗：{message}',
     pluginPromptParseFailed: '插件「{title}」提示詞範本解析失敗',
     promptParseFailed: '提示詞解析失敗，請檢查助手提示詞範本',
-    plugins: '插件'
+    plugins: '插件',
   },
   settingsView: {
     title: '設定',
     defaultProviderHeader: '預設服務商',
     customProvider: '自訂服務商',
-    customProviderCaption: '透過建立自訂服務商，你可以混合使用多個服務商的不同模型',
+    customProviderCaption:
+      '透過建立自訂服務商，你可以混合使用多個服務商的不同模型',
     shareLinkLabel: '分享連結',
-    shareLinkCaption: '用於分享你的服務商設定。其他人開啟連結後，會自動應用此設定',
+    shareLinkCaption:
+      '用於分享你的服務商設定。其他人開啟連結後，會自動應用此設定',
     copyLinkLabel: '複製連結',
-    noProviderConfigured: '目前未配置預設服務商，將預設使用我們提供的模型服務。詳見',
+    noProviderConfigured:
+      '目前未配置預設服務商，將預設使用我們提供的模型服務。詳見',
     accountPage: '帳號',
     pageSuffix: '頁面',
     defaultModelHeader: '預設模型',
     systemAssistantHeader: '系統助手',
-    systemAssistantCaption: '用於總結對話標題、提取 Artifacts。如果留空，則使用預設服務商設定',
+    systemAssistantCaption:
+      '用於總結對話標題、提取 Artifacts。如果留空，則使用預設服務商設定',
     featureHeader: '功能',
     operationHeader: '操作',
     autoSummarizeTitle: '自動總結對話標題',
@@ -186,9 +191,11 @@ export default {
     messageSelectionMenu: '訊息選中文本選單',
     messageSelectionCaption: '選中訊息文本時，顯示操作按鈕',
     codePasteOptimize: '程式碼貼上最佳化',
-    codePasteCaption: '貼上從 VSCode 複製的程式碼時，自動用 markdown 程式碼區塊包裹',
+    codePasteCaption:
+      '貼上從 VSCode 複製的程式碼時，自動用 markdown 程式碼區塊包裹',
     quickScrollButton: '快速滾動按鈕',
-    quickScrollCaption: '在對話右下角顯示快速滾動按鈕。關閉後，你仍然可以使用鍵盤快捷鍵滾動',
+    quickScrollCaption:
+      '在對話右下角顯示快速滾動按鈕。關閉後，你仍然可以使用鍵盤快捷鍵滾動',
     autoFocusInput: '自動聚焦對話輸入框',
     autoLockBottom: '生成時自動鎖定底部',
     messageContentCatalog: '訊息內容目錄',
@@ -215,7 +222,8 @@ export default {
     codeTheme: '程式碼主題',
     disableMermaid: '禁用 Mermaid',
     codeAutoFoldThreshold: '程式碼自動摺疊閾值',
-    codeAutoFoldThresholdCaption: '程式碼區塊超過此行數後，自動摺疊。預設不摺疊',
+    codeAutoFoldThresholdCaption:
+      '程式碼區塊超過此行數後，自動摺疊。預設不摺疊',
     dataHeader: '資料',
     userData: '使用者資料',
     export: '導出',
@@ -227,17 +235,18 @@ export default {
     dark: '深色',
     exportFailed: '導出失敗',
     auto: '自動',
-    language: '語言'
+    language: '語言',
   },
   customProvider: {
     title: '編輯服務商',
     name: '名稱',
     icon: '圖示',
     fallbackProvider: '回落服務商',
-    fallbackProviderCaption: '當使用的模型不匹配所有子服務商的模型時，則會使用回落服務商',
+    fallbackProviderCaption:
+      '當使用的模型不匹配所有子服務商的模型時，則會使用回落服務商',
     subproviders: '子服務商',
     addSubprovider: '添加子服務商',
-    removeSubprovider: '刪除子服務商'
+    removeSubprovider: '刪除子服務商',
   },
   shortcutKeysView: {
     keyboardShortcuts: '鍵盤快捷鍵',
@@ -258,6 +267,6 @@ export default {
     createDialog: '新建對話',
     searchDialog: '搜尋對話',
     editArtifacts: '編輯 Artifacts',
-    saveArtifact: '儲存 Artifact'
-  }
+    saveArtifact: '儲存 Artifact',
+  },
 }

@@ -40,7 +40,9 @@ const { addWorkspace, addFolder } = useWorkspaceActions()
 const workspaceStore = useWorkspacesStore()
 const router = useRouter()
 function goTo(id: string) {
-  const workspace = workspaceStore.workspaces.find(w => w.id === id) as Workspace
+  const workspace = workspaceStore.workspaces.find(
+    (w) => w.id === id
+  ) as Workspace
   let path = `/workspaces/${workspace.id}`
   if (workspace.lastDialogId) path += `/dialogs/${workspace.lastDialogId}`
   router.push(path)

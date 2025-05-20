@@ -1,4 +1,11 @@
-import { Array as TArray, Object, String, Unsafe, Optional, Number } from '@sinclair/typebox'
+import {
+  Array as TArray,
+  Object,
+  String,
+  Unsafe,
+  Optional,
+  Number,
+} from '@sinclair/typebox'
 import { Plugin, PluginData } from './types'
 import { i18n } from 'src/boot/i18n'
 import { fetch } from './platform-api'
@@ -8,8 +15,7 @@ const { t } = i18n.global
 
 const JinaReaderURL = 'https://r.jina.ai'
 
-const prompt =
-`<role>
+const prompt = `<role>
 You are an AI assistant equipped with tools to access external and up-to-date information from the internet. Your primary goal is to provide accurate, comprehensive, and well-cited answers to user queries. You have access to the following tools:
 - \`aiaw-web-search\`: Performs web searches using SearXNG. Can execute multiple queries simultaneously.
 - \`aiaw-web-crawl\`: Fetches the full content of specific webpage URLs.
@@ -82,7 +88,8 @@ async function search({ q, engines, timeRange }, settings) {
   const url = new URL(settings.searxngURL || SearxngBaseURL, location.origin)
   url.searchParams.set('format', 'json')
   url.searchParams.set('q', q)
-  settings.defaultEngines && url.searchParams.set('engines', settings.defaultEngines)
+  settings.defaultEngines &&
+    url.searchParams.set('engines', settings.defaultEngines)
   engines && url.searchParams.set('engines', engines)
   timeRange && url.searchParams.set('time_range', timeRange)
   const response = await fetch(url)
@@ -95,22 +102,26 @@ async function search({ q, engines, timeRange }, settings) {
   const { query, results } = await response.json()
   return {
     query,
-    results: results.map(({ title, url, content, publishedDate, thumbnail, engine }) => ({
-      title,
-      url,
-      content,
-      publishedDate,
-      thumbnail,
-      engine
-    })).slice(0, settings.resultsLimit)
+    results: results
+      .map(({ title, url, content, publishedDate, thumbnail, engine }) => ({
+        title,
+        url,
+        content,
+        publishedDate,
+        thumbnail,
+        engine,
+      }))
+      .slice(0, settings.resultsLimit),
   }
 }
 
 async function crawl(url, settings) {
   const response = await fetch(new URL(`/${url}`, JinaReaderURL), {
-    headers: settings.jinaApiKey ? {
-      Authorization: `Bearer ${settings.jinaApiKey}`
-    } : undefined
+    headers: settings.jinaApiKey
+      ? {
+          Authorization: `Bearer ${settings.jinaApiKey}`,
+        }
+      : undefined,
   })
   if (!response.ok) {
     throw new Error(`Failed to crawl: ${response.statusText}`)
@@ -127,79 +138,100 @@ const plugin: Plugin = {
   description: t('webSearchPlugin.description'),
   available: true,
   prompt,
-  apis: [{
-    type: 'tool',
-    name: 'search',
-    description: t('webSearchPlugin.toolSearchCaption'),
-    prompt: 'Use the search engine to search the web',
-    parameters: Object({
-      searches: TArray(Object({
-        q: String({ description: 'The search query' }),
-        engines: Optional(String({
-          description: 'Comma separated list, specifies the active search engines'
-        })),
-        timeRange: Optional(Unsafe({
-          type: 'string',
-          description: 'The time range for the search, unlimited by default',
-          enum: ['day', 'month', 'year']
-        }))
-      }))
-    }),
-    async execute({ searches }, settings) {
-      const res = await Promise.all(searches.map(s => search(s, settings)))
-      return [{
-        type: 'text',
-        contentText: JSON.stringify(res, null, 2)
-      }]
-    }
-  }, {
-    type: 'tool',
-    name: 'crawl',
-    description: t('webSearchPlugin.toolCrawlCaption'),
-    prompt: 'Get the content of web pages',
-    parameters: Object({
-      urls: TArray(String(), { description: 'The URLs to crawl' })
-    }),
-    async execute({ urls }, settings) {
-      const res = await Promise.all(urls.map(url => crawl(url, settings)))
-      return [{
-        type: 'text',
-        contentText: JSON.stringify(res, null, 2)
-      }]
-    }
-  }],
+  apis: [
+    {
+      type: 'tool',
+      name: 'search',
+      description: t('webSearchPlugin.toolSearchCaption'),
+      prompt: 'Use the search engine to search the web',
+      parameters: Object({
+        searches: TArray(
+          Object({
+            q: String({ description: 'The search query' }),
+            engines: Optional(
+              String({
+                description:
+                  'Comma separated list, specifies the active search engines',
+              })
+            ),
+            timeRange: Optional(
+              Unsafe({
+                type: 'string',
+                description:
+                  'The time range for the search, unlimited by default',
+                enum: ['day', 'month', 'year'],
+              })
+            ),
+          })
+        ),
+      }),
+      async execute({ searches }, settings) {
+        const res = await Promise.all(searches.map((s) => search(s, settings)))
+        return [
+          {
+            type: 'text',
+            contentText: JSON.stringify(res, null, 2),
+          },
+        ]
+      },
+    },
+    {
+      type: 'tool',
+      name: 'crawl',
+      description: t('webSearchPlugin.toolCrawlCaption'),
+      prompt: 'Get the content of web pages',
+      parameters: Object({
+        urls: TArray(String(), { description: 'The URLs to crawl' }),
+      }),
+      async execute({ urls }, settings) {
+        const res = await Promise.all(urls.map((url) => crawl(url, settings)))
+        return [
+          {
+            type: 'text',
+            contentText: JSON.stringify(res, null, 2),
+          },
+        ]
+      },
+    },
+  ],
   fileparsers: [],
   settings: Object({
-    searxngURL: Optional(String({
-      title: 'SearXNG URL',
-      description: t('webSearchPlugin.searxngURLCaption')
-    })),
-    jinaApiKey: Optional(String({
-      title: 'Jina API Key',
-      description: t('webSearchPlugin.jinaApiKeyCaption'),
-      format: 'password'
-    })),
-    defaultEngines: Optional(String({
-      title: t('webSearchPlugin.defaultEngines'),
-      description: t('webSearchPlugin.defaultEnginesCaption')
-    })),
+    searxngURL: Optional(
+      String({
+        title: 'SearXNG URL',
+        description: t('webSearchPlugin.searxngURLCaption'),
+      })
+    ),
+    jinaApiKey: Optional(
+      String({
+        title: 'Jina API Key',
+        description: t('webSearchPlugin.jinaApiKeyCaption'),
+        format: 'password',
+      })
+    ),
+    defaultEngines: Optional(
+      String({
+        title: t('webSearchPlugin.defaultEngines'),
+        description: t('webSearchPlugin.defaultEnginesCaption'),
+      })
+    ),
     resultsLimit: Number({
       title: t('webSearchPlugin.resultsLimit'),
-      description: t('webSearchPlugin.resultsLimitCaption')
-    })
-  })
+      description: t('webSearchPlugin.resultsLimitCaption'),
+    }),
+  }),
 }
 
 const defaultData: PluginData = {
   settings: {
-    resultsLimit: 15
+    resultsLimit: 15,
   },
   avatar: { type: 'icon', icon: 'sym_o_travel_explore', hue: 225 },
-  fileparsers: {}
+  fileparsers: {},
 }
 
 export default {
   pluginId,
   plugin,
-  defaultData
+  defaultData,
 }

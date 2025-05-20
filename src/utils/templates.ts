@@ -2,8 +2,7 @@
 import { Boolean, Object, Optional, Static, String } from '@sinclair/typebox'
 import { i18n } from 'src/boot/i18n'
 
-const GenDialogTitle =
-`
+const GenDialogTitle = `
 <instructions>
   Your task is to analyze the provided chat history between a user and an assistant and generate a concise, relevant title summarizing the conversation.
   Follow these rules strictly:
@@ -55,8 +54,7 @@ const GenDialogTitle =
 </final_instruction>
 `
 
-const DialogContent =
-`# {{ title }}
+const DialogContent = `# {{ title }}
 {%- for content in contents %}
 {%- if content.type == 'user-message' %}
 
@@ -69,8 +67,7 @@ const DialogContent =
 {%- endif %}
 {%- endfor %}`
 
-const PluginsPrompt =
-`<plugins>
+const PluginsPrompt = `<plugins>
 {%- for plugin in plugins %}
 <plugin id="{{ plugin.id }}">
 {%- if plugin.prompt %}
@@ -83,8 +80,7 @@ const PluginsPrompt =
 </plugins>
 `
 
-const AssistantDefaultPrompt =
-`{%- if _rolePrompt %}
+const AssistantDefaultPrompt = `{%- if _rolePrompt %}
 <role_prompt>
 {{ _rolePrompt }}
 </role_prompt>
@@ -99,24 +95,33 @@ const DefaultWsIndexContent = t('templates.defaultWsIndexContent')
 
 const ExtractArtifactSchema = Object({
   thinking: String({
-    description: '在你判断助手回答中是否有适合提取为 Artifact 的独立内容的过程中，你思考的过程。'
+    description:
+      '在你判断助手回答中是否有适合提取为 Artifact 的独立内容的过程中，你思考的过程。',
   }),
   found: Boolean({
-    description: '是否有适合提取为 Artifact 的独立内容'
+    description: '是否有适合提取为 Artifact 的独立内容',
   }),
-  regex: Optional(String({
-    description: '用于提取 Artifacts 的 JS 正则表达式字符串，需恰好匹配整个 Artifact。Artifacts 很长，可用 `[\\s\\S]*` 匹配中间任意内容。如果 Artifact 代码块，请**不要**包含开头的 "\`\`\`" 标记。'
-  })),
-  name: Optional(String({
-    description: '根据 Artifact 内容为 Artifact 命名。像文件名那样带后缀。命名格式需符合对应语言代码的文件命名规范。'
-  })),
-  language: Optional(String({
-    description: '内容的代码语言，用于代码高亮。示例值："markdown", "javascript", "python" 等'
-  }))
+  regex: Optional(
+    String({
+      description:
+        '用于提取 Artifacts 的 JS 正则表达式字符串，需恰好匹配整个 Artifact。Artifacts 很长，可用 `[\\s\\S]*` 匹配中间任意内容。如果 Artifact 代码块，请**不要**包含开头的 "\`\`\`" 标记。',
+    })
+  ),
+  name: Optional(
+    String({
+      description:
+        '根据 Artifact 内容为 Artifact 命名。像文件名那样带后缀。命名格式需符合对应语言代码的文件命名规范。',
+    })
+  ),
+  language: Optional(
+    String({
+      description:
+        '内容的代码语言，用于代码高亮。示例值："markdown", "javascript", "python" 等',
+    })
+  ),
 })
 type ExtractArtifactResult = Static<typeof ExtractArtifactSchema>
-const ExtractArtifactPrompt =
-`
+const ExtractArtifactPrompt = `
 <instruction>
 你的任务是判断用户与 AI 助手对话记录中是否有 Artifacts，如果有则将它提取出来。
 
@@ -148,8 +153,7 @@ ${JSON.stringify(ExtractArtifactSchema, null, 2)}
 {%- endfor %}
 </chat_history>
 `
-const NameArtifactPrompt =
-`<instruction>
+const NameArtifactPrompt = `<instruction>
 请根据该文件的内容，为该文件命名。要求：
 - 文件名带后缀
 - 文件名符合对应语言代码的文件命名规范，如 "hello_world.py"（下划线格式）, "hello-world.js"（连字符格式）, "HelloWorld.java"（驼峰格式） 等。
@@ -172,7 +176,7 @@ export {
   ExampleWsIndexContent,
   ExtractArtifactPrompt,
   ExtractArtifactSchema,
-  NameArtifactPrompt
+  NameArtifactPrompt,
 }
 
 export type { ExtractArtifactResult }

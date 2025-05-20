@@ -1,6 +1,10 @@
 <template>
   <q-btn
-    :label="store.availableIds.includes(id) ? $t('installPluginBtn.installed') : $t('installPluginBtn.install')"
+    :label="
+      store.availableIds.includes(id)
+        ? $t('installPluginBtn.installed')
+        : $t('installPluginBtn.install')
+    "
     :disable="store.availableIds.includes(id)"
     :loading
     @click="installIt"
@@ -28,14 +32,16 @@ const loading = ref(false)
 const $q = useQuasar()
 function installIt() {
   loading.value = true
-  install(props.manifest).catch(err => {
-    console.error(err)
-    $q.notify({
-      message: `${t('installPluginBtn.installFailed')}${err.message}`,
-      color: 'negative'
+  install(props.manifest)
+    .catch((err) => {
+      console.error(err)
+      $q.notify({
+        message: `${t('installPluginBtn.installFailed')}${err.message}`,
+        color: 'negative',
+      })
     })
-  }).finally(() => {
-    loading.value = false
-  })
+    .finally(() => {
+      loading.value = false
+    })
 }
 </script>

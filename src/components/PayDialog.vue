@@ -1,9 +1,5 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-    persistent
-  >
+  <q-dialog ref="dialogRef" @hide="onDialogHide" persistent>
     <q-card min-w="320px">
       <q-card-section>
         <div class="text-h6">
@@ -45,13 +41,12 @@
 import { useDialogPluginComponent } from 'quasar'
 import CopyBtn from './CopyBtn.vue'
 
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent()
 
 defineProps<{
   link: string
 }>()
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 </script>

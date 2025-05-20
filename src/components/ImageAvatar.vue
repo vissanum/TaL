@@ -1,9 +1,6 @@
 <template>
   <q-avatar>
-    <img
-      v-if="url"
-      :src="url"
-    >
+    <img v-if="url" :src="url" />
   </q-avatar>
 </template>
 

@@ -29,7 +29,7 @@ function add() {
   model.value.push({
     id: genId(),
     name: null,
-    type: 'text'
+    type: 'text',
   })
 }
 </script>

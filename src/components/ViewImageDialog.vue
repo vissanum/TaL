@@ -1,15 +1,6 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-    maximized
-  >
-    <img
-      :src="url"
-      object-contain
-      max-w-100vw
-      max-h-100vh
-    >
+  <q-dialog ref="dialogRef" @hide="onDialogHide" maximized>
+    <img :src="url" object-contain max-w-100vw max-h-100vh />
   </q-dialog>
 </template>
 
@@ -20,9 +11,7 @@ defineProps<{
   url: string
 }>()
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const { dialogRef, onDialogHide } = useDialogPluginComponent()
 </script>

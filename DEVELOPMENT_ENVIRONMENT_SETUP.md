@@ -15,7 +15,7 @@ Esta guía describe los pasos para configurar tu entorno de desarrollo y poder c
 
 ### 1. Node.js y pnpm
 
-TaL utiliza Node.js para el desarrollo del frontend y la gestión de algunas herramientas de compilación. `pnpm` es el gestor de paquetes Node.js preferido para este proyecto debido a su eficiencia.
+TaL utiliza Node.js para el desarrollo del frontend y la gestión de algunas herramientas de compilación. `pnpm` es el gestor de paquetes Node.js preferido para este proyecto debido a su eficiencia. Se recomienda usar una versión LTS reciente de Node.js ej., v20.x.x. Asegúrate de tener pnpm instalado ej., v10.x.x.
 
 - **Node.js:**
 
@@ -45,7 +45,7 @@ El backend de TaL está escrito en Rust.
 
   - Sigue las instrucciones oficiales en [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install)
   - Esto instalará `rustup` (el gestor de toolchains de Rust) y `cargo` (el gestor de paquetes y sistema de compilación de Rust).
-  - Asegúrate de tener el toolchain `stable` como predeterminado y actualizado:
+  - Asegúrate de tener el toolchain `stable` como predeterminado y actualizado ej. rustc 1.86.0:
 
     ```bash
     rustup default stable
@@ -69,81 +69,93 @@ El backend de TaL está escrito en Rust.
 Tauri CLI es necesario para desarrollar y compilar aplicaciones Tauri.
 
 - **Prerrequisitos del sistema para Tauri:**
-  - Antes de instalar Tauri CLI, asegúrate de cumplir con los [prerrequisitos de desarrollo de Tauri](https://tauri.app/v1/guides/getting-started/prerequisites) para tu sistema operativo. Esto incluye compiladores de C/C++, bibliotecas de desarrollo webview, etc.
-  - **Linux:** `sudo apt update && sudo apt install libwebkit2gtk-4.0-dev build-essential curl wget libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev` (para Debian/Ubuntu)
+  - Antes de instalar Tauri CLI, asegúrate de cumplir con los [prerrequisitos de desarrollo de Tauri](https://v2.tauri.app/start/prerequisites/) para tu sistema operativo. Esto incluye compiladores de C/C++, bibliotecas de desarrollo webview, etc.
+  - **Linux:** `sudo apt update && sudo apt install libwebkit2gtk-4.0-dev build-essential curl wget libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf` (para Debian/Ubuntu)
   - **Windows:** Microsoft Visual Studio C++ Build Tools (ver enlace de prerrequisitos).
   - **macOS:** Xcode Command Line Tools (ver enlace de prerrequisitos).
 - **Instalación de Tauri CLI:**
 
-  - Una vez que los prerrequisitos del sistema estén instalados:
+Tauri CLI se gestiona como una dependencia de desarrollo del proyecto a través de pnpm. Normalmente no necesitarás instalarlo globalmente si ejecutas los comandos a través de pnpm.:
 
-    ```bash
-    cargo install tauri-cli --locked
-    ```
+- Verifica la instalación (Deberías ver una salida similar a tauri-cli 2.x.x, ej. tauri-cli 2.5.0):
 
-  - Verifica la instalación:
-
-    ```bash
-    cargo tauri --version
-    ```
+  ```bash
+  pnpm tauri --version
+  ```
 
 ### 4. Configuración de VSCode (Recomendado)
 
-- **Extensiones esenciales:**
-  - `rust-lang.rust-analyzer`: Soporte avanzado para el lenguaje Rust (autocompletado, errores, etc.).
-  - `Vue.volar` (o `Vue.vscode-typescript-vue-plugin` si prefieres, y `Vue.volar-embedded-vue-language-features`): Soporte para Vue 3 y TypeScript.
-  - `dbaeumer.vscode-eslint`: Integración con ESLint para el frontend.
-  - `esbenp.prettier-vscode`: Formateador de código para frontend.
-  - `tauri-apps.tauri-vscode`: Ayuda para el desarrollo con Tauri.
-  - `serayuzgur.crates`: Ayuda a gestionar dependencias de `Cargo.toml`.
-- **Extensiones recomendadas adicionales:**
+Se recomienda [Visual Studio Code (VSCode)](https://code.visualstudio.com/) como IDE para el desarrollo de TaL. A continuación, se listan extensiones y configuraciones sugeridas.
 
-  - `EditorConfig.EditorConfig`: Mantiene la consistencia del estilo de código entre editores.
-  - `GitHub.copilot` (si tienes acceso): Asistente de codificación IA.
-  - `usernamehw.errorlens`: Muestra errores y warnings directamente en la línea.
-  - `Gruntfuggly.todo-tree`: Encuentra comentarios TODO, FIXME, etc.
+- **Extensiones esenciales y recomendadas:**
+  Sugerimos instalar las siguientes extensiones para una mejor experiencia de desarrollo. Puedes instalarlas buscando sus IDs en el Marketplace de VSCode.
 
-- **Configuración del espacio de trabajo (Opcional pero recomendado):**
+  - **Esenciales:**
+    - `rust-lang.rust-analyzer`: Soporte avanzado para el lenguaje Rust.
+    - `Vue.volar`: Soporte oficial para Vue 3 y TypeScript (anteriormente Volar).
+    - `dbaeumer.vscode-eslint`: Integración con ESLint para el frontend.
+    - `esbenp.prettier-vscode`: Formateador de código Prettier.
+    - `tauri-apps.tauri-vscode`: Ayuda para el desarrollo con Tauri (ej. `tauri.conf.json`).
+    - `EditorConfig.EditorConfig`: Mantiene la consistencia del estilo de código.
+  - **Adicionales útiles:**
+    - `foxundermoon.dependi`: Ayuda a gestionar dependencias en `Cargo.toml` (sucesor de `crates`).
+    - `wayou.vscode-todo-highlight`: Resalta comentarios TODO, FIXME, etc.
+    - `GitHub.vscode-github-actions`: Soporte para workflows de GitHub Actions.
+    - `usernamehw.errorlens`: Muestra errores y warnings directamente en la línea.
 
-  - Crea un archivo `.vscode/settings.json` en la raíz del proyecto para configuraciones específicas:
+- **Configuración del espacio de trabajo (Workspace):**
+  Para asegurar una configuración consistente entre colaboradores, el proyecto TaL incluye archivos de configuración recomendados en el directorio `.vscode/`.
 
-    ```json
-    {
-      // Formateo
-      "editor.formatOnSave": true,
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "[rust]": {
-        "editor.defaultFormatter": "rust-lang.rust-analyzer",
-        "editor.formatOnSave": true
-      },
-      // ESLint
-      "eslint.validate": ["javascript", "typescript", "vue"],
-      "files.eol": "\n",
-      "search.exclude": {
-        "**/node_modules": true,
-        "**/dist": true,
-        "**/target": true,
-        "**/pnpm-lock.yaml": true
-      }
-    }
-    ```
-
-  - Considera añadir un archivo `.vscode/extensions.json` para recomendar extensiones a los colaboradores:
+  - **`.vscode/extensions.json`:**
+    Este archivo recomienda las extensiones listadas arriba a cualquier persona que abra el proyecto en VSCode. Su contenido debería ser similar a:
 
     ```json
+    // .vscode/extensions.json
     {
       "recommendations": [
-        "rust-lang.rust-analyzer",
-        "Vue.volar",
+        // Esenciales
         "dbaeumer.vscode-eslint",
+        "editorconfig.editorconfig",
+        "Vue.volar",
         "esbenp.prettier-vscode",
+        "rust-lang.rust-analyzer",
         "tauri-apps.tauri-vscode",
-        "serayuzgur.crates",
-        "EditorConfig.EditorConfig",
-        "Gruntfuggly.todo-tree"
+        // Adicionales
+        "foxundermoon.dependi",
+        "wayou.vscode-todo-highlight",
+        "GitHub.vscode-github-actions",
+        "usernamehw.errorlens"
+      ],
+      "unwantedRecommendations": [
+        "octref.vetur",
+        "hookyqr.beautify",
+        "dbaeumer.jshint",
+        "ms-vscode.vscode-typescript-tslint-plugin",
+        "serayuzgur.crates"
       ]
     }
     ```
+
+  - **`.vscode/settings.json`:**
+    Este archivo define configuraciones específicas del espacio de trabajo, como el formateador por defecto y el formateo al guardar. El contenido actual del proyecto es un buen punto de partida y se encuentra en `.vscode/settings.json`. Un ejemplo de su estructura es:
+    ```json
+    // .vscode/settings.json
+    {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "esbenp.prettier-vscode", // Prettier como global por defecto
+      "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+      },
+      "eslint.validate": ["javascript", "typescript", "vue"],
+      // ... (otras configuraciones como las que ya tienes para rust-analyzer) ...
+      "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.formatOnSave": true
+      }
+      // ... (resto de tu configuración actual de settings.json) ...
+    }
+    ```
+    _(Nota: Se recomienda mantener el archivo `.vscode/settings.json` del repositorio actualizado con las configuraciones que beneficien al equipo, como las relativas a formateadores y linters)._
 
 ## Pasos iniciales del proyecto
 
@@ -159,6 +171,145 @@ Tauri CLI es necesario para desarrollar y compilar aplicaciones Tauri.
     ```bash
     pnpm install
     ```
+
+### 5. Configuración de linters (Análisis estático de código)
+
+Para mantener la calidad y consistencia del código, TaL utiliza linters tanto para el backend de Rust como para el frontend de TypeScript/Vue.
+
+#### a. Clippy (Rust linter)
+
+Clippy es el linter estándar para Rust y ayuda a identificar errores comunes y código poco idiomático.
+
+- **Configuración:**
+  Clippy se configura principalmente a través de la toolchain de Rust. Por defecto, la mayoría de los lints de Clippy generan advertencias (`warn`). Para este proyecto, buscamos un alto nivel de calidad, por lo que se recomienda tratar las advertencias como errores durante el desarrollo.
+  Si se necesitan configuraciones específicas para ciertos lints, se pueden añadir a la sección `[lints.clippy]` del archivo `src-tauri/Cargo.toml`.
+
+- **Ejecución:**
+  Para ejecutar Clippy en el backend (desde el directorio `src-tauri/` o usando los scripts del `package.json` si se configuran):
+
+```bash
+  cargo clippy --all-targets -- -D warnings
+```
+
+Este comando verifica todos los targets y falla si hay alguna advertencia (`-D warnings`).
+Espera una salida limpia (sin errores ni advertencias) para considerar el código como válido.
+
+#### b. ESLint (TypeScript/Vue linter)
+
+ESLint se utiliza para el análisis estático del código del frontend (TypeScript, Vue, JavaScript).
+
+- **Configuración:**
+  La configuración de ESLint se encuentra en el archivo `.eslintrc.cjs` en la raíz del proyecto. Utiliza presets para TypeScript, Vue 3 (con reglas "strongly-recommended"), StandardJS y se integra con Prettier para evitar conflictos de reglas de formato. Los archivos ignorados por ESLint se especifican en `.eslintignore`.
+
+- **Ejecución:**
+  Para ejecutar ESLint en el frontend (desde el directorio raíz del proyecto):
+
+```bash
+    pnpm lint
+```
+
+    Este comando está definido en el `package.json`.
+    Revisa la salida en la terminal. ESLint reportará cualquier error o advertencia de estilo o potencial bug. Se espera una salida sin errores.
+
+### 6. Configuración de formateadores de código
+
+Para asegurar un estilo de código uniforme y legible en todo el proyecto, se utilizan formateadores automáticos.
+
+#### a. rustfmt (Rust Formatter)
+
+`rustfmt` es la herramienta estándar para formatear código Rust.
+
+- **Configuración:**
+  El proyecto utiliza la configuración por defecto de `rustfmt`. No se requiere un archivo de configuración `rustfmt.toml` adicional, ya que los defaults son ampliamente aceptados.
+  VSCode, a través de la extensión `rust-analyzer`, está configurado para usar `rustfmt` y formatear los archivos Rust al guardarlos (ver sección de configuración de VSCode).
+
+- **Ejecución manual:**
+  Para formatear manualmente todo el código del backend (desde el directorio `src-tauri/`):
+  ```bash
+  cargo fmt
+  ```
+
+### 7. Scripts de Desarrollo Comunes
+
+El archivo `package.json` en la raíz del proyecto contiene varios scripts para facilitar las tareas comunes de desarrollo, linting, formateo y compilación. A continuación, se describen los más relevantes:
+
+#### a. Desarrollo
+
+- **`pnpm dev`**:
+  Inicia el servidor de desarrollo de Quasar para el frontend. Útil para trabajar exclusivamente en la interfaz de usuario. El frontend estará accesible generalmente en `http://localhost:9005`.
+
+- **`pnpm dev:tauri`**:
+  Inicia la aplicación Tauri completa en modo desarrollo. Esto compila el backend de Rust, inicia el frontend (ejecutando `pnpm dev` internamente si es necesario, según la configuración de `tauri.conf.json`) y abre la ventana de la aplicación de escritorio con las herramientas de desarrollo activadas. Es el comando principal para el desarrollo diario de la aplicación.
+
+#### b. Compilación (Build)
+
+- **`pnpm build`**:
+  Compila el frontend de Quasar para producción. Los artefactos se generan típicamente en `dist/spa`.
+
+- **`pnpm build:tauri`**:
+  Compila y empaqueta la aplicación Tauri completa para producción, generando los instaladores y ejecutables para las plataformas configuradas. Este comando ejecutará `pnpm build` internamente antes de empaquetar (según `tauri.conf.json`).
+
+#### c. Calidad de Código (Linting y Formateo)
+
+- **Frontend (ESLint & Prettier):**
+
+  - `pnpm lint:frontend`: Ejecuta ESLint para analizar el código TypeScript y Vue.
+  - `pnpm format:frontend`: Formatea el código del frontend utilizando Prettier.
+  - `pnpm format:frontend:check`: Verifica si el código del frontend está formateado correctamente según Prettier, sin aplicar cambios.
+  - `pnpm check:frontend:types`: Realiza un chequeo de tipos de TypeScript en los archivos Vue y TS.
+
+- **Backend (Clippy & rustfmt):**
+
+  - `pnpm check:rust`: Ejecuta `cargo check` en el backend para una verificación rápida.
+  - `pnpm lint:rust`: Ejecuta Clippy en el backend con `-D warnings` para un análisis exhaustivo.
+  - `pnpm format:rust`: Formatea el código del backend utilizando `cargo fmt`.
+  - `pnpm format:rust:check`: Verifica si el código del backend está formateado correctamente según `rustfmt`, sin aplicar cambios.
+
+- **Combinados:**
+  - `pnpm lint`: Ejecuta linters para frontend y backend.
+  - `pnpm format`: Formatea código de frontend y backend.
+  - `pnpm format:check`: Verifica el formateo de frontend y backend.
+  - `pnpm check:all`: Realiza chequeos de tipos del frontend y `cargo check` del backend.
+
+#### d. Otros
+
+- **`pnpm test`**: (Actualmente un placeholder) Destinado a ejecutar las suites de pruebas automatizadas del proyecto.
+- **`pnpm docs:*`**: Scripts relacionados con la generación y visualización de la documentación con VitePress.
+- **`pnpm sync-version`**: Script personalizado para sincronizar versiones (ver `scripts/sync-version.js`).
+
+Se recomienda familiarizarse con estos scripts para agilizar el flujo de trabajo de desarrollo y asegurar la calidad del código antes de realizar commits.
+
+### 8. Flujo de Trabajo de Desarrollo y Contribución
+
+Para asegurar una colaboración efectiva y un historial de cambios limpio y comprensible, el proyecto TaL sigue pautas específicas para el flujo de trabajo con Git y la redacción de mensajes de commit.
+
+- **Flujo de Git:**
+  El proyecto utiliza un flujo de trabajo Git simplificado basado en ramas. Las nuevas funcionalidades y correcciones se desarrollan en ramas específicas que parten de `develop` y luego se integran de nuevo en `develop` mediante Pull Requests. La rama `main` se reserva para las versiones estables.
+
+- **Convenciones de Commit:**
+  Se sigue la especificación de [Conventional Commits](https://www.conventionalcommits.org/) para los mensajes de commit. Esto es crucial para la claridad del historial y para futuras automatizaciones (como la generación de changelogs).
+
+- **Guía Detallada:**
+  Encontrarás todos los detalles sobre el flujo de trabajo de Git, la estructura de ramas, cómo nombrar tus ramas, la convención exacta para los mensajes de commit y el proceso de Pull Request en nuestra **[Guía de Contribución (`CONTRIBUTING.md`)](https://github.com/vissanum/TaL/blob/develop/CONTRIBUTING.md)**. Es **fundamental** leer y seguir estas pautas al contribuir al proyecto.
+
+### 9. Script de Diagnóstico del Entorno
+
+Para ayudarte a verificar rápidamente si tu entorno de desarrollo cumple con los requisitos básicos, el proyecto incluye un script de diagnóstico.
+
+- **Ubicación:** `scripts/check-env.js`
+- **Ejecución (desde la raíz del proyecto):**
+
+  ```bash
+  node scripts/check-env.js
+  ```
+
+  _(Opcionalmente, si le has dado permisos de ejecución y el shebang `#!/usr/bin/env node` funciona en tu sistema: `./scripts/check-env.js`)_
+
+- **Propósito:**
+  El script verificará la presencia y las versiones de herramientas clave como Git, Node.js, nvm, pnpm, Rust (rustc, cargo), Tauri CLI y algunas dependencias de sistema comunes para Linux.
+  Mostrará `OK` si una herramienta se encuentra y cumple con un patrón de versión esperado (si se define), o `FALLO`/`NO ENCONTRADO` en caso contrario. Para las dependencias de sistema en Linux, indicará si están instaladas.
+
+  Utiliza este script si encuentras problemas al compilar o ejecutar el proyecto para obtener una primera pista sobre posibles problemas de configuración del entorno.
 
 ### 3. Verificación Inicial
 

@@ -4,10 +4,7 @@
       <q-item-label>
         {{ label || $t('providerInputItems.provider') }}
       </q-item-label>
-      <q-item-label
-        caption
-        v-if="caption"
-      >
+      <q-item-label caption v-if="caption">
         {{ caption }}
       </q-item-label>
     </q-item-section>
@@ -24,18 +21,13 @@
         clearable
       >
         <template #option="{ opt, itemProps }">
-          <q-item
-            v-bind="itemProps"
-            min-h-0
-          >
-            <q-item-section
-              avatar
-              min-w-0
-              pr-2
-            >
+          <q-item v-bind="itemProps" min-h-0>
+            <q-item-section avatar min-w-0 pr-2>
               <a-avatar
                 size="24px"
-                :avatar="store.providerTypes.find(p => p.name === opt.value).avatar"
+                :avatar="
+                  store.providerTypes.find((p) => p.name === opt.value).avatar
+                "
               />
             </q-item-section>
             <q-item-section>{{ opt.label }}</q-item-section>
@@ -51,7 +43,7 @@
     component="item"
     lazy
     :input-props="{
-      clearable: true
+      clearable: true,
     }"
   />
 </template>
@@ -71,15 +63,22 @@ defineProps<{
 const provider = defineModel<Provider>()
 const store = useProvidersStore()
 const providerOptions = computed(() =>
-  store.providerTypes.map(p => ({
+  store.providerTypes.map((p) => ({
     label: p.label,
-    value: p.name
+    value: p.name,
   }))
 )
-const providerType = computed(() => store.providerTypes.find(p => p.name === provider.value?.type))
+const providerType = computed(() =>
+  store.providerTypes.find((p) => p.name === provider.value?.type)
+)
 function switchProvider(type: string) {
   if (type) {
-    provider.value = { type, settings: { ...store.providerTypes.find(p => p.name === type).initialSettings } }
+    provider.value = {
+      type,
+      settings: {
+        ...store.providerTypes.find((p) => p.name === type).initialSettings,
+      },
+    }
   } else {
     provider.value = null
   }

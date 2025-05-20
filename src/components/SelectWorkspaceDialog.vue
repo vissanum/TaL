@@ -1,19 +1,17 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
+  <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card min-w="320px">
       <q-card-section>
         <div class="text-h6">
-          {{ accept === 'workspace' ? $t('selectWorkspaceDialog.selectWorkspace') : $t('selectWorkspaceDialog.selectFolder') }}
+          {{
+            accept === 'workspace'
+              ? $t('selectWorkspaceDialog.selectWorkspace')
+              : $t('selectWorkspaceDialog.selectFolder')
+          }}
         </div>
       </q-card-section>
       <q-card-section p-0>
-        <workspace-list-select
-          v-model="selected"
-          :accept
-        />
+        <workspace-list-select v-model="selected" :accept />
       </q-card-section>
       <q-card-actions align="right">
         <q-btn
@@ -40,15 +38,14 @@ import { ref } from 'vue'
 import WorkspaceListSelect from './WorkspaceListSelect.vue'
 
 defineProps<{
-  accept: 'workspace' | 'folder',
+  accept: 'workspace' | 'folder'
   exclude?: string[]
 }>()
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const selected = ref<string>()
 
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent()
 </script>

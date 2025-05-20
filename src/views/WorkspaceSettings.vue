@@ -22,19 +22,12 @@
               map-options
             >
               <template #option="{ itemProps, opt }">
-                <assistant-item
-                  v-bind="itemProps"
-                  :assistant="opt.assistant"
-                />
+                <assistant-item v-bind="itemProps" :assistant="opt.assistant" />
               </template>
             </q-select>
           </q-item-section>
         </q-item>
-        <q-item
-          clickable
-          v-ripple
-          @click="pickAvatar"
-        >
+        <q-item clickable v-ripple @click="pickAvatar">
           <q-item-section>
             {{ $t('workspaceSettings.avatar') }}
           </q-item-section>
@@ -66,7 +59,7 @@
           filled: true,
           autogrow: true,
           clearale: true,
-          placeholder: $t('workspaceSettings.inputPlaceholder')
+          placeholder: $t('workspaceSettings.inputPlaceholder'),
         }"
       />
     </q-page>
@@ -95,25 +88,33 @@ defineEmits(['toggle-drawer'])
 const store = useWorkspacesStore()
 const workspace = syncRef(
   inject('workspace') as Ref<Workspace>,
-  val => { store.putItem(toRaw(val)) },
+  (val) => {
+    store.putItem(toRaw(val))
+  },
   { valueDeep: true }
 )
 const assistantsStore = useAssistantsStore()
-const assistantOptions = computed(() => assistantsStore.assistants.filter(
-  a => [workspace.value.id, '$root'].includes(a.workspaceId)
-).map(a => ({
-  label: a.name,
-  value: a.id,
-  assistant: a
-})))
+const assistantOptions = computed(() =>
+  assistantsStore.assistants
+    .filter((a) => [workspace.value.id, '$root'].includes(a.workspaceId))
+    .map((a) => ({
+      label: a.name,
+      value: a.id,
+      assistant: a,
+    }))
+)
 
 const $q = useQuasar()
 function pickAvatar() {
   $q.dialog({
     component: PickAvatarDialog,
-    componentProps: { model: workspace.value.avatar, defaultTab: 'icon' }
-  }).onOk(avatar => { workspace.value.avatar = avatar })
+    componentProps: { model: workspace.value.avatar, defaultTab: 'icon' },
+  }).onOk((avatar) => {
+    workspace.value.avatar = avatar
+  })
 }
 
-useSetTitle(computed(() => `${t('workspaceSettings.title')} - ${workspace.value?.name}`))
+useSetTitle(
+  computed(() => `${t('workspaceSettings.title')} - ${workspace.value?.name}`)
+)
 </script>

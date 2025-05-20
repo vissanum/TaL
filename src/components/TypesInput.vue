@@ -79,5 +79,5 @@ if (props.type === 'array' && !model.value) {
   model.value = []
 }
 
-const inputComponent = computed(() => props.lazy ? LazyInput : QInput)
+const inputComponent = computed(() => (props.lazy ? LazyInput : QInput))
 </script>

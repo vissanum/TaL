@@ -37,16 +37,8 @@
       text-ellipsis
       cursor-pointer
     >
-      <q-icon
-        name="sym_o_neurology"
-        size="24px"
-      />
-      <code
-        bg-sur-c-high
-        px="6px"
-        py="3px"
-        text="xs"
-      >{{ model.name }}</code>
+      <q-icon name="sym_o_neurology" size="24px" />
+      <code bg-sur-c-high px="6px" py="3px" text="xs">{{ model.name }}</code>
       <q-menu important:max-w="300px">
         <q-list>
           <q-item>
@@ -59,20 +51,13 @@
                 :label="$t('dialogView.model')"
               >
                 <template #option="{ opt, selected, itemProps }">
-                  <model-item
-                    :model="opt"
-                    :selected
-                    v-bind="itemProps"
-                  />
+                  <model-item :model="opt" :selected v-bind="itemProps" />
                 </template>
               </autocomplete-input>
             </q-item-section>
           </q-item>
           <template v-if="assistant.model">
-            <q-item-label
-              header
-              py-2
-            >
+            <q-item-label header py-2>
               {{ $t('dialogView.assistantModel') }}
             </q-item-label>
             <model-item
@@ -85,10 +70,7 @@
             />
           </template>
           <template v-else-if="perfs.model">
-            <q-item-label
-              header
-              py-2
-            >
+            <q-item-label header py-2>
               {{ $t('dialogView.globalDefault') }}
             </q-item-label>
             <model-item
@@ -100,22 +82,15 @@
               v-close-popup
             />
           </template>
-          <q-item-label
-            header
-            py-2
-          >
+          <q-item-label header py-2>
             {{ $t('dialogView.commonModels') }}
           </q-item-label>
-          <a-tip
-            tip-key="configure-common-models"
-            rd-0
-          >
-            {{ $t('dialogView.modelsConfigGuide1') }}<router-link
-              to="/settings"
-              pri-link
-            >
+          <a-tip tip-key="configure-common-models" rd-0>
+            {{ $t('dialogView.modelsConfigGuide1')
+            }}<router-link to="/settings" pri-link>
               {{ $t('dialogView.settings') }}
-            </router-link> {{ $t('dialogView.modelsConfigGuide2') }}
+            </router-link>
+            {{ $t('dialogView.modelsConfigGuide2') }}
           </a-tip>
           <model-item
             v-for="m of perfs.commonModelOptions"
@@ -131,15 +106,8 @@
     </div>
     <q-space />
   </view-common-header>
-  <q-page-container
-    bg-sur-c-low
-    v-if="dialog"
-  >
-    <q-page
-      flex
-      flex-col
-      :style-fn="pageFhStyle"
-    >
+  <q-page-container bg-sur-c-low v-if="dialog">
+    <q-page flex flex-col :style-fn="pageFhStyle">
       <div
         grow
         bg-sur
@@ -150,10 +118,7 @@
         :class="{ 'rd-r-lg': rightDrawerAbove }"
         @scroll="onScroll"
       >
-        <template
-          v-for="(i, index) in chain"
-          :key="i"
-        >
+        <template v-for="(i, index) in chain" :key="i">
           <message-item
             class="message-item"
             v-if="messageMap[i] && i !== '$root'"
@@ -173,11 +138,7 @@
           />
         </template>
       </div>
-      <div
-        bg-sur-c-low
-        p-2
-        pos-relative
-      >
+      <div bg-sur-c-low p-2 pos-relative>
         <div
           v-if="inputMessageContent?.items.length"
           pos-absolute
@@ -192,7 +153,9 @@
           of-x-auto
         >
           <message-image
-            v-for="image in inputContentItems.filter(i => i.mimeType?.startsWith('image/'))"
+            v-for="image in inputContentItems.filter((i) =>
+              i.mimeType?.startsWith('image/')
+            )"
             :key="image.id"
             :image
             removable
@@ -202,7 +165,9 @@
             shadow
           />
           <message-file
-            v-for="file in inputContentItems.filter(i => !i.mimeType?.startsWith('image/'))"
+            v-for="file in inputContentItems.filter(
+              (i) => !i.mimeType?.startsWith('image/')
+            )"
             :key="file.id"
             :file
             removable
@@ -251,13 +216,7 @@
             @click="scroll('bottom')"
           />
         </div>
-        <div
-          flex
-          flex-wrap
-          justify-end
-          text-sec
-          items-center
-        >
+        <div flex flex-wrap justify-end text-sec items-center>
           <q-btn
             v-if="model && mimeTypeMatch('image/webp', model.inputTypes.user)"
             flat
@@ -275,7 +234,7 @@
               accept="image/*"
               @change="onInputFiles"
               un-hidden
-            >
+            />
           </q-btn>
           <q-btn
             flat
@@ -293,13 +252,15 @@
               accept="*"
               @change="onInputFiles"
               un-hidden
-            >
+            />
           </q-btn>
           <q-btn
             v-if="assistant?.promptVars.length"
             flat
             icon="sym_o_tune"
-            :title="showVars ? $t('dialogView.hideVars') : $t('dialogView.showVars')"
+            :title="
+              showVars ? $t('dialogView.hideVars') : $t('dialogView.showVars')
+            "
             round
             min-w="2.7em"
             min-h="2.7em"
@@ -335,31 +296,22 @@
             icon="sym_o_extension"
             :title="$t('dialogView.plugins')"
           >
-            <code
-              v-if="activePlugins.length"
-              bg-sur-c-high
-              px="6px"
-            >{{ activePlugins.length }}</code>
+            <code v-if="activePlugins.length" bg-sur-c-high px="6px">{{
+              activePlugins.length
+            }}</code>
             <enable-plugins-menu :assistant-id="assistant.id" />
           </q-btn>
           <q-space />
-          <div
-            v-if="usage"
-            my-2
-            ml-2
-          >
-            <q-icon
-              name="sym_o_generating_tokens"
-              size="24px"
-            />
-            <code
-              bg-sur-c-high
-              px-2
-              py-1
-            >{{ usage.promptTokens }}+{{ usage.completionTokens }}</code>
+          <div v-if="usage" my-2 ml-2>
+            <q-icon name="sym_o_generating_tokens" size="24px" />
+            <code bg-sur-c-high px-2 py-1
+              >{{ usage.promptTokens }}+{{ usage.completionTokens }}</code
+            >
             <q-tooltip>
-              {{ $t('dialogView.messageTokens') }}<br>
-              {{ $t('dialogView.tokenPrompt') }}：{{ usage.promptTokens }}，{{ $t('dialogView.tokenCompletion') }}：{{ usage.completionTokens }}
+              {{ $t('dialogView.messageTokens') }}<br />
+              {{ $t('dialogView.tokenPrompt') }}：{{ usage.promptTokens }}，{{
+                $t('dialogView.tokenCompletion')
+              }}：{{ usage.completionTokens }}
             </q-tooltip>
           </div>
           <abortable-btn
@@ -372,11 +324,7 @@
             min-h="40px"
           />
         </div>
-        <div
-          flex
-          v-if="assistant"
-          v-show="showVars"
-        >
+        <div flex v-if="assistant" v-show="showVars">
           <prompt-var-input
             class="mt-2 mr-2"
             v-for="promptVar of assistant.promptVars"
@@ -385,7 +333,7 @@
             v-model="dialog.inputVars[promptVar.name]"
             :input-props="{
               dense: true,
-              outlined: true
+              outlined: true,
             }"
             component="input"
           />
@@ -412,18 +360,71 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onUnmounted, provide, ref, Ref, toRaw, toRef, watch, nextTick } from 'vue'
+import {
+  computed,
+  inject,
+  onUnmounted,
+  provide,
+  ref,
+  Ref,
+  toRaw,
+  toRef,
+  watch,
+  nextTick,
+} from 'vue'
 import { db } from 'src/utils/db'
 import { useLiveQueryWithDeps } from 'src/composables/live-query'
-import { almostEqual, displayLength, genId, isPlatformEnabled, isTextFile, JSONEqual, mimeTypeMatch, pageFhStyle, textBeginning, wrapCode, wrapQuote } from 'src/utils/functions'
+import {
+  almostEqual,
+  displayLength,
+  genId,
+  isPlatformEnabled,
+  isTextFile,
+  JSONEqual,
+  mimeTypeMatch,
+  pageFhStyle,
+  textBeginning,
+  wrapCode,
+  wrapQuote,
+} from 'src/utils/functions'
 import { useAssistantsStore } from 'src/stores/assistants'
-import { streamText, CoreMessage, generateText, tool, jsonSchema, StreamTextResult, GenerateTextResult } from 'ai'
+import {
+  streamText,
+  CoreMessage,
+  generateText,
+  tool,
+  jsonSchema,
+  StreamTextResult,
+  GenerateTextResult,
+} from 'ai'
 import { throttle, useQuasar } from 'quasar'
 import AssistantItem from 'src/components/AssistantItem.vue'
-import { DialogContent, ExtractArtifactPrompt, ExtractArtifactResult, GenDialogTitle, NameArtifactPrompt, PluginsPrompt } from 'src/utils/templates'
+import {
+  DialogContent,
+  ExtractArtifactPrompt,
+  ExtractArtifactResult,
+  GenDialogTitle,
+  NameArtifactPrompt,
+  PluginsPrompt,
+} from 'src/utils/templates'
 import sessions from 'src/utils/sessions'
 import PromptVarInput from 'src/components/PromptVarInput.vue'
-import { MessageContent, PluginApi, ApiCallError, Plugin, Dialog, Message, Workspace, UserMessageContent, StoredItem, ModelSettings, ApiResultItem, Artifact, ConvertArtifactOptions, AssistantMessageContent } from 'src/utils/types'
+import {
+  MessageContent,
+  PluginApi,
+  ApiCallError,
+  Plugin,
+  Dialog,
+  Message,
+  Workspace,
+  UserMessageContent,
+  StoredItem,
+  ModelSettings,
+  ApiResultItem,
+  Artifact,
+  ConvertArtifactOptions,
+  AssistantMessageContent,
+} from 'src/utils/types'
 import { usePluginsStore } from 'src/stores/plugins'
 import MessageItem from 'src/components/MessageItem.vue'
 import { scaleBlob } from 'src/utils/image-process'
@@ -468,28 +469,48 @@ const props = defineProps<{
 const rightDrawerAbove = inject('rightDrawerAbove')
 
 const dialogs: Ref<Dialog[]> = inject('dialogs')
-const liveData = useLiveQueryWithDeps(() => props.id, async () => {
-  const [dialog, messages, items] = await Promise.all([
-    db.dialogs.get(props.id),
-    db.messages.where('dialogId').equals(props.id).toArray(),
-    db.items.where('dialogId').equals(props.id).toArray()
-  ])
-  return { dialog, messages, items }
-}, { initialValue: { dialog: null, messages: [], items: [] } as { dialog: Dialog, messages: Message[], items: StoredItem[] } })
+const liveData = useLiveQueryWithDeps(
+  () => props.id,
+  async () => {
+    const [dialog, messages, items] = await Promise.all([
+      db.dialogs.get(props.id),
+      db.messages.where('dialogId').equals(props.id).toArray(),
+      db.items.where('dialogId').equals(props.id).toArray(),
+    ])
+    return { dialog, messages, items }
+  },
+  {
+    initialValue: { dialog: null, messages: [], items: [] } as {
+      dialog: Dialog
+      messages: Message[]
+      items: StoredItem[]
+    },
+  }
+)
 const dialog = syncRef<Dialog>(
   () => liveData.value.dialog,
-  val => { db.dialogs.put(toRaw(val)) },
+  (val) => {
+    db.dialogs.put(toRaw(val))
+  },
   { valueDeep: true }
 )
 const assistantsStore = useAssistantsStore()
 const workspace: Ref<Workspace> = inject('workspace')
-const assistants = computed(() => assistantsStore.assistants.filter(
-  a => [workspace.value.id, '$root'].includes(a.workspaceId)
-))
-const assistant = computed(() => ({ ...assistantsStore.assistants.find(a => a.id === dialog.value?.assistantId) })) // force trigger updates
+const assistants = computed(() =>
+  assistantsStore.assistants.filter((a) =>
+    [workspace.value.id, '$root'].includes(a.workspaceId)
+  )
+)
+const assistant = computed(() => ({
+  ...assistantsStore.assistants.find((a) => a.id === dialog.value?.assistantId),
+})) // force trigger updates
 provide('dialog', dialog)
 
-const chain = computed<string[]>(() => liveData.value.dialog ? getChain('$root', liveData.value.dialog.msgRoute)[0] : [])
+const chain = computed<string[]>(() =>
+  liveData.value.dialog
+    ? getChain('$root', liveData.value.dialog.msgRoute)[0]
+    : []
+)
 const historyChain = ref<string[]>([])
 function switchChain(index, value) {
   const route = [...dialog.value.msgRoute.slice(0, index), value]
@@ -500,15 +521,21 @@ function updateChain(route) {
   historyChain.value = res[0]
   db.dialogs.update(dialog.value.id, { msgRoute: res[1] })
 }
-watch([() => liveData.value.messages.length, () => liveData.value.dialog?.id], () => {
-  liveData.value.dialog && updateChain(liveData.value.dialog.msgRoute)
-})
+watch(
+  [() => liveData.value.messages.length, () => liveData.value.dialog?.id],
+  () => {
+    liveData.value.dialog && updateChain(liveData.value.dialog.msgRoute)
+  }
+)
 function getChain(node, route: number[]) {
   const children = liveData.value.dialog.msgTree[node]
   const r = route.at(0) || 0
   if (children[r]) {
     const [restChain, restRoute] = getChain(children[r], route.slice(1))
-    return [[node, ...restChain], [r, ...restRoute]]
+    return [
+      [node, ...restChain],
+      [r, ...restRoute],
+    ]
   } else {
     return [[node], [r]]
   }
@@ -526,21 +553,27 @@ async function edit(index) {
     appendMessage(target, {
       type,
       contents,
-      status: 'inputing'
+      status: 'inputing',
     })
     const content = contents[0] as UserMessageContent
-    saveItems(content.items.map(id => itemMap.value[id]))
+    saveItems(content.items.map((id) => itemMap.value[id]))
   })
   await nextTick()
   focusInput()
 }
 async function regenerate(index) {
   if (!assistant.value) {
-    $q.notify({ message: t('dialogView.errors.setAssistant'), color: 'negative' })
+    $q.notify({
+      message: t('dialogView.errors.setAssistant'),
+      color: 'negative',
+    })
     return
   }
   if (!sdkModel.value) {
-    $q.notify({ message: t('dialogView.errors.configModel'), color: 'negative' })
+    $q.notify({
+      message: t('dialogView.errors.configModel'),
+      color: 'negative',
+    })
     return
   }
   const target = chain.value[index - 1]
@@ -551,23 +584,28 @@ async function deleteBranch(index) {
   const parent = chain.value[index - 1]
   const anchor = chain.value[index]
   const branch = dialog.value.msgRoute[index - 1]
-  branch === dialog.value.msgTree[parent].length - 1 && switchChain(index - 1, branch - 1)
+  branch === dialog.value.msgTree[parent].length - 1 &&
+    switchChain(index - 1, branch - 1)
   const ids = expandMessageTree(anchor)
-  const itemIds = ids.flatMap(id => messageMap.value[id].contents).flatMap(c => {
-    if (c.type === 'user-message') return c.items
-    else if (c.type === 'assistant-tool') return c.result || []
-    else return []
-  })
+  const itemIds = ids
+    .flatMap((id) => messageMap.value[id].contents)
+    .flatMap((c) => {
+      if (c.type === 'user-message') return c.items
+      else if (c.type === 'assistant-tool') return c.result || []
+      else return []
+    })
   await db.transaction('rw', db.dialogs, db.messages, db.items, () => {
     db.messages.bulkDelete(ids)
-    itemIds.forEach(id => {
+    itemIds.forEach((id) => {
       let { references } = itemMap.value[id]
       references--
-      references === 0 ? db.items.delete(id) : db.items.update(id, { references })
+      references === 0
+        ? db.items.delete(id)
+        : db.items.update(id, { references })
     })
     const msgTree = { ...toRaw(dialog.value.msgTree) }
-    msgTree[parent] = msgTree[parent].filter(id => id !== anchor)
-    ids.forEach(id => {
+    msgTree[parent] = msgTree[parent].filter((id) => id !== anchor)
+    ids.forEach((id) => {
       delete msgTree[id]
     })
     db.dialogs.update(props.id, { msgTree })
@@ -581,42 +619,60 @@ async function appendMessage(target, info: Partial<Message>, insert = false) {
       id,
       dialogId: dialog.value.id,
       workspaceId: dialog.value.workspaceId,
-      ...info
+      ...info,
     } as Message)
     const d = await db.dialogs.get(props.id)
     const children = d.msgTree[target]
-    const changes = insert ? {
-      [target]: [id],
-      [id]: children
-    } : {
-      [target]: [...children, id],
-      [id]: []
-    }
+    const changes = insert
+      ? {
+          [target]: [id],
+          [id]: children,
+        }
+      : {
+          [target]: [...children, id],
+          [id]: [],
+        }
     await db.dialogs.update(props.id, {
-      msgTree: { ...d.msgTree, ...changes }
+      msgTree: { ...d.msgTree, ...changes },
     })
   })
   return id
 }
 function expandMessageTree(root): string[] {
-  return [root, ...dialog.value.msgTree[root].flatMap(id => expandMessageTree(id))]
+  return [
+    root,
+    ...dialog.value.msgTree[root].flatMap((id) => expandMessageTree(id)),
+  ]
 }
 
-const inputMessageContent = computed(() => messageMap.value[chain.value.at(-1)]?.contents[0] as UserMessageContent)
-const inputContentItems = computed(() => inputMessageContent.value.items.map(id => itemMap.value[id]).filter(x => x))
+const inputMessageContent = computed(
+  () => messageMap.value[chain.value.at(-1)]?.contents[0] as UserMessageContent
+)
+const inputContentItems = computed(() =>
+  inputMessageContent.value.items
+    .map((id) => itemMap.value[id])
+    .filter((x) => x)
+)
 const messageMap = computed<Record<string, Message>>(() => {
   const map = {}
-  liveData.value.messages.forEach(m => { map[m.id] = m })
+  liveData.value.messages.forEach((m) => {
+    map[m.id] = m
+  })
   return map
 })
 const itemMap = computed<Record<string, StoredItem>>(() => {
   const map = {}
-  liveData.value.items.forEach(i => { map[i.id] = i })
+  liveData.value.items.forEach((i) => {
+    map[i.id] = i
+  })
   return map
 })
 provide('messageMap', messageMap)
 provide('itemMap', itemMap)
-const inputEmpty = computed(() => !inputMessageContent.value?.text && !inputMessageContent.value?.items.length)
+const inputEmpty = computed(
+  () =>
+    !inputMessageContent.value?.text && !inputMessageContent.value?.items.length
+)
 
 const inputText = ref('')
 const pendingTexts = []
@@ -630,27 +686,33 @@ async function updateInputText(text) {
   }, 100)
   await db.messages.update(chain.value.at(-1), {
     // use shallow keyPath to avoid dexie's sync bug
-    contents: [{
-      ...inputMessageContent.value,
-      text
-    }]
+    contents: [
+      {
+        ...inputMessageContent.value,
+        text,
+      },
+    ],
   })
 }
-watch(() => inputMessageContent.value?.text, val => {
-  const index = pendingTexts.indexOf(val)
-  if (index !== -1) {
-    pendingTexts.splice(0, index + 1)
-  } else {
-    inputText.value = val
+watch(
+  () => inputMessageContent.value?.text,
+  (val) => {
+    const index = pendingTexts.indexOf(val)
+    if (index !== -1) {
+      pendingTexts.splice(0, index + 1)
+    } else {
+      inputText.value = val
+    }
   }
-})
+)
 
 function onTextPaste(ev: ClipboardEvent) {
   if (!perfs.codePasteOptimize) return
   const { clipboardData } = ev
-  const i = clipboardData.types.findIndex(t => t === 'vscode-editor-data')
+  const i = clipboardData.types.findIndex((t) => t === 'vscode-editor-data')
   if (i !== -1) {
-    const code = clipboardData.getData('text/plain')
+    const code = clipboardData
+      .getData('text/plain')
       .replace(/\r\n/g, '\n')
       .replace(/\r/g, '\n')
     if (!/\n/.test(code)) return
@@ -675,14 +737,18 @@ function onPaste(ev: ClipboardEvent) {
   if (clipboardData.types.includes('text/plain')) {
     if (
       !['TEXTAREA', 'INPUT'].includes(document.activeElement.tagName) &&
-      !['true', 'plaintext-only'].includes((document.activeElement as HTMLElement).contentEditable)
+      !['true', 'plaintext-only'].includes(
+        (document.activeElement as HTMLElement).contentEditable
+      )
     ) {
       const text = clipboardData.getData('text/plain')
-      addInputItems([{
-        type: 'text',
-        name: t('dialogView.pastedText', { text: textBeginning(text, 12) }),
-        contentText: text
-      }])
+      addInputItems([
+        {
+          type: 'text',
+          name: t('dialogView.pastedText', { text: textBeginning(text, 12) }),
+          contentText: text,
+        },
+      ])
     }
     return
   }
@@ -695,10 +761,12 @@ async function removeItem({ id, references }: StoredItem) {
   items.splice(items.indexOf(id), 1)
   await db.transaction('rw', db.messages, db.items, () => {
     db.messages.update(chain.value.at(-1), {
-      contents: [{
-        ...inputMessageContent.value,
-        items
-      }]
+      contents: [
+        {
+          ...inputMessageContent.value,
+          items,
+        },
+      ],
     })
     references--
     references === 0 ? db.items.delete(id) : db.items.update(id, { references })
@@ -711,7 +779,8 @@ async function parseFiles(files: File[]) {
   const otherFiles = []
   for (const file of files) {
     if (await isTextFile(file)) textFiles.push(file)
-    else if (mimeTypeMatch(file.type, model.value.inputTypes.user)) supportedFiles.push(file)
+    else if (mimeTypeMatch(file.type, model.value.inputTypes.user))
+      supportedFiles.push(file)
     else otherFiles.push(file)
   }
 
@@ -720,30 +789,41 @@ async function parseFiles(files: File[]) {
     parsedFiles.push({
       type: 'text',
       name: file.name,
-      contentText: await file.text()
+      contentText: await file.text(),
     })
   }
   for (const file of supportedFiles) {
     if (file.size > MaxMessageFileSizeMB * 1024 * 1024) {
-      $q.notify({ message: t('dialogView.fileTooLarge', { maxSize: MaxMessageFileSizeMB }), color: 'negative' })
+      $q.notify({
+        message: t('dialogView.fileTooLarge', {
+          maxSize: MaxMessageFileSizeMB,
+        }),
+        color: 'negative',
+      })
       continue
     }
-    const f = file.type.startsWith('image/') && file.size > 512 * 1024 ? await scaleBlob(file, 2048 * 2048) : file
+    const f =
+      file.type.startsWith('image/') && file.size > 512 * 1024
+        ? await scaleBlob(file, 2048 * 2048)
+        : file
     parsedFiles.push({
       type: 'file',
       name: file.name,
       mimeType: file.type,
-      contentBuffer: await f.arrayBuffer()
+      contentBuffer: await f.arrayBuffer(),
     })
   }
   addInputItems(parsedFiles)
 
-  otherFiles.length && $q.dialog({
-    component: ParseFilesDialog,
-    componentProps: { files: otherFiles, plugins: assistant.value.plugins }
-  }).onOk((files: ApiResultItem[]) => {
-    addInputItems(files)
-  })
+  otherFiles.length &&
+    $q
+      .dialog({
+        component: ParseFilesDialog,
+        componentProps: { files: otherFiles, plugins: assistant.value.plugins },
+      })
+      .onOk((files: ApiResultItem[]) => {
+        addInputItems(files)
+      })
 }
 function quote(item: ApiResultItem) {
   if (displayLength(item.contentText) > 200) {
@@ -756,22 +836,29 @@ function quote(item: ApiResultItem) {
   }
 }
 async function addInputItems(items: ApiResultItem[]) {
-  const storedItems = items.map(i => ({ ...i, id: genId(), dialogId: props.id, references: 0 }))
-  const ids = storedItems.map(i => i.id)
+  const storedItems = items.map((i) => ({
+    ...i,
+    id: genId(),
+    dialogId: props.id,
+    references: 0,
+  }))
+  const ids = storedItems.map((i) => i.id)
   await db.transaction('rw', db.messages, db.items, () => {
     db.messages.update(chain.value.at(-1), {
       // use shallow keyPath to avoid dexie's sync bug
-      contents: [{
-        ...inputMessageContent.value,
-        items: [...inputMessageContent.value.items, ...ids]
-      }]
+      contents: [
+        {
+          ...inputMessageContent.value,
+          items: [...inputMessageContent.value.items, ...ids],
+        },
+      ],
     })
     saveItems(storedItems)
   })
 }
 
 async function saveItems(items: StoredItem[]) {
-  items.forEach(i => {
+  items.forEach((i) => {
     i.references++
   })
   await db.items.bulkPut(items)
@@ -782,42 +869,57 @@ function getChainMessages() {
   historyChain.value
     .slice(1)
     .slice(-assistant.value.contextNum || 0)
-    .filter(id => messageMap.value[id].status !== 'inputing')
-    .map(id => messageMap.value[id].contents)
+    .filter((id) => messageMap.value[id].status !== 'inputing')
+    .map((id) => messageMap.value[id].contents)
     .flat()
-    .forEach(content => {
+    .forEach((content) => {
       if (content.type === 'user-message') {
         val.push({
           role: 'user',
           content: [
             { type: 'text', text: content.text },
-            ...content.items.map(id => itemMap.value[id]).map(i => {
-              if (i.contentText != null) {
-                if (i.type === 'file') {
-                  return { type: 'text' as const, text: `<file_content filename="${i.name}">\n${i.contentText}\n</file_content>` }
-                } else if (i.type === 'quote') {
-                  return { type: 'text' as const, text: `<quote name="${i.name}">${i.contentText}</quote>` }
+            ...content.items
+              .map((id) => itemMap.value[id])
+              .map((i) => {
+                if (i.contentText != null) {
+                  if (i.type === 'file') {
+                    return {
+                      type: 'text' as const,
+                      text: `<file_content filename="${i.name}">\n${i.contentText}\n</file_content>`,
+                    }
+                  } else if (i.type === 'quote') {
+                    return {
+                      type: 'text' as const,
+                      text: `<quote name="${i.name}">${i.contentText}</quote>`,
+                    }
+                  } else {
+                    return { type: 'text' as const, text: i.contentText }
+                  }
                 } else {
-                  return { type: 'text' as const, text: i.contentText }
+                  if (!mimeTypeMatch(i.mimeType, model.value.inputTypes.user)) {
+                    return null
+                  } else if (i.mimeType.startsWith('image/')) {
+                    return {
+                      type: 'image' as const,
+                      image: i.contentBuffer,
+                      mimeType: i.mimeType,
+                    }
+                  } else {
+                    return {
+                      type: 'file' as const,
+                      mimeType: i.mimeType,
+                      data: i.contentBuffer,
+                    }
+                  }
                 }
-              } else {
-                if (!mimeTypeMatch(i.mimeType, model.value.inputTypes.user)) {
-                  return null
-                } else if (i.mimeType.startsWith('image/')) {
-                  return { type: 'image' as const, image: i.contentBuffer, mimeType: i.mimeType }
-                } else {
-                  return { type: 'file' as const, mimeType: i.mimeType, data: i.contentBuffer }
-                }
-              }
-            }).filter(x => x)
-          ]
+              })
+              .filter((x) => x),
+          ],
         })
       } else if (content.type === 'assistant-message') {
         val.push({
           role: 'assistant',
-          content: [
-            { type: 'text', text: content.text }
-          ]
+          content: [{ type: 'text', text: content.text }],
         })
       } else if (content.type === 'assistant-tool') {
         if (content.status !== 'completed') return
@@ -825,22 +927,30 @@ function getChainMessages() {
         const id = genId()
         val.push({
           role: 'assistant',
-          content: [{
-            type: 'tool-call',
-            toolName: `${pluginId}-${name}`,
-            toolCallId: id,
-            args
-          }]
+          content: [
+            {
+              type: 'tool-call',
+              toolName: `${pluginId}-${name}`,
+              toolCallId: id,
+              args,
+            },
+          ],
         })
         val.push({
           role: 'tool',
-          content: [{
-            type: 'tool-result',
-            toolName: `${pluginId}-${name}`,
-            toolCallId: id,
-            result: toToolResultContent(result.map(id => itemMap.value[id])),
-            experimental_content: toToolResultContent(result.map(id => itemMap.value[id]))
-          }]
+          content: [
+            {
+              type: 'tool-result',
+              toolName: `${pluginId}-${name}`,
+              toolCallId: id,
+              result: toToolResultContent(
+                result.map((id) => itemMap.value[id])
+              ),
+              experimental_content: toToolResultContent(
+                result.map((id) => itemMap.value[id])
+              ),
+            },
+          ],
         })
       }
     })
@@ -856,7 +966,7 @@ function getSystemPrompt(enabledPlugins) {
       _pluginsPrompt: enabledPlugins.length
         ? engine.parseAndRenderSync(PluginsPrompt, { plugins: enabledPlugins })
         : '',
-      _rolePrompt: assistant.value.prompt
+      _rolePrompt: assistant.value.prompt,
     })
     return prompt.trim() ? prompt : undefined
   } catch (e) {
@@ -877,7 +987,7 @@ function getCommonVars() {
     _dialogId: dialog.value.id,
     _modelId: model.value.name,
     _isDarkMode: $q.dark.isActive,
-    _platform: $q.platform
+    _platform: $q.platform,
   }
 }
 
@@ -887,27 +997,41 @@ const { callApi } = useCallApi({ workspace, dialog })
 
 const modelOptions = ref({})
 const { getModel, getSdkModel } = useGetModel()
-const model = computed(() => getModel(dialog.value?.modelOverride || assistant.value?.model))
-const sdkModel = computed(() => getSdkModel(assistant.value?.provider, model.value, modelOptions.value))
+const model = computed(() =>
+  getModel(dialog.value?.modelOverride || assistant.value?.model)
+)
+const sdkModel = computed(() =>
+  getSdkModel(assistant.value?.provider, model.value, modelOptions.value)
+)
 const $q = useQuasar()
 const { data } = useUserDataStore()
 async function send() {
   if (!assistant.value) {
-    $q.notify({ message: t('dialogView.errors.setAssistant'), color: 'negative' })
+    $q.notify({
+      message: t('dialogView.errors.setAssistant'),
+      color: 'negative',
+    })
     return
   }
   if (!sdkModel.value) {
-    $q.notify({ message: t('dialogView.errors.configModel'), color: 'negative' })
+    $q.notify({
+      message: t('dialogView.errors.configModel'),
+      color: 'negative',
+    })
     return
   }
-  if (!data.noobAlertDismissed && chain.value.length > 10 && dialogs.value.length < 3) {
+  if (
+    !data.noobAlertDismissed &&
+    chain.value.length > 10 &&
+    dialogs.value.length < 3
+  ) {
     $q.dialog({
       title: t('dialogView.noobAlert.title'),
       message: t('dialogView.noobAlert.message'),
       persistent: true,
       ok: t('dialogView.noobAlert.okBtn'),
       cancel: t('dialogView.noobAlert.cancelBtn'),
-      ...dialogOptions
+      ...dialogOptions,
     }).onCancel(() => {
       data.noobAlertDismissed = true
       send()
@@ -920,11 +1044,13 @@ async function send() {
   } else {
     const target = chain.value.at(-1)
     await db.messages.update(target, { status: 'default' })
-    until(chain).changed().then(() => {
-      nextTick().then(() => {
-        scroll('bottom')
+    until(chain)
+      .changed()
+      .then(() => {
+        nextTick().then(() => {
+          scroll('bottom')
+        })
       })
-    })
     await stream(target, false)
   }
   perfs.autoGenTitle && chain.value.length === 4 && genTitle()
@@ -942,28 +1068,35 @@ async function stream(target, insert = false) {
   }
   const messageContent: AssistantMessageContent = {
     type: 'assistant-message',
-    text: ''
+    text: '',
   }
   const contents: MessageContent[] = [messageContent]
   let id
   await db.transaction('rw', db.dialogs, db.messages, async () => {
-    id = await appendMessage(target, {
-      type: 'assistant',
-      assistantId: assistant.value.id,
-      contents,
-      status: 'pending',
-      generatingSession: sessions.id,
-      modelName: model.value.name
-    }, insert)
-    !insert && await appendMessage(id, {
-      type: 'user',
-      contents: [{
-        type: 'user-message',
-        text: '',
-        items: []
-      }],
-      status: 'inputing'
-    })
+    id = await appendMessage(
+      target,
+      {
+        type: 'assistant',
+        assistantId: assistant.value.id,
+        contents,
+        status: 'pending',
+        generatingSession: sessions.id,
+        modelName: model.value.name,
+      },
+      insert
+    )
+    !insert &&
+      (await appendMessage(id, {
+        type: 'user',
+        contents: [
+          {
+            type: 'user-message',
+            text: '',
+            items: [],
+          },
+        ],
+        status: 'inputing',
+      }))
   })
 
   const update = throttle(() => db.messages.update(id, { contents }), 50)
@@ -973,19 +1106,24 @@ async function stream(target, insert = false) {
       pluginId: plugin.id,
       name: api.name,
       args,
-      status: 'calling'
+      status: 'calling',
     }
     contents.push(content)
     update()
     const { result: apiResult, error } = await callApi(plugin, api, args)
-    const result: StoredItem[] = apiResult.map(r => ({ ...r, id: genId(), dialogId: props.id, references: 0 }))
+    const result: StoredItem[] = apiResult.map((r) => ({
+      ...r,
+      id: genId(),
+      dialogId: props.id,
+      references: 0,
+    }))
     saveItems(result)
     if (error) {
       content.status = 'failed'
       content.error = error
     } else {
       content.status = 'completed'
-      content.result = result.map(i => i.id)
+      content.result = result.map((i) => i.id)
     }
     update()
     return { result, error }
@@ -994,55 +1132,75 @@ async function stream(target, insert = false) {
   const tools = {}
   const enabledPlugins = []
   let noRoundtrip = true
-  await Promise.all(activePlugins.value.map(async p => {
-    noRoundtrip &&= p.noRoundtrip
-    const plugin = plugins[p.id]
-    const pluginVars = {
-      ...getCommonVars(),
-      ...plugin.vars
-    }
-    plugin.tools.forEach(api => {
-      if (!api.enabled) return
-      const a = p.apis.find(a => a.name === api.name)
-      const { name, prompt } = a
-      tools[`${p.id}-${name}`] = tool({
-        description: engine.parseAndRenderSync(prompt, pluginVars),
-        parameters: jsonSchema(a.parameters),
-        async execute(args) {
-          const { result, error } = await callTool(p, a, args)
-          if (error) throw new ApiCallError(error)
-          return result
-        },
-        experimental_toToolResultContent: toToolResultContent
-      })
-    })
-    const pluginInfos = {}
-    await Promise.all(plugin.infos.map(async api => {
-      if (!api.enabled) return
-      const a = p.apis.find(a => a.name === api.name)
-      if (a.infoType !== 'prompt-var') return
-      try {
-        pluginInfos[a.name] = await callApi(p, a, api.args)
-      } catch (e) {
-        $q.notify({ message: t('dialogView.callPluginInfoFailed', { message: e.message }), color: 'negative' })
+  await Promise.all(
+    activePlugins.value.map(async (p) => {
+      noRoundtrip &&= p.noRoundtrip
+      const plugin = plugins[p.id]
+      const pluginVars = {
+        ...getCommonVars(),
+        ...plugin.vars,
       }
-    }))
-
-    try {
-      enabledPlugins.push({
-        id: p.id,
-        prompt: p.prompt && engine.parseAndRenderSync(p.prompt, { ...pluginVars, infos: pluginInfos })
+      plugin.tools.forEach((api) => {
+        if (!api.enabled) return
+        const a = p.apis.find((a) => a.name === api.name)
+        const { name, prompt } = a
+        tools[`${p.id}-${name}`] = tool({
+          description: engine.parseAndRenderSync(prompt, pluginVars),
+          parameters: jsonSchema(a.parameters),
+          async execute(args) {
+            const { result, error } = await callTool(p, a, args)
+            if (error) throw new ApiCallError(error)
+            return result
+          },
+          experimental_toToolResultContent: toToolResultContent,
+        })
       })
-    } catch (e) {
-      $q.notify({ message: t('dialogView.pluginPromptParseFailed', { title: p.title }), color: 'negative' })
-    }
-  }))
-  if (isPlatformEnabled(perfs.artifactsEnabled) && artifacts.value.some(a => a.open)) {
+      const pluginInfos = {}
+      await Promise.all(
+        plugin.infos.map(async (api) => {
+          if (!api.enabled) return
+          const a = p.apis.find((a) => a.name === api.name)
+          if (a.infoType !== 'prompt-var') return
+          try {
+            pluginInfos[a.name] = await callApi(p, a, api.args)
+          } catch (e) {
+            $q.notify({
+              message: t('dialogView.callPluginInfoFailed', {
+                message: e.message,
+              }),
+              color: 'negative',
+            })
+          }
+        })
+      )
+
+      try {
+        enabledPlugins.push({
+          id: p.id,
+          prompt:
+            p.prompt &&
+            engine.parseAndRenderSync(p.prompt, {
+              ...pluginVars,
+              infos: pluginInfos,
+            }),
+        })
+      } catch (e) {
+        $q.notify({
+          message: t('dialogView.pluginPromptParseFailed', { title: p.title }),
+          color: 'negative',
+        })
+      }
+    })
+  )
+  if (
+    isPlatformEnabled(perfs.artifactsEnabled) &&
+    artifacts.value.some((a) => a.open)
+  ) {
     const { plugin, getPrompt, api } = artifactsPlugin
     enabledPlugins.push({
       id: plugin.id,
-      prompt: getPrompt(artifacts.value.filter(a => a.open)),
-      actions: []
+      prompt: getPrompt(artifacts.value.filter((a) => a.open)),
+      actions: [],
     })
     tools[`${plugin.id}-${api.name}`] = tool({
       description: api.prompt,
@@ -1052,21 +1210,22 @@ async function stream(target, insert = false) {
         if (error) throw new ApiCallError(error)
         return result
       },
-      experimental_toToolResultContent: toToolResultContent
+      experimental_toToolResultContent: toToolResultContent,
     })
   }
   try {
     if (noRoundtrip) settings.maxSteps = 1
     abortController.value = new AbortController()
     const messages = getChainMessages()
-    const prompt = getSystemPrompt(enabledPlugins.filter(p => p.prompt))
-    prompt && messages.unshift({ role: assistant.value.promptRole, content: prompt })
+    const prompt = getSystemPrompt(enabledPlugins.filter((p) => p.prompt))
+    prompt &&
+      messages.unshift({ role: assistant.value.promptRole, content: prompt })
     const params = {
       model: sdkModel.value,
       messages,
       tools,
       ...settings,
-      abortSignal: abortController.value.signal
+      abortSignal: abortController.value.signal,
     }
     let result: StreamTextResult<any, any> | GenerateTextResult<any, any>
     if (assistant.value.stream) {
@@ -1078,7 +1237,8 @@ async function stream(target, insert = false) {
           messageContent.text += part.textDelta
           update()
         } else if (part.type === 'reasoning') {
-          messageContent.reasoning = (messageContent.reasoning ?? '') + part.textDelta
+          messageContent.reasoning =
+            (messageContent.reasoning ?? '') + part.textDelta
           update()
         } else if (part.type === 'error') {
           throw part.error
@@ -1091,8 +1251,18 @@ async function stream(target, insert = false) {
     }
 
     const usage = await result.usage
-    const warnings = (await result.warnings).map(w => (w.type === 'unsupported-setting' || w.type === 'unsupported-tool') ? w.details : w.message)
-    await db.messages.update(id, { contents, status: 'default', generatingSession: null, warnings, usage })
+    const warnings = (await result.warnings).map((w) =>
+      w.type === 'unsupported-setting' || w.type === 'unsupported-tool'
+        ? w.details
+        : w.message
+    )
+    await db.messages.update(id, {
+      contents,
+      status: 'default',
+      generatingSession: null,
+      warnings,
+      usage,
+    })
   } catch (e) {
     console.error(e)
     if (e.data?.error?.type === 'budget_exceeded') {
@@ -1100,10 +1270,23 @@ async function stream(target, insert = false) {
         message: t('dialogView.errors.insufficientQuota'),
         color: 'err-c',
         textColor: 'on-err-c',
-        actions: [{ label: t('dialogView.recharge'), color: 'on-sur', handler() { router.push('/account') } }]
+        actions: [
+          {
+            label: t('dialogView.recharge'),
+            color: 'on-sur',
+            handler() {
+              router.push('/account')
+            },
+          },
+        ],
       })
     }
-    await db.messages.update(id, { contents, error: e.message || e.toString(), status: 'failed', generatingSession: null })
+    await db.messages.update(id, {
+      contents,
+      error: e.message || e.toString(),
+      status: 'failed',
+      generatingSession: null,
+    })
   }
   perfs.artifactsAutoExtract && autoExtractArtifact()
   lockingBottom.value = false
@@ -1114,7 +1297,11 @@ function toToolResultContent(items: StoredItem[]) {
     if (item.type === 'text') {
       val.push({ type: 'text', text: item.contentText })
     } else if (mimeTypeMatch(item.mimeType, model.value.inputTypes.tool)) {
-      val.push({ type: item.mimeType.startsWith('image/') ? 'image' : 'file', mimeType: item.mimeType, data: item.contentBuffer })
+      val.push({
+        type: item.mimeType.startsWith('image/') ? 'image' : 'file',
+        mimeType: item.mimeType,
+        data: item.contentBuffer,
+      })
     }
   }
   return val
@@ -1131,7 +1318,7 @@ function scrollListener() {
 function lockBottom() {
   lockingBottom.value && scroll('bottom', 'auto')
 }
-watch(lockingBottom, val => {
+watch(lockingBottom, (val) => {
   if (val) {
     lastScrollTop = scrollContainer.value.scrollTop
     scrollContainer.value.addEventListener('scroll', scrollListener)
@@ -1140,12 +1327,21 @@ watch(lockingBottom, val => {
     scrollContainer.value.removeEventListener('scroll', scrollListener)
   }
 })
-const activePlugins = computed<Plugin[]>(() => pluginsStore.plugins.filter(p => p.available && assistant.value.plugins[p.id]?.enabled))
+const activePlugins = computed<Plugin[]>(() =>
+  pluginsStore.plugins.filter(
+    (p) => p.available && assistant.value.plugins[p.id]?.enabled
+  )
+)
 const usage = computed(() => messageMap.value[chain.value.at(-2)]?.usage)
 
-const systemSdkModel = computed(() => getSdkModel(perfs.systemProvider, perfs.systemModel))
+const systemSdkModel = computed(() =>
+  getSdkModel(perfs.systemProvider, perfs.systemModel)
+)
 function getDialogContents() {
-  return chain.value.slice(1, -1).map(id => messageMap.value[id].contents).flat()
+  return chain.value
+    .slice(1, -1)
+    .map((id) => messageMap.value[id].contents)
+    .flat()
 }
 async function genTitle() {
   try {
@@ -1154,8 +1350,8 @@ async function genTitle() {
       model: systemSdkModel.value,
       prompt: await engine.parseAndRender(GenDialogTitle, {
         contents: getDialogContents(),
-        lang: locale.value
-      })
+        lang: locale.value,
+      }),
     })
     await db.dialogs.update(dialogId, { name: text })
   } catch (e) {
@@ -1164,46 +1360,56 @@ async function genTitle() {
   }
 }
 async function copyContent() {
-  await navigator.clipboard.writeText(await engine.parseAndRender(DialogContent, {
-    contents: getDialogContents(),
-    title: dialog.value.name
-  }))
+  await navigator.clipboard.writeText(
+    await engine.parseAndRender(DialogContent, {
+      contents: getDialogContents(),
+      title: dialog.value.name,
+    })
+  )
 }
 const route = useRoute()
 const router = useRouter()
-watch(route, to => {
-  db.workspaces.update(workspace.value.id, { lastDialogId: props.id } as Partial<Workspace>)
+watch(
+  route,
+  (to) => {
+    db.workspaces.update(workspace.value.id, {
+      lastDialogId: props.id,
+    } as Partial<Workspace>)
 
-  until(dialog).toMatch(val => val?.id === props.id).then(async () => {
-    focusInput()
-    if (to.hash === '#genTitle') {
-      genTitle()
-      router.replace({ hash: '' })
-    } else if (to.hash === '#copyContent') {
-      copyContent()
-      router.replace({ hash: '' })
-    }
-    if (to.query.goto) {
-      const { route, highlight } = JSON.parse(to.query.goto as string)
-      if (!JSONEqual(route, dialog.value.msgRoute.slice(0, route.length))) {
-        updateChain(route)
-        await until(chain).changed()
-      }
-      await nextTick()
-      const { items } = getEls()
-      if (route.length) {
-        const item = items[route.length - 1]
-        if (highlight) {
-          const mark = new Mark(item)
-          mark.unmark()
-          mark.mark(highlight)
+    until(dialog)
+      .toMatch((val) => val?.id === props.id)
+      .then(async () => {
+        focusInput()
+        if (to.hash === '#genTitle') {
+          genTitle()
+          router.replace({ hash: '' })
+        } else if (to.hash === '#copyContent') {
+          copyContent()
+          router.replace({ hash: '' })
         }
-        item.querySelector('mark[data-markjs]')?.scrollIntoView()
-      }
-      router.replace({ query: {} })
-    }
-  })
-}, { immediate: true })
+        if (to.query.goto) {
+          const { route, highlight } = JSON.parse(to.query.goto as string)
+          if (!JSONEqual(route, dialog.value.msgRoute.slice(0, route.length))) {
+            updateChain(route)
+            await until(chain).changed()
+          }
+          await nextTick()
+          const { items } = getEls()
+          if (route.length) {
+            const item = items[route.length - 1]
+            if (highlight) {
+              const mark = new Mark(item)
+              mark.unmark()
+              mark.mark(highlight)
+            }
+            item.querySelector('mark[data-markjs]')?.scrollIntoView()
+          }
+          router.replace({ query: {} })
+        }
+      })
+  },
+  { immediate: true }
+)
 
 function onEnter(ev) {
   if (perfs.sendKey === 'ctrl+enter') {
@@ -1221,18 +1427,23 @@ const showVars = ref(true)
 const scrollContainer = ref<HTMLElement>()
 function getEls() {
   const container = scrollContainer.value
-  const items: HTMLElement[] = Array.from(document.querySelectorAll('.message-item'))
+  const items: HTMLElement[] = Array.from(
+    document.querySelectorAll('.message-item')
+  )
   return { container, items }
 }
 function itemInView(item: HTMLElement, container: HTMLElement) {
-  return item.offsetTop <= container.scrollTop + container.clientHeight &&
-  item.offsetTop + item.clientHeight > container.scrollTop
+  return (
+    item.offsetTop <= container.scrollTop + container.clientHeight &&
+    item.offsetTop + item.clientHeight > container.scrollTop
+  )
 }
 function switchTo(target: 'prev' | 'next' | 'first' | 'last') {
   const { container, items } = getEls()
-  const index = items.findIndex((item, i) =>
-    itemInView(item, container) &&
-    dialog.value.msgTree[chain.value[i]].length > 1
+  const index = items.findIndex(
+    (item, i) =>
+      itemInView(item, container) &&
+      dialog.value.msgTree[chain.value[i]].length > 1
   )
   if (index === -1) return
 
@@ -1252,7 +1463,10 @@ function switchTo(target: 'prev' | 'next' | 'first' | 'last') {
   if (to < 0 || to >= num || to === curr) return
   switchChain(index, to)
 }
-function scroll(action: 'up' | 'down' | 'top' | 'bottom', behavior: 'smooth' | 'auto' = 'smooth') {
+function scroll(
+  action: 'up' | 'down' | 'top' | 'bottom',
+  behavior: 'smooth' | 'auto' = 'smooth'
+) {
   const { container, items } = getEls()
   if (action === 'top') {
     container.scrollTo({ top: 0, behavior })
@@ -1263,17 +1477,28 @@ function scroll(action: 'up' | 'down' | 'top' | 'bottom', behavior: 'smooth' | '
   }
 
   // Get current position
-  const index = items.findIndex(item => itemInView(item, container))
-  const itemTypes = items.map(i => i.clientHeight > container.clientHeight ? 'partial' : 'entire')
+  const index = items.findIndex((item) => itemInView(item, container))
+  const itemTypes = items.map((i) =>
+    i.clientHeight > container.clientHeight ? 'partial' : 'entire'
+  )
   let position: 'start' | 'inner' | 'end' | 'out'
   const item = items[index]
   const type = itemTypes[index]
   if (type === 'partial') {
     if (almostEqual(container.scrollTop, item.offsetTop, 5)) {
       position = 'start'
-    } else if (almostEqual(container.scrollTop + container.clientHeight, item.offsetTop + item.clientHeight, 5)) {
+    } else if (
+      almostEqual(
+        container.scrollTop + container.clientHeight,
+        item.offsetTop + item.clientHeight,
+        5
+      )
+    ) {
       position = 'end'
-    } else if (container.scrollTop + container.clientHeight < item.offsetTop + item.clientHeight) {
+    } else if (
+      container.scrollTop + container.clientHeight <
+      item.offsetTop + item.clientHeight
+    ) {
       position = 'inner'
     } else {
       position = 'out'
@@ -1292,9 +1517,12 @@ function scroll(action: 'up' | 'down' | 'top' | 'bottom', behavior: 'smooth' | '
     if (action === 'up') {
       if (position === 'start') {
         if (index === 0) return
-        top = itemTypes[index - 1] === 'entire'
-          ? items[index - 1].offsetTop
-          : items[index - 1].offsetTop + items[index - 1].clientHeight - container.clientHeight
+        top =
+          itemTypes[index - 1] === 'entire'
+            ? items[index - 1].offsetTop
+            : items[index - 1].offsetTop +
+              items[index - 1].clientHeight -
+              container.clientHeight
       } else {
         top = item.offsetTop
       }
@@ -1306,9 +1534,12 @@ function scroll(action: 'up' | 'down' | 'top' | 'bottom', behavior: 'smooth' | '
     if (action === 'up') {
       if (position === 'start') {
         if (index === 0) return
-        top = itemTypes[index - 1] === 'entire'
-          ? items[index - 1].offsetTop
-          : items[index - 1].offsetTop + items[index - 1].clientHeight - container.clientHeight
+        top =
+          itemTypes[index - 1] === 'entire'
+            ? items[index - 1].offsetTop
+            : items[index - 1].offsetTop +
+              items[index - 1].clientHeight -
+              container.clientHeight
       } else if (position === 'out') {
         top = item.offsetTop + item.clientHeight - container.clientHeight
       } else {
@@ -1328,7 +1559,9 @@ function scroll(action: 'up' | 'down' | 'top' | 'bottom', behavior: 'smooth' | '
 function regenerateCurr() {
   const { container, items } = getEls()
   const index = items.findIndex(
-    (item, i) => itemInView(item, container) && messageMap.value[chain.value[i + 1]].type === 'assistant'
+    (item, i) =>
+      itemInView(item, container) &&
+      messageMap.value[chain.value[i + 1]].type === 'assistant'
   )
   if (index === -1) return
   regenerate(index + 1)
@@ -1336,7 +1569,9 @@ function regenerateCurr() {
 function editCurr() {
   const { container, items } = getEls()
   const index = items.findIndex(
-    (item, i) => itemInView(item, container) && messageMap.value[chain.value[i + 1]].type === 'user'
+    (item, i) =>
+      itemInView(item, container) &&
+      messageMap.value[chain.value[i + 1]].type === 'user'
   )
   if (index === -1) return
   edit(index + 1)
@@ -1359,28 +1594,39 @@ if (isPlatformEnabled(perfs.enableShortcutKey)) {
 async function genArtifactName(content: string, lang?: string) {
   const { text } = await generateText({
     model: systemSdkModel.value,
-    prompt: engine.parseAndRenderSync(NameArtifactPrompt, { content, lang })
+    prompt: engine.parseAndRenderSync(NameArtifactPrompt, { content, lang }),
   })
   return text
 }
 const { createArtifact } = useCreateArtifact(workspace)
-async function extractArtifact(message: Message, text: string, pattern, options: ConvertArtifactOptions) {
-  const name = options.name || await genArtifactName(text, options.lang)
+async function extractArtifact(
+  message: Message,
+  text: string,
+  pattern,
+  options: ConvertArtifactOptions
+) {
+  const name = options.name || (await genArtifactName(text, options.lang))
   const id = await createArtifact({
     name,
     language: options.lang,
-    versions: [{
-      date: new Date(),
-      text
-    }],
-    tmp: text
+    versions: [
+      {
+        date: new Date(),
+        text,
+      },
+    ],
+    tmp: text,
   })
   if (options.reserveOriginal) return
   const to = `> ${t('dialogView.convertedToArtifact')}: <router-link to="?openArtifact=${id}">${name}</router-link>\n`
-  const index = message.contents.findIndex(c => ['assistant-message', 'user-message'].includes(c.type))
-  const content = message.contents[index] as UserMessageContent | AssistantMessageContent
+  const index = message.contents.findIndex((c) =>
+    ['assistant-message', 'user-message'].includes(c.type)
+  )
+  const content = message.contents[index] as
+    | UserMessageContent
+    | AssistantMessageContent
   await db.messages.update(message.id, {
-    [`contents.${index}.text`]: content.text.replace(pattern, to) as any
+    [`contents.${index}.text`]: content.text.replace(pattern, to) as any,
   })
 }
 async function autoExtractArtifact() {
@@ -1388,19 +1634,22 @@ async function autoExtractArtifact() {
   const { text } = await generateText({
     model: systemSdkModel.value,
     prompt: engine.parseAndRenderSync(ExtractArtifactPrompt, {
-      contents: chain.value.slice(-3, -1).map(id => messageMap.value[id].contents).flat()
-    })
+      contents: chain.value
+        .slice(-3, -1)
+        .map((id) => messageMap.value[id].contents)
+        .flat(),
+    }),
   })
   const object: ExtractArtifactResult = JSON.parse(text)
   if (!object.found) return
   const reg = new RegExp(`(\`{3,}.*\\n)?(${object.regex})(\\s*\`{3,})?`)
-  const content = message.contents.find(c => c.type === 'assistant-message')
+  const content = message.contents.find((c) => c.type === 'assistant-message')
   const match = content.text.match(reg)
   if (!match) return
   await extractArtifact(message, match[2], reg, {
     name: object.name,
     lang: object.language,
-    reserveOriginal: perfs.artifactsReserveOriginal
+    reserveOriginal: perfs.artifactsReserveOriginal,
   })
 }
 
@@ -1409,17 +1658,23 @@ const scrollTops = uiStateStore.dialogScrollTops
 function onScroll(ev) {
   scrollTops[props.id] = ev.target.scrollTop
 }
-watch(() => liveData.value.dialog?.id, id => {
-  if (!id) return
-  nextTick(() => {
-    scrollContainer.value?.scrollTo({ top: scrollTops[id] ?? 0 })
-  })
-})
+watch(
+  () => liveData.value.dialog?.id,
+  (id) => {
+    if (!id) return
+    nextTick(() => {
+      scrollContainer.value?.scrollTo({ top: scrollTops[id] ?? 0 })
+    })
+  }
+)
 
 const providersStore = useProvidersStore()
 function setModel(name: string) {
   dialog.value.modelOverride = name
-    ? models.find(model => model.name === name) || { name, inputTypes: InputTypes.default }
+    ? models.find((model) => model.name === name) || {
+        name,
+        inputTypes: InputTypes.default,
+      }
     : null
 }
 

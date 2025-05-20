@@ -1,25 +1,16 @@
 <template>
-  <div
-    v-if="mode === 'edit'"
-    flex-1
-    of-y-auto
-  >
+  <div v-if="mode === 'edit'" flex-1 of-y-auto>
     <code-jar
       :language="props.artifact.language"
       :model-value="props.artifact.tmp"
       @update:model-value="update({ tmp: $event })"
     />
   </div>
-  <div
-    v-else
-    flex-1
-    of-y-auto
-    bg-sur
-  >
+  <div v-else flex-1 of-y-auto bg-sur>
     <img
       v-if="artifact.language === 'svg'"
       :src="`data:image/svg+xml,${encodeURIComponent(artifact.tmp)}`"
-    >
+    />
     <md-preview
       v-else
       :model-value="artifact.tmp"
@@ -27,15 +18,9 @@
       bg-sur
     />
   </div>
-  <div
-    flex
-    items-center
-    p-2
-  >
+  <div flex items-center p-2>
     <div>
-      <div
-        text-out
-      >
+      <div text-out>
         {{ artifact.versions[artifact.currIndex].date.toLocaleString() }}
       </div>
       <q-pagination
@@ -83,7 +68,7 @@
         @update:model-value="update({ readable: $event })"
         dense
         text-on-sur-var
-      /><br>
+      /><br />
       <q-checkbox
         mt-2
         ml-2
@@ -118,7 +103,7 @@ function update(changes: Partial<Artifact>) {
 function setIndex(index: number) {
   update({
     currIndex: index,
-    tmp: props.artifact.versions[index].text
+    tmp: props.artifact.versions[index].text,
   })
 }
 function save() {
@@ -130,7 +115,9 @@ const { perfs } = useUserPerfsStore()
 useListenKey(toRef(perfs, 'saveArtifactKey'), save)
 
 const mode = ref<'edit' | 'view'>('edit')
-const viewable = computed(() => ['markdown', 'md', 'svg', 'txt'].includes(props.artifact.language))
+const viewable = computed(() =>
+  ['markdown', 'md', 'svg', 'txt'].includes(props.artifact.language)
+)
 watchEffect(() => {
   mode.value = viewable.value ? 'view' : 'edit'
 })

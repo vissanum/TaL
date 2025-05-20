@@ -4,9 +4,7 @@
     expand-icon-class="important:pl-2"
   >
     <template #header>
-      <q-item-section>
-        Artifacts
-      </q-item-section>
+      <q-item-section> Artifacts </q-item-section>
       <q-item-section side>
         <div>
           <select-file-btn
@@ -29,11 +27,9 @@
       </q-item-section>
     </template>
     <template #default>
-      <a-tip
-        tip-key="artifacts-usage"
-        rd-0
-      >
-        {{ $t('artifactsExpansion.artifactsGuide') }} <a
+      <a-tip tip-key="artifacts-usage" rd-0>
+        {{ $t('artifactsExpansion.artifactsGuide') }}
+        <a
           href="https://docs.aiaw.app/usage/artifacts.html"
           target="_blank"
           pri-link
@@ -55,22 +51,18 @@
           v-for="artifact in filteredArtifacts"
           :key="artifact.id"
           clickable
-          @click="$route.query.artifactId !== artifact.id && $router.push({ query: { openArtifact: artifact.id } })"
+          @click="
+            $route.query.artifactId !== artifact.id &&
+            $router.push({ query: { openArtifact: artifact.id } })
+          "
           :class="{ 'route-active': artifact.open }"
           item-rd
           min-h="32px"
           py-1
           px-3
         >
-          <q-item-section
-            avatar
-            min-w-0
-            pr-2
-          >
-            <artifact-item-icon
-              size="16px"
-              :artifact
-            />
+          <q-item-section avatar min-w-0 pr-2>
+            <artifact-item-icon size="16px" :artifact />
           </q-item-section>
           <q-item-section>
             {{ artifact.name }}
@@ -111,7 +103,9 @@ import ATip from './ATip.vue'
 const artifacts: Ref<Artifact[]> = inject('artifacts')
 const filter = ref(null)
 const filteredArtifacts = computed(() => {
-  return artifacts.value.filter(d => !filter.value || caselessIncludes(d.name, filter.value)).reverse()
+  return artifacts.value
+    .filter((d) => !filter.value || caselessIncludes(d.name, filter.value))
+    .reverse()
 })
 
 const { closeArtifact } = useCloseArtifact()
@@ -128,22 +122,22 @@ function createEmptyArtifact() {
       model: '',
       type: 'text',
       label: t('artifactsExpansion.name'),
-      isValid: v => !!v.trim()
+      isValid: (v) => !!v.trim(),
     },
     cancel: true,
     ok: t('artifactsExpansion.create'),
-    ...dialogOptions
-  }).onOk(name => {
+    ...dialogOptions,
+  }).onOk((name) => {
     const language = getFileExt(name)
     createArtifact({ name, language })
   })
 }
 async function artifactFromFiles(files: File[]) {
   for (const file of files) {
-    if (!await isTextFile(file)) {
+    if (!(await isTextFile(file))) {
       $q.notify({
         message: t('artifactsExpansion.nonTextFile', { name: file.name }),
-        color: 'negative'
+        color: 'negative',
       })
       continue
     }
@@ -153,7 +147,7 @@ async function artifactFromFiles(files: File[]) {
       language: getFileExt(file.name),
       versions: [{ date: new Date(file.lastModified), text }],
       currIndex: 0,
-      tmp: text
+      tmp: text,
     })
   }
 }

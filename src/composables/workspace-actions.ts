@@ -20,18 +20,27 @@ export function useWorkspaceActions() {
       prompt: {
         model: '',
         type: 'text',
-        isValid: v => !!v.trim(),
-        label: t('workspace.name')
+        isValid: (v) => !!v.trim(),
+        label: t('workspace.name'),
       },
       cancel: true,
       ok: t('workspace.create'),
-      ...dialogOptions
-    }).onOk(name => {
+      ...dialogOptions,
+    }).onOk((name) => {
       const workspaceId = genId()
       const assistantId = genId()
       db.transaction('rw', db.workspaces, db.assistants, () => {
-        workspacesStore.addWorkspace({ id: workspaceId, name: name.trim(), parentId, defaultAssistantId: assistantId })
-        assistantsStore.add({ id: assistantId, name: t('workspace.defaultAssistant'), workspaceId })
+        workspacesStore.addWorkspace({
+          id: workspaceId,
+          name: name.trim(),
+          parentId,
+          defaultAssistantId: assistantId,
+        })
+        assistantsStore.add({
+          id: assistantId,
+          name: t('workspace.defaultAssistant'),
+          workspaceId,
+        })
       })
     })
   }
@@ -41,13 +50,13 @@ export function useWorkspaceActions() {
       prompt: {
         model: '',
         type: 'text',
-        isValid: v => !!v.trim(),
-        label: t('workspace.name')
+        isValid: (v) => !!v.trim(),
+        label: t('workspace.name'),
       },
       cancel: true,
       ok: t('workspace.create'),
-      ...dialogOptions
-    }).onOk(name => {
+      ...dialogOptions,
+    }).onOk((name) => {
       workspacesStore.addFolder({ name: name.trim(), parentId })
     })
   }
@@ -58,12 +67,12 @@ export function useWorkspaceActions() {
         prompt: {
           model: item.name,
           type: 'text',
-          isValid: v => !!v.trim() && v !== item.name,
-          label: t('workspace.name')
+          isValid: (v) => !!v.trim() && v !== item.name,
+          label: t('workspace.name'),
         },
         cancel: true,
-        ...dialogOptions
-      }).onOk(newName => {
+        ...dialogOptions,
+      }).onOk((newName) => {
         workspacesStore.updateItem(item.id, { name: newName.trim() })
       })
     }
@@ -71,8 +80,8 @@ export function useWorkspaceActions() {
   function changeAvatar(item) {
     $q.dialog({
       component: PickAvatarDialog,
-      componentProps: { model: item.avatar, defaultTab: 'icon' }
-    }).onOk(avatar => {
+      componentProps: { model: item.avatar, defaultTab: 'icon' },
+    }).onOk((avatar) => {
       workspacesStore.updateItem(item.id, { avatar: toRaw(avatar) })
     })
   }
@@ -81,24 +90,39 @@ export function useWorkspaceActions() {
       component: SelectWorkspaceDialog,
       componentProps: {
         accept: 'folder',
-        exclude
-      }
-    }).onOk(parentId => {
+        exclude,
+      },
+    }).onOk((parentId) => {
       workspacesStore.updateItem(id, { parentId })
     })
   }
   function deleteItem({ id, type, name }) {
     $q.dialog({
-      title: type === 'workspace' ? t('workspace.deleteWorkspace') : t('workspace.deleteFolder'),
-      message: type === 'workspace' ? t('workspace.confirmDeleteWorkspace', { name }) : t('workspace.confirmDeleteFolder', { name }),
+      title:
+        type === 'workspace'
+          ? t('workspace.deleteWorkspace')
+          : t('workspace.deleteFolder'),
+      message:
+        type === 'workspace'
+          ? t('workspace.confirmDeleteWorkspace', { name })
+          : t('workspace.confirmDeleteFolder', { name }),
       cancel: true,
       ok: {
         label: t('workspace.delete'),
         color: 'err',
-        flat: true
+        flat: true,
       },
-      ...dialogOptions
-    }).onOk(() => { workspacesStore.deleteItem(id) })
+      ...dialogOptions,
+    }).onOk(() => {
+      workspacesStore.deleteItem(id)
+    })
   }
-  return { addWorkspace, addFolder, renameItem, changeAvatar, moveItem, deleteItem }
+  return {
+    addWorkspace,
+    addFolder,
+    renameItem,
+    changeAvatar,
+    moveItem,
+    deleteItem,
+  }
 }

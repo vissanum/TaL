@@ -9,14 +9,8 @@
     v-model="expanded"
   >
     <template #header>
-      <q-item-section
-        avatar
-        min-w-0
-      >
-        <a-avatar
-          size="32px"
-          :avatar="item.avatar"
-        />
+      <q-item-section avatar min-w-0>
+        <a-avatar size="32px" :avatar="item.avatar" />
       </q-item-section>
       <q-item-section>
         {{ item.name }}
@@ -78,14 +72,8 @@
     py-1.5
     min-h-0
   >
-    <q-item-section
-      avatar
-      min-w-0
-    >
-      <a-avatar
-        size="32px"
-        :avatar="item.avatar"
-      />
+    <q-item-section avatar min-w-0>
+      <a-avatar size="32px" :avatar="item.avatar" />
     </q-item-section>
     <q-item-section>{{ item.name }}</q-item-section>
     <q-menu context-menu>
@@ -130,18 +118,30 @@ const props = defineProps<{
 }>()
 const workspacesStore = useWorkspacesStore()
 
-const { addWorkspace, addFolder, renameItem, moveItem, deleteItem, changeAvatar } = useWorkspaceActions()
+const {
+  addWorkspace,
+  addFolder,
+  renameItem,
+  moveItem,
+  deleteItem,
+  changeAvatar,
+} = useWorkspaceActions()
 
 const children = computed(() => {
-  return workspacesStore.workspaces.filter(item => item.parentId === props.item.id)
+  return workspacesStore.workspaces.filter(
+    (item) => item.parentId === props.item.id
+  )
 })
 
 const selected = defineModel<string>('selected')
 const expanded = ref(false)
-watch(selected, () => {
-  if (children.value.some(c => c.id === selected.value)) {
-    expanded.value = true
-  }
-}, { immediate: true })
-
+watch(
+  selected,
+  () => {
+    if (children.value.some((c) => c.id === selected.value)) {
+      expanded.value = true
+    }
+  },
+  { immediate: true }
+)
 </script>

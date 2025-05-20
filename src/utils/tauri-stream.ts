@@ -11,20 +11,20 @@ import { invoke } from '@tauri-apps/api/core'
 import { IsTauri } from './platform-api'
 
 type ResponseEvent = {
-  id: number;
+  id: number
   payload: {
-    request_id: number;
-    status?: number;
-    chunk?: number[];
-  };
-};
+    request_id: number
+    status?: number
+    chunk?: number[]
+  }
+}
 
 type StreamResponse = {
-  request_id: number;
-  status: number;
-  status_text: string;
-  headers: Record<string, string>;
-};
+  request_id: number
+  status: number
+  status_text: string
+  headers: Record<string, string>
+}
 
 export function fetch(url: string, options?: RequestInit): Promise<Response> {
   if (!IsTauri) return window.fetch(url, options)
@@ -32,7 +32,7 @@ export function fetch(url: string, options?: RequestInit): Promise<Response> {
     signal,
     method = 'GET',
     headers: _headers = {},
-    body = []
+    body = [],
   } = options || {}
   let unlisten: Function | undefined
   let setRequestId: Function | undefined
@@ -69,13 +69,12 @@ export function fetch(url: string, options?: RequestInit): Promise<Response> {
         close()
       }
     })
-  )
-    .then((u: Function) => (unlisten = u))
+  ).then((u: Function) => (unlisten = u))
 
   const headers: Record<string, string> = {
     Accept: 'application/json, text/plain, */*',
     'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
-    'User-Agent': navigator.userAgent
+    'User-Agent': navigator.userAgent,
   }
   for (const item of new Headers(_headers || {})) {
     headers[item[0]] = item[1]
@@ -86,9 +85,9 @@ export function fetch(url: string, options?: RequestInit): Promise<Response> {
     headers,
     // TODO FormData
     body:
-          typeof body === 'string'
-            ? Array.from(new TextEncoder().encode(body))
-            : []
+      typeof body === 'string'
+        ? Array.from(new TextEncoder().encode(body))
+        : [],
   })
     .then((res: StreamResponse) => {
       const { request_id, status, status_text: statusText, headers } = res
@@ -96,14 +95,14 @@ export function fetch(url: string, options?: RequestInit): Promise<Response> {
       const response = new Response(ts.readable, {
         status,
         statusText,
-        headers
+        headers,
       })
       if (status >= 300) {
         setTimeout(close, 100)
       }
       return response
     })
-    .catch(msg => {
+    .catch((msg) => {
       throw new Error(msg)
     })
 }

@@ -1,8 +1,5 @@
 <template>
-  <q-header
-    bg-sur-c-low
-    text-on-sur
-  >
+  <q-header bg-sur-c-low text-on-sur>
     <q-toolbar>
       <q-btn
         flat

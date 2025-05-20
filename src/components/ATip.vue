@@ -6,32 +6,20 @@
   >
     <template v-if="dense">
       <div class="top-row">
-        <span style="font-weight: 500;">{{ $t('aTip.tip') }}</span>
+        <span style="font-weight: 500">{{ $t('aTip.tip') }}</span>
         <div class="spacer" />
-        <q-btn
-          flat
-          :label="$t('aTip.dismiss')"
-          @click="dismiss"
-        />
+        <q-btn flat :label="$t('aTip.dismiss')" @click="dismiss" />
       </div>
       <div class="tip-text mb-2">
         <slot />
       </div>
     </template>
     <template v-else>
-      <q-icon
-        name="sym_o_lightbulb"
-        size="sm"
-      />
+      <q-icon name="sym_o_lightbulb" size="sm" />
       <div class="tip-text ml-2">
         <slot />
       </div>
-      <q-btn
-        flat
-        class="ml-2"
-        :label="$t('aTip.dismiss')"
-        @click="dismiss"
-      />
+      <q-btn flat class="ml-2" :label="$t('aTip.dismiss')" @click="dismiss" />
     </template>
   </div>
 </template>
@@ -48,7 +36,9 @@ const props = defineProps<{
 }>()
 
 const store = useUserDataStore()
-const dismissed = computed(() => !store.ready || store.data.tipDismissed[props.tipKey])
+const dismissed = computed(
+  () => !store.ready || store.data.tipDismissed[props.tipKey]
+)
 function dismiss() {
   store.data.tipDismissed[props.tipKey] = true
 }

@@ -5,7 +5,7 @@
       'bg-pri-c text-on-pri-c': props.type === 'builtin',
       'bg-50-48-90-a text-50-48-10-a': props.type === 'lobechat',
       'bg-90-48-90-a text-90-48-10-a': props.type === 'gradio',
-      'bg-250-48-90-a text-250-48-10-a': props.type === 'mcp'
+      'bg-250-48-90-a text-250-48-10-a': props.type === 'mcp',
     }"
   />
 </template>

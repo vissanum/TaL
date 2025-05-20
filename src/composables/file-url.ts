@@ -2,7 +2,7 @@ import { AvatarImage, StoredItem } from 'src/utils/types'
 import { onUnmounted, Ref, ref, watch } from 'vue'
 
 const objectURLs: {
-  [id: string]: { url: string, active: number }
+  [id: string]: { url: string; active: number }
 } = {}
 
 export function useFileURL(file: Ref<StoredItem | AvatarImage>) {
@@ -24,10 +24,14 @@ export function useFileURL(file: Ref<StoredItem | AvatarImage>) {
       delete objectURLs[id]
     }
   }
-  watch(file, (to, from) => {
-    to && mount(to)
-    from && unmount(from)
-  }, { immediate: true })
+  watch(
+    file,
+    (to, from) => {
+      to && mount(to)
+      from && unmount(from)
+    },
+    { immediate: true }
+  )
   onUnmounted(() => {
     file.value && unmount(file.value)
   })

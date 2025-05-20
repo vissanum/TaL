@@ -21,18 +21,20 @@ export function useCreateDialog(workspace: Ref<Workspace>) {
         msgRoute: [],
         assistantId: workspace.value.defaultAssistantId,
         inputVars: {},
-        ...props
+        ...props,
       })
       db.messages.add({
         id: messageId,
         dialogId: id,
         type: 'user',
-        contents: [{
-          type: 'user-message',
-          text: '',
-          items: []
-        }],
-        status: 'inputing'
+        contents: [
+          {
+            type: 'user-message',
+            text: '',
+            items: [],
+          },
+        ],
+        status: 'inputing',
       })
     })
     router.push(`/workspaces/${workspace.value.id}/dialogs/${id}`)

@@ -1,39 +1,21 @@
 <template>
-  <view-common-header
-    @toggle-drawer="$emit('toggle-drawer')"
-    back-to="."
-  >
+  <view-common-header @toggle-drawer="$emit('toggle-drawer')" back-to=".">
     <q-toolbar-title>
       {{ $t('customProvider.title') }}
     </q-toolbar-title>
   </view-common-header>
   <q-page-container v-if="provider">
     <q-page :style-fn="pageFhStyle">
-      <q-list
-        py-2
-        max-w="1000px"
-        mx-a
-      >
+      <q-list py-2 max-w="1000px" mx-a>
         <q-item>
           <q-item-section>{{ $t('customProvider.name') }}</q-item-section>
           <q-item-section side>
-            <a-input
-              class="w-150px"
-              filled
-              dense
-              v-model="provider.name"
-            />
+            <a-input class="w-150px" filled dense v-model="provider.name" />
           </q-item-section>
         </q-item>
-        <q-item
-          clickable
-          @click="pickAvatar"
-        >
+        <q-item clickable @click="pickAvatar">
           <q-item-section>{{ $t('customProvider.icon') }}</q-item-section>
-          <q-item-section
-            side
-            text-on-sur
-          >
+          <q-item-section side text-on-sur>
             <a-avatar :avatar="provider.avatar" />
           </q-item-section>
         </q-item>
@@ -63,10 +45,7 @@
               />
             </q-item-section>
           </q-item>
-          <q-separator
-            spaced
-            inset
-          />
+          <q-separator spaced inset />
         </template>
         <q-item>
           <q-item-section>
@@ -111,8 +90,10 @@ defineEmits(['toggle-drawer'])
 const store = useProvidersStore()
 
 const provider = syncRef<CustomProvider>(
-  () => store.providers.find(a => a.id === props.id),
-  val => { store.put(toRaw(val)) },
+  () => store.providers.find((a) => a.id === props.id),
+  (val) => {
+    store.put(toRaw(val))
+  },
   { valueDeep: true }
 )
 
@@ -120,7 +101,7 @@ function addSubprovider() {
   provider.value.subproviders.push({
     id: genId(),
     provider: null,
-    modelMap: {}
+    modelMap: {},
   })
 }
 
@@ -130,12 +111,17 @@ function pickAvatar() {
     component: PickAvatarDialog,
     componentProps: {
       model: provider.value.avatar,
-      defaultTab: 'icon'
-    }
-  }).onOk(avatar => {
+      defaultTab: 'icon',
+    },
+  }).onOk((avatar) => {
     provider.value.avatar = avatar
   })
 }
 const { t } = useI18n()
-useSetTitle(computed(() => provider.value && `${t('customProvider.title')} - ${provider.value.name}`))
+useSetTitle(
+  computed(
+    () =>
+      provider.value && `${t('customProvider.title')} - ${provider.value.name}`
+  )
+)
 </script>

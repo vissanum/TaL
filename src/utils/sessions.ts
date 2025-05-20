@@ -9,7 +9,7 @@ channel.addEventListener('message', ({ data }) => {
   }
 })
 function ping(sessionId: string) {
-  return new Promise<boolean>(resolve => {
+  return new Promise<boolean>((resolve) => {
     if (sessionId === id) {
       resolve(true)
       return

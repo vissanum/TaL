@@ -4,7 +4,7 @@ import { LocalStorage } from 'quasar'
 export function localReactive<T extends object>(key: string, value: T) {
   const val = reactive({
     ...value,
-    ...LocalStorage.getItem(key) as T || {}
+    ...((LocalStorage.getItem(key) as T) || {}),
   })
   let flag = false
   watch(val, () => {
@@ -14,7 +14,7 @@ export function localReactive<T extends object>(key: string, value: T) {
     }
     LocalStorage.setItem(key, val)
   })
-  addEventListener('storage', event => {
+  addEventListener('storage', (event) => {
     if (event.key === key) {
       flag = true
       Object.assign(val, LocalStorage.getItem(key) as T)

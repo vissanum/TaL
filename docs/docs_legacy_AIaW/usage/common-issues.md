@@ -18,7 +18,6 @@
 
 This appears to be related to an issue with Webkitgtk + Nvidia drivers. Try setting the environment variable `WEBKIT_DISABLE_DMABUF_RENDERER=1` before launching. See [Issue #49](https://github.com/NitroRCr/AIaW/issues/49)
 
-
 ## Reply Error
 
 ### deepseek-reasoner does not support Function Calling

@@ -12,6 +12,8 @@ const props = defineProps<{
 }>()
 
 const icon = computed(() =>
-  codeExtensions.includes(props.artifact.name.split('.').pop()) ? 'sym_o_code' : 'sym_o_description'
+  codeExtensions.includes(props.artifact.name.split('.').pop())
+    ? 'sym_o_code'
+    : 'sym_o_description'
 )
 </script>

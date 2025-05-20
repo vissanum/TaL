@@ -7,7 +7,9 @@ import { AssistantDefaultPrompt } from 'src/utils/templates'
 import { useI18n } from 'vue-i18n'
 
 export const useAssistantsStore = defineStore('assistants', () => {
-  const assistants = useLiveQuery(() => db.assistants.toArray(), { initialValue: [] as Assistant[] })
+  const assistants = useLiveQuery(() => db.assistants.toArray(), {
+    initialValue: [] as Assistant[],
+  })
   const { t } = useI18n()
   async function add(props: Partial<Assistant> = {}) {
     return await db.assistants.add({
@@ -24,7 +26,7 @@ export const useAssistantsStore = defineStore('assistants', () => {
       plugins: {},
       promptRole: 'system',
       stream: true,
-      ...props
+      ...props,
     })
   }
 
@@ -45,6 +47,6 @@ export const useAssistantsStore = defineStore('assistants', () => {
     add,
     update,
     put,
-    delete: delete_
+    delete: delete_,
   }
 })

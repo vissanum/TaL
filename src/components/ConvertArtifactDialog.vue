@@ -1,22 +1,13 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
+  <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card min-w="320px">
       <q-card-section>
         <div class="text-h6">
           {{ $t('convertArtifactDialog.title') }}
         </div>
       </q-card-section>
-      <q-card-section
-        py-0
-        px-2
-      >
-        <div
-          flex
-          px-2
-        >
+      <q-card-section py-0 px-2>
+        <div flex px-2>
           <a-input
             v-model="options.name"
             :label="$t('convertArtifactDialog.name')"
@@ -78,12 +69,11 @@ const props = defineProps<{
 const { perfs } = useUserPerfsStore()
 const options = ref<ConvertArtifactOptions>({
   lang: props.lang,
-  reserveOriginal: perfs.artifactsReserveOriginal
+  reserveOriginal: perfs.artifactsReserveOriginal,
 })
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent<ConvertArtifactOptions>()
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent<ConvertArtifactOptions>()
 </script>

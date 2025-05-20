@@ -39,13 +39,13 @@ In addition, the out-of-the-box model service is unique to our deployment ([aiaw
 
 Below is a feature comparison table for different deployment methods:
 
-| Feature \ Deployment Method | [Static Deployment](advanced#static-deployment) (Frontend Only) | Quick Docker Deployment | Advanced Deployment (Self-Built) | aiaw.app |
-| --- | --- | --- | --- | --- |
-| Basic Features | √ | √ | √ | √ |
-| Plugin Market / Assistant Market / Gradio Plugins | √ | √ | √ | √ |
-| LobeChat Plugins | × | √ | √ | √ |
-| Document Parsing Plugin | × | Requires `LLAMA_CLOUD_API_KEY` | Requires `LLAMA_CLOUD_API_KEY` | √ |
-| Cloud Synchronization | Requires DexieCloud Configuration | × | Requires DexieCloud Configuration | √ |
-| Out-of-the-Box Model Service | × | × | × | √ |
+| Feature \ Deployment Method                       | [Static Deployment](advanced#static-deployment) (Frontend Only) | Quick Docker Deployment        | Advanced Deployment (Self-Built)  | aiaw.app |
+| ------------------------------------------------- | --------------------------------------------------------------- | ------------------------------ | --------------------------------- | -------- |
+| Basic Features                                    | √                                                               | √                              | √                                 | √        |
+| Plugin Market / Assistant Market / Gradio Plugins | √                                                               | √                              | √                                 | √        |
+| LobeChat Plugins                                  | ×                                                               | √                              | √                                 | √        |
+| Document Parsing Plugin                           | ×                                                               | Requires `LLAMA_CLOUD_API_KEY` | Requires `LLAMA_CLOUD_API_KEY`    | √        |
+| Cloud Synchronization                             | Requires DexieCloud Configuration                               | ×                              | Requires DexieCloud Configuration | √        |
+| Out-of-the-Box Model Service                      | ×                                                               | ×                              | ×                                 | √        |
 
 We also use the Quick Docker Deployment method to deploy a version: [lite.aiaw.app](https://lite.aiaw.app), which supports LobeChat plugins and document parsing, but does not have cloud synchronization and out-of-the-box model services.

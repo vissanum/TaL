@@ -1,17 +1,12 @@
 <template>
-  <provider-input-items
-    v-model="subprovider.provider"
-  />
+  <provider-input-items v-model="subprovider.provider" />
   <q-item>
     <q-item-section>
       <q-item-label>
         {{ $t('subproviderInput.modelList') }}
       </q-item-label>
       <q-item-label caption>
-        <get-model-list
-          :provider="subprovider.provider"
-          v-model="models"
-        />
+        <get-model-list :provider="subprovider.provider" v-model="models" />
       </q-item-label>
     </q-item-section>
     <q-item-section side>
@@ -36,9 +31,13 @@ const subprovider = defineModel<Subprovider>()
 
 const models = computed({
   get: () =>
-    Object.entries(subprovider.value.modelMap).map(([key, value]) => key === value ? key : `${key}::${value}`),
+    Object.entries(subprovider.value.modelMap).map(([key, value]) =>
+      key === value ? key : `${key}::${value}`
+    ),
   set: (value: string[]) => {
-    subprovider.value.modelMap = Object.fromEntries(value.map(v => v.includes('::') ? v.split('::', 2) : [v, v]))
-  }
+    subprovider.value.modelMap = Object.fromEntries(
+      value.map((v) => (v.includes('::') ? v.split('::', 2) : [v, v]))
+    )
+  },
 })
 </script>

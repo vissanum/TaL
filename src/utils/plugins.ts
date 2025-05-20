@@ -1,13 +1,40 @@
-import { GradioFixedInput, GradioManifestEndpoint, GradioPluginManifest, GradioApiInput, HuggingPluginManifest, Plugin, PluginApi, PluginData, PluginsData, McpPluginDump, McpPluginManifest, Avatar } from './types'
+import {
+  GradioFixedInput,
+  GradioManifestEndpoint,
+  GradioPluginManifest,
+  GradioApiInput,
+  HuggingPluginManifest,
+  Plugin,
+  PluginApi,
+  PluginData,
+  PluginsData,
+  McpPluginDump,
+  McpPluginManifest,
+  Avatar,
+} from './types'
 import { base64ToArrayBuffer, defaultAvatar, parseSeconds } from './functions'
-import { createHeadersWithPluginSettings, LobeChatPluginManifest, PluginSchema } from '@lobehub/chat-plugin-sdk'
-import { Boolean as TBoolean, Number as TNumber, Object as TObject, Optional as TOptional, String as TString } from '@sinclair/typebox'
+import {
+  createHeadersWithPluginSettings,
+  LobeChatPluginManifest,
+  PluginSchema,
+} from '@lobehub/chat-plugin-sdk'
+import {
+  Boolean as TBoolean,
+  Number as TNumber,
+  Object as TObject,
+  Optional as TOptional,
+  String as TString,
+} from '@sinclair/typebox'
 import { Client as GradioClient } from '@gradio/client'
 import { AudioEncoderSupported, extractAudioBlob } from './audio-process'
 import { Parser } from 'expr-eval'
 import { corsFetch } from './cors-fetch'
 import artifacts from './artifacts-plugin'
-import { CallToolResult, GetPromptResult, ReadResourceResult } from '@modelcontextprotocol/sdk/types.js'
+import {
+  CallToolResult,
+  GetPromptResult,
+  ReadResourceResult,
+} from '@modelcontextprotocol/sdk/types.js'
 import { fetch, IsTauri } from './platform-api'
 import { getClient } from './mcp-client'
 import { i18n } from 'src/boot/i18n'
@@ -28,21 +55,22 @@ const timePlugin: Plugin = {
       prompt: t('plugins.time.prompt'),
       parameters: TObject({}),
       async execute() {
-        return [{
-          type: 'text',
-          contentText: new Date().toString()
-        }]
-      }
-    }
+        return [
+          {
+            type: 'text',
+            contentText: new Date().toString(),
+          },
+        ]
+      },
+    },
   ],
   fileparsers: [],
   settings: TObject({}),
   title: t('plugins.time.title'),
-  description: t('plugins.time.description')
+  description: t('plugins.time.description'),
 }
 
-const calculatorPrompt =
-  `Use this tool to evaluate mathetical expressions. The calculator is based on the \`expr-eval\` js library.
+const calculatorPrompt = `Use this tool to evaluate mathetical expressions. The calculator is based on the \`expr-eval\` js library.
 
 Examples:
 
@@ -69,8 +97,7 @@ Examples:
 </example>
 `
 
-const calculatorExpressionPrompt =
-  `### Expression Syntax ###
+const calculatorExpressionPrompt = `### Expression Syntax ###
 
 The parser accepts a pretty basic grammar. It's similar to normal JavaScript
 expressions, but is more math-oriented. For example, the \`^\` operator is
@@ -154,29 +181,36 @@ const calculatorPlugin: Plugin = {
   id: 'aiaw-calculator',
   type: 'builtin',
   available: true,
-  apis: [{
-    type: 'tool',
-    name: 'evaluate',
-    description: t('plugins.calculator.description'),
-    prompt: calculatorPrompt,
-    parameters: TObject({
-      expression: TString({ description: calculatorExpressionPrompt }),
-      variables: TOptional(TObject(undefined, { description: 'Variables' }))
-    }),
-    async execute({ expression, variables }) {
-      return [{
-        type: 'text',
-        contentText: Parser.evaluate(expression, variables).toString()
-      }]
-    }
-  }],
+  apis: [
+    {
+      type: 'tool',
+      name: 'evaluate',
+      description: t('plugins.calculator.description'),
+      prompt: calculatorPrompt,
+      parameters: TObject({
+        expression: TString({ description: calculatorExpressionPrompt }),
+        variables: TOptional(TObject(undefined, { description: 'Variables' })),
+      }),
+      async execute({ expression, variables }) {
+        return [
+          {
+            type: 'text',
+            contentText: Parser.evaluate(expression, variables).toString(),
+          },
+        ]
+      },
+    },
+  ],
   fileparsers: [],
   settings: TObject({}),
   title: t('plugins.calculator.title'),
-  description: t('plugins.calculator.description')
+  description: t('plugins.calculator.description'),
 }
 
-function buildLobePlugin(manifest: LobeChatPluginManifest, available: boolean): Plugin {
+function buildLobePlugin(
+  manifest: LobeChatPluginManifest,
+  available: boolean
+): Plugin {
   const { identifier, meta, settings } = manifest
   const title = meta.title ?? identifier
   return {
@@ -192,14 +226,16 @@ function buildLobePlugin(manifest: LobeChatPluginManifest, available: boolean): 
         const res = await corsFetch(url, {
           method: 'POST',
           body: JSON.stringify(args),
-          headers: createHeadersWithPluginSettings(settings)
+          headers: createHeadersWithPluginSettings(settings),
         })
         if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
-        return [{
-          type: 'text',
-          contentText: await res.text()
-        }]
-      }
+        return [
+          {
+            type: 'text',
+            contentText: await res.text(),
+          },
+        ]
+      },
     })),
     fileparsers: [],
     id: `lobe-${identifier}`,
@@ -210,7 +246,7 @@ function buildLobePlugin(manifest: LobeChatPluginManifest, available: boolean): 
     settings: settings ?? TObject({}),
     noRoundtrip: manifest.type === 'markdown',
     author: manifest.author,
-    homepage: manifest.homepage
+    homepage: manifest.homepage,
   }
 }
 function buildHuggingParams(inputs: HuggingPluginManifest['inputs']) {
@@ -232,11 +268,16 @@ function buildHuggingParams(inputs: HuggingPluginManifest['inputs']) {
 function buildGradioSettings(endpoint: GradioManifestEndpoint) {
   const obj = {}
   for (const input of endpoint.inputs) {
-    if (input.paramType === 'required' || input.paramType === 'file' || input.paramType === 'range') continue
+    if (
+      input.paramType === 'required' ||
+      input.paramType === 'file' ||
+      input.paramType === 'range'
+    )
+      continue
     const title = `${endpoint.name}.${input.name}`
     const opt = {
       description: input.description,
-      title: input.paramType === 'optional' ? `${title} 默认值` : title
+      title: input.paramType === 'optional' ? `${title} 默认值` : title,
     }
     let type
     if (input.type === 'str') type = TString(opt)
@@ -248,82 +289,106 @@ function buildGradioSettings(endpoint: GradioManifestEndpoint) {
   }
   return TObject(obj)
 }
-function buildGradioPlugin(manifest: GradioPluginManifest, available: boolean): Plugin {
+function buildGradioPlugin(
+  manifest: GradioPluginManifest,
+  available: boolean
+): Plugin {
   const { id, title, description, prompt, promptVars, noRoundtrip } = manifest
   const settings = {
-    _hfToken: TOptional(TString({ title: 'HF Token', description: 'Hugging Face API Token', format: 'password' }))
+    _hfToken: TOptional(
+      TString({
+        title: 'HF Token',
+        description: 'Hugging Face API Token',
+        format: 'password',
+      })
+    ),
   }
   for (const endpoint of manifest.endpoints) {
     settings[endpoint.name] = buildGradioSettings(endpoint)
   }
   async function predict(endpoint: GradioManifestEndpoint, args, settings) {
-    const options = settings._hfToken ? { hf_token: settings._hfToken } : undefined
+    const options = settings._hfToken
+      ? { hf_token: settings._hfToken }
+      : undefined
     const app = await GradioClient.connect(manifest.baseUrl, options)
-    const { data } = await app.predict(endpoint.path, { ...settings[endpoint.name], ...args })
-    return await Promise.all(endpoint.outputIdxs.map(async i => {
-      const d = data[i]
-      if (typeof d === 'object' && d.url) {
-        const resp = await fetch(d.url)
-        const blob = await resp.blob()
-        return {
-          type: 'file' as const,
-          mimeType: blob.type,
-          contentBuffer: await blob.arrayBuffer(),
-          name: d.orig_name
+    const { data } = await app.predict(endpoint.path, {
+      ...settings[endpoint.name],
+      ...args,
+    })
+    return await Promise.all(
+      endpoint.outputIdxs.map(async (i) => {
+        const d = data[i]
+        if (typeof d === 'object' && d.url) {
+          const resp = await fetch(d.url)
+          const blob = await resp.blob()
+          return {
+            type: 'file' as const,
+            mimeType: blob.type,
+            contentBuffer: await blob.arrayBuffer(),
+            name: d.orig_name,
+          }
         }
-      }
-      return {
-        type: 'text' as const,
-        contentText: d
-      }
-    }))
+        return {
+          type: 'text' as const,
+          contentText: d,
+        }
+      })
+    )
   }
-  const infos: PluginApi[] = manifest.endpoints.filter(e => e.type === 'info').map(e => {
-    const { name, description, infoType } = e
-    return {
-      type: 'info',
-      infoType: infoType ?? 'prompt-var',
-      name,
-      description,
-      prompt: description,
-      parameters: buildHuggingParams(e.inputs),
-      async execute(args, settings) {
-        return await predict(e, args, settings)
+  const infos: PluginApi[] = manifest.endpoints
+    .filter((e) => e.type === 'info')
+    .map((e) => {
+      const { name, description, infoType } = e
+      return {
+        type: 'info',
+        infoType: infoType ?? 'prompt-var',
+        name,
+        description,
+        prompt: description,
+        parameters: buildHuggingParams(e.inputs),
+        async execute(args, settings) {
+          return await predict(e, args, settings)
+        },
       }
-    }
-  })
-  const tools: PluginApi[] = manifest.endpoints.filter(e => e.type === 'tool').map(e => {
-    const { name, description, showComponents } = e
-    return {
-      type: 'tool',
-      name,
-      description,
-      prompt: description,
-      parameters: buildHuggingParams(e.inputs),
-      showComponents,
-      async execute(args, settings) {
-        return await predict(e, args, settings)
+    })
+  const tools: PluginApi[] = manifest.endpoints
+    .filter((e) => e.type === 'tool')
+    .map((e) => {
+      const { name, description, showComponents } = e
+      return {
+        type: 'tool',
+        name,
+        description,
+        prompt: description,
+        parameters: buildHuggingParams(e.inputs),
+        showComponents,
+        async execute(args, settings) {
+          return await predict(e, args, settings)
+        },
       }
-    }
-  })
-  const fileparsers = manifest.endpoints.filter(e => e.type === 'fileparser').map(e => {
-    const fileInput = e.inputs.find(i => i.paramType === 'file')
-    const rangeInput = e.inputs.find(i => i.paramType === 'range')
-    return {
-      name: e.name,
-      description: e.description,
-      rangeInput: rangeInput ? {
-        label: rangeInput.label,
-        hint: rangeInput.hint,
-        mask: rangeInput.mask
-      } : undefined,
-      async execute({ file, range }, settings) {
-        const args: any = { [fileInput.name]: file }
-        if (rangeInput) args[rangeInput.name] = range
-        return await predict(e, args, settings)
+    })
+  const fileparsers = manifest.endpoints
+    .filter((e) => e.type === 'fileparser')
+    .map((e) => {
+      const fileInput = e.inputs.find((i) => i.paramType === 'file')
+      const rangeInput = e.inputs.find((i) => i.paramType === 'range')
+      return {
+        name: e.name,
+        description: e.description,
+        rangeInput: rangeInput
+          ? {
+              label: rangeInput.label,
+              hint: rangeInput.hint,
+              mask: rangeInput.mask,
+            }
+          : undefined,
+        async execute({ file, range }, settings) {
+          const args: any = { [fileInput.name]: file }
+          if (rangeInput) args[rangeInput.name] = range
+          return await predict(e, args, settings)
+        },
       }
-    }
-  })
+    })
   return {
     id,
     type: 'gradio',
@@ -337,23 +402,27 @@ function buildGradioPlugin(manifest: GradioPluginManifest, available: boolean): 
     apis: [...infos, ...tools],
     fileparsers,
     author: manifest.author,
-    homepage: manifest.homepage
+    homepage: manifest.homepage,
   }
 }
 
 function buildMcpPlugin(dump: McpPluginDump, available: boolean): Plugin {
-  const resourceToResultItem = (resource, name?) => resource.text ? {
-    type: 'text' as const,
-    name,
-    contentText: `<resource uri="${resource.uri}">\n${resource.text}\n</resource>`
-  } : {
-    type: 'file' as const,
-    name,
-    contentBuffer: base64ToArrayBuffer(resource.blob as string),
-    mimeType: resource.mimeType
-  }
-  const { id, title, description, transport, noRoundtrip, author, homepage } = dump
-  const tools: PluginApi[] = dump.tools.map(tool => ({
+  const resourceToResultItem = (resource, name?) =>
+    resource.text
+      ? {
+          type: 'text' as const,
+          name,
+          contentText: `<resource uri="${resource.uri}">\n${resource.text}\n</resource>`,
+        }
+      : {
+          type: 'file' as const,
+          name,
+          contentBuffer: base64ToArrayBuffer(resource.blob as string),
+          mimeType: resource.mimeType,
+        }
+  const { id, title, description, transport, noRoundtrip, author, homepage } =
+    dump
+  const tools: PluginApi[] = dump.tools.map((tool) => ({
     type: 'tool',
     name: tool.name,
     description: tool.description,
@@ -363,28 +432,28 @@ function buildMcpPlugin(dump: McpPluginDump, available: boolean): Plugin {
       const client = await getClient(id, { type: transport.type, ...settings })
       const res: CallToolResult = await client.callTool({
         name: tool.name,
-        arguments: args
+        arguments: args,
       })
-      return res.content.map(i => {
+      return res.content.map((i) => {
         if (i.type === 'text') {
           return {
             type: 'text' as const,
-            contentText: i.text
+            contentText: i.text,
           }
         } else if (i.type === 'image') {
           return {
             type: 'file' as const,
             contentBuffer: base64ToArrayBuffer(i.data),
-            mimeType: i.mimeType
+            mimeType: i.mimeType,
           }
         } else {
           // type: 'resource'
           return resourceToResultItem(i.resource)
         }
       })
-    }
+    },
   }))
-  const resources: PluginApi[] = dump.resources.map(resource => {
+  const resources: PluginApi[] = dump.resources.map((resource) => {
     const { name, description, uri } = resource
     return {
       type: 'info',
@@ -393,16 +462,19 @@ function buildMcpPlugin(dump: McpPluginDump, available: boolean): Plugin {
       description,
       parameters: TObject({}),
       async execute(args, settings) {
-        const client = await getClient(id, { type: transport.type, ...settings })
+        const client = await getClient(id, {
+          type: transport.type,
+          ...settings,
+        })
         const res: ReadResourceResult = await client.readResource({ uri })
-        return res.contents.map(c => resourceToResultItem(c, name))
-      }
+        return res.contents.map((c) => resourceToResultItem(c, name))
+      },
     }
   })
-  const prompts: PluginApi[] = dump.prompts.map(prompt => {
+  const prompts: PluginApi[] = dump.prompts.map((prompt) => {
     const { name, description } = prompt
     const params: Record<string, any> = {}
-    prompt.arguments.forEach(arg => {
+    prompt.arguments.forEach((arg) => {
       const t = TString({ title: arg.name, description: arg.description })
       params[arg.name] = arg.required ? t : TOptional(t)
     })
@@ -413,27 +485,40 @@ function buildMcpPlugin(dump: McpPluginDump, available: boolean): Plugin {
       description,
       parameters: TObject(params),
       async execute(args, settings) {
-        const client = await getClient(id, { type: transport.type, ...settings })
-        const res: GetPromptResult = await client.getPrompt({ name, arguments: args })
-        return res.messages.map(m => {
+        const client = await getClient(id, {
+          type: transport.type,
+          ...settings,
+        })
+        const res: GetPromptResult = await client.getPrompt({
+          name,
+          arguments: args,
+        })
+        return res.messages.map((m) => {
           const { content } = m
           if (content.type === 'text') {
             return {
               type: 'text',
               name,
-              contentText: content.text
+              contentText: content.text,
             }
           } else if (content.type === 'image') {
             return {
               type: 'file',
               name,
               contentBuffer: base64ToArrayBuffer(content.data),
-              mimeType: content.mimeType
+              mimeType: content.mimeType,
             }
-          } else { // Asumimos que este 'else' corresponde a content.type === 'resource'
+          } else {
+            // Asumimos que este 'else' corresponde a content.type === 'resource'
             // Hacemos una aserción de tipo para content.resource
             // Es importante que el tipo real de content.resource en runtime coincida con esta aserción.
-            const resource = content.resource as { uri: string; text?: string; blob?: string; mimeType?: string;[key: string]: any }
+            const resource = content.resource as {
+              uri: string
+              text?: string
+              blob?: string
+              mimeType?: string
+              [key: string]: any
+            }
 
             // Verificamos explícitamente 'uri' antes de usarla, aunque la aserción la incluye.
             // 'name?' en resourceToResultItem espera un string o undefined.
@@ -442,7 +527,7 @@ function buildMcpPlugin(dump: McpPluginDump, available: boolean): Plugin {
             return resourceToResultItem(resource, nameForResourceItem)
           }
         })
-      }
+      },
     }
   })
   let settings: Record<string, any>
@@ -450,7 +535,7 @@ function buildMcpPlugin(dump: McpPluginDump, available: boolean): Plugin {
     const env: Record<string, any> = {}
     settings = {
       command: TString({ title: t('plugins.mcp.runCommand') }),
-      cwd: TOptional(TString({ title: t('plugins.mcp.cwd') }))
+      cwd: TOptional(TString({ title: t('plugins.mcp.cwd') })),
     }
     if (transport.env) {
       for (const key in transport.env) {
@@ -460,7 +545,7 @@ function buildMcpPlugin(dump: McpPluginDump, available: boolean): Plugin {
     }
   } else {
     settings = {
-      url: TString({ title: 'SSE URL' })
+      url: TString({ title: 'SSE URL' }),
     }
   }
   return {
@@ -474,21 +559,29 @@ function buildMcpPlugin(dump: McpPluginDump, available: boolean): Plugin {
     fileparsers: [],
     noRoundtrip,
     author,
-    homepage
+    homepage,
   }
 }
 
-async function dumpMcpPlugin(manifest: McpPluginManifest): Promise<McpPluginDump> {
+async function dumpMcpPlugin(
+  manifest: McpPluginManifest
+): Promise<McpPluginDump> {
   const client = await getClient(manifest.id, manifest.transport)
   const capabilities = client.getServerCapabilities()
-  const { tools } = capabilities.tools ? await client.listTools() : { tools: [] }
-  const { resources } = capabilities.resources ? await client.listResources() : { resources: [] }
-  const res = capabilities.prompts ? await client.listPrompts() : { prompts: [] }
+  const { tools } = capabilities.tools
+    ? await client.listTools()
+    : { tools: [] }
+  const { resources } = capabilities.resources
+    ? await client.listResources()
+    : { resources: [] }
+  const res = capabilities.prompts
+    ? await client.listPrompts()
+    : { prompts: [] }
   return {
     ...manifest,
     tools,
     resources,
-    prompts: res.prompts
+    prompts: res.prompts,
   }
 }
 
@@ -497,9 +590,11 @@ function lobeDefaultData(manifest: LobeChatPluginManifest): PluginData {
   return {
     settings: {},
     avatar: meta.avatar
-      ? (meta.avatar.startsWith('http') ? { type: 'url', url: meta.avatar } : { type: 'text', text: meta.avatar })
+      ? meta.avatar.startsWith('http')
+        ? { type: 'url', url: meta.avatar }
+        : { type: 'text', text: meta.avatar }
       : defaultAvatar((meta.title || identifier)[0].toUpperCase()),
-    fileparsers: {}
+    fileparsers: {},
   }
 }
 
@@ -508,34 +603,48 @@ function gradioDefaultData(manifest: GradioPluginManifest): PluginData {
   for (const e of manifest.endpoints) {
     const setting = {}
     for (const i of e.inputs) {
-      if (i.paramType === 'required' || i.paramType === 'file' || i.paramType === 'range') continue
+      if (
+        i.paramType === 'required' ||
+        i.paramType === 'file' ||
+        i.paramType === 'range'
+      )
+        continue
 
       const type = gradioTypeMap[i.type]
-      if (i.paramType === 'optional') setting[i.name] = type ? type(i.default) : i.default
-      if (i.paramType === 'fixed') setting[i.name] = type ? type(i.value) : i.value
+      if (i.paramType === 'optional')
+        setting[i.name] = type ? type(i.default) : i.default
+      if (i.paramType === 'fixed')
+        setting[i.name] = type ? type(i.value) : i.value
     }
     settings[e.name] = setting
   }
   const fileparsers = {}
-  manifest.endpoints.filter(e => e.type === 'fileparser').forEach(e => {
-    fileparsers[e.name] = {
-      enabled: true,
-      mimeTypes: e.inputs.find(i => i.paramType === 'file').mimeTypes
-    }
-  })
+  manifest.endpoints
+    .filter((e) => e.type === 'fileparser')
+    .forEach((e) => {
+      fileparsers[e.name] = {
+        enabled: true,
+        mimeTypes: e.inputs.find((i) => i.paramType === 'file').mimeTypes,
+      }
+    })
   return { settings, avatar: manifest.avatar, fileparsers }
 }
 
 function mcpDefaultData(manifest: McpPluginManifest): PluginData {
   const { transport } = manifest
-  const settings = transport.type === 'stdio' ? {
-    command: transport.command,
-    cwd: transport.cwd,
-    env: transport.env
-  } : {
-    url: transport.url
-  }
-  const avatar = manifest.avatar as Avatar ?? defaultAvatar(manifest.title[0].toUpperCase())
+  const settings =
+    transport.type === 'stdio'
+      ? {
+          command: transport.command,
+          cwd: transport.cwd,
+          env: transport.env,
+        }
+      : {
+          url: transport.url,
+        }
+  const avatar =
+    (manifest.avatar as Avatar) ??
+    defaultAvatar(manifest.title[0].toUpperCase())
   return { settings, avatar, fileparsers: {} }
 }
 
@@ -550,24 +659,26 @@ const huggingIconsMap = {
   game: 'sym_o_sports_esports',
   chat: 'sym_o_chat',
   speaker: 'sym_o_volume_up',
-  video: 'sym_o_videocam'
+  video: 'sym_o_videocam',
 }
 const huggingColorsMap = {
   purple: 300,
   blue: 250,
   green: 150,
   yellow: 80,
-  red: 30
+  red: 30,
 }
 const gradioTypeMap = {
   str: String,
   float: Number,
   int: Number,
-  bool: (val) => val === 'true'
+  bool: (val) => val === 'true',
 }
 
-function huggingToGradio(manifest: HuggingPluginManifest): GradioPluginManifest {
-  const fileInput = manifest.inputs.find(i => i.type === 'file')
+function huggingToGradio(
+  manifest: HuggingPluginManifest
+): GradioPluginManifest {
+  const fileInput = manifest.inputs.find((i) => i.type === 'file')
   return {
     id: `hf-${manifest._id}`,
     title: manifest.displayName,
@@ -576,29 +687,40 @@ function huggingToGradio(manifest: HuggingPluginManifest): GradioPluginManifest 
     avatar: {
       type: 'icon',
       icon: huggingIconsMap[manifest.icon] ?? 'sym_o_extension',
-      hue: huggingColorsMap[manifest.color] ?? 300
+      hue: huggingColorsMap[manifest.color] ?? 300,
     },
-    endpoints: [fileInput ? {
-      type: 'fileparser',
-      name: manifest.name,
-      description: manifest.description,
-      path: manifest.endpoint,
-      inputs: [{
-        name: fileInput.name,
-        paramType: 'file',
-        mimeTypes: fileInput.mimeTypes.split(',')
-      }, ...manifest.inputs.filter(i => i.paramType === 'fixed') as GradioFixedInput[]],
-      outputIdxs: [manifest.outputComponentIdx]
-    } : {
-      type: 'tool',
-      name: manifest.name,
-      description: manifest.description,
-      prompt: manifest.description,
-      path: manifest.endpoint,
-      inputs: manifest.inputs as GradioApiInput[],
-      outputIdxs: [manifest.outputComponentIdx],
-      showComponents: manifest.showOutput ? [manifest.outputComponent] : []
-    }]
+    endpoints: [
+      fileInput
+        ? {
+            type: 'fileparser',
+            name: manifest.name,
+            description: manifest.description,
+            path: manifest.endpoint,
+            inputs: [
+              {
+                name: fileInput.name,
+                paramType: 'file',
+                mimeTypes: fileInput.mimeTypes.split(','),
+              },
+              ...(manifest.inputs.filter(
+                (i) => i.paramType === 'fixed'
+              ) as GradioFixedInput[]),
+            ],
+            outputIdxs: [manifest.outputComponentIdx],
+          }
+        : {
+            type: 'tool',
+            name: manifest.name,
+            description: manifest.description,
+            prompt: manifest.description,
+            path: manifest.endpoint,
+            inputs: manifest.inputs as GradioApiInput[],
+            outputIdxs: [manifest.outputComponentIdx],
+            showComponents: manifest.showOutput
+              ? [manifest.outputComponent]
+              : [],
+          },
+    ],
   }
 }
 
@@ -608,24 +730,29 @@ const whisperPluginManifest: GradioPluginManifest = {
   description: t('plugins.whisper.description'),
   baseUrl: 'https://mrfakename-fast-whisper-turbo.hf.space',
   avatar: { type: 'icon', icon: 'sym_o_mic', hue: 100 },
-  endpoints: [{
-    type: 'fileparser',
-    name: 'transcribe',
-    description: t('plugins.whisper.transcribe.description'),
-    path: '/transcribe',
-    inputs: [{
-      name: 'audio',
-      mimeTypes: ['audio/*'],
-      paramType: 'file'
-    }, {
-      name: 'task',
-      description: t('plugins.whisper.taskType'),
-      type: 'str',
-      paramType: 'fixed',
-      value: 'transcribe'
-    }],
-    outputIdxs: [0]
-  }]
+  endpoints: [
+    {
+      type: 'fileparser',
+      name: 'transcribe',
+      description: t('plugins.whisper.transcribe.description'),
+      path: '/transcribe',
+      inputs: [
+        {
+          name: 'audio',
+          mimeTypes: ['audio/*'],
+          paramType: 'file',
+        },
+        {
+          name: 'task',
+          description: t('plugins.whisper.taskType'),
+          type: 'str',
+          paramType: 'fixed',
+          value: 'transcribe',
+        },
+      ],
+      outputIdxs: [0],
+    },
+  ],
 }
 const whisperPlugin = buildGradioPlugin(whisperPluginManifest, true)
 whisperPlugin.type = 'builtin'
@@ -635,23 +762,29 @@ const videoTranscriptPlugin: Plugin = {
   type: 'builtin',
   available: true,
   apis: [],
-  fileparsers: [{
-    name: 'transcribe',
-    description: t('plugins.videoTranscript.transcribe.description'),
-    async execute({ file, range }, settings) {
-      if (!AudioEncoderSupported) throw new Error(t('plugins.videoTranscript.audioEncoderError'))
-      const rg = range ? range.split('-').map(parseSeconds) : undefined
-      const audioBlob = await extractAudioBlob(file, rg as [number, number])
-      return await whisperPlugin.fileparsers[0].execute({ file: audioBlob }, settings)
+  fileparsers: [
+    {
+      name: 'transcribe',
+      description: t('plugins.videoTranscript.transcribe.description'),
+      async execute({ file, range }, settings) {
+        if (!AudioEncoderSupported)
+          throw new Error(t('plugins.videoTranscript.audioEncoderError'))
+        const rg = range ? range.split('-').map(parseSeconds) : undefined
+        const audioBlob = await extractAudioBlob(file, rg as [number, number])
+        return await whisperPlugin.fileparsers[0].execute(
+          { file: audioBlob },
+          settings
+        )
+      },
+      rangeInput: {
+        label: t('plugins.videoTranscript.rangeInput.label'),
+        hint: 'XX:XX-XX:XX',
+      },
     },
-    rangeInput: {
-      label: t('plugins.videoTranscript.rangeInput.label'),
-      hint: 'XX:XX-XX:XX'
-    }
-  }],
+  ],
   settings: TObject({}),
   title: t('plugins.videoTranscript.title'),
-  description: t('plugins.videoTranscript.description')
+  description: t('plugins.videoTranscript.description'),
 }
 
 const fluxPluginManifest: GradioPluginManifest = {
@@ -664,40 +797,40 @@ const fluxPluginManifest: GradioPluginManifest = {
         name: 'prompt',
         description: 'A prompt to generate an image from',
         paramType: 'required',
-        type: 'str'
+        type: 'str',
       },
       {
         name: 'seed',
         paramType: 'fixed',
         value: '0',
-        type: 'float'
+        type: 'float',
       },
       {
         name: 'randomize_seed',
         paramType: 'fixed',
         value: 'true',
-        type: 'bool'
+        type: 'bool',
       },
       {
         name: 'width',
         description: 'numeric value between 256 and 2048',
         paramType: 'optional',
         default: 1024,
-        type: 'float'
+        type: 'float',
       },
       {
         name: 'height',
         description: 'numeric value between 256 and 2048',
         paramType: 'optional',
         default: 1024,
-        type: 'float'
+        type: 'float',
       },
       {
         name: 'num_inference_steps',
         paramType: 'fixed',
         value: '4',
-        type: 'float'
-      }
+        type: 'float',
+      },
     ],
     outputComponent: 'image',
     outputComponentIdx: 0,
@@ -706,18 +839,17 @@ const fluxPluginManifest: GradioPluginManifest = {
     baseUrl: 'https://black-forest-labs-flux-1-schnell.hf.space',
     displayName: 'Image Generation',
     color: 'yellow',
-    icon: 'camera'
+    icon: 'camera',
   }),
   noRoundtrip: true,
   title: t('plugins.flux.title'),
-  description: t('plugins.flux.description')
+  description: t('plugins.flux.description'),
 }
 
 const fluxPlugin: Plugin = buildGradioPlugin(fluxPluginManifest, true)
 fluxPlugin.type = 'builtin'
 
-const emotionsPrompt =
-  `在回答中，你可以使用 html img 标签插入表情包，使回答更可爱、富有情感。
+const emotionsPrompt = `在回答中，你可以使用 html img 标签插入表情包，使回答更可爱、富有情感。
 设置 width="{{ displayWidth }}"，以避免显示得太大。
 
 可用的表情：
@@ -776,9 +908,9 @@ const emotionsPlugin: Plugin = {
       name: 'displayWidth',
       label: t('plugins.emotions.displayWidth.label'),
       type: 'number',
-      default: 100
-    }
-  ]
+      default: 100,
+    },
+  ],
 }
 
 const mermaidPlugin: Plugin = {
@@ -790,45 +922,45 @@ const mermaidPlugin: Plugin = {
   settings: TObject({}),
   title: t('plugins.mermaid.title'),
   description: t('plugins.mermaid.description'),
-  prompt: t('plugins.mermaid.prompt')
+  prompt: t('plugins.mermaid.prompt'),
 }
 
 const defaultData: PluginsData = {
   'aiaw-time': {
     settings: {},
     avatar: { type: 'icon', icon: 'sym_o_alarm', hue: 220 },
-    fileparsers: {}
+    fileparsers: {},
   },
   'aiaw-video-transcript': {
     settings: {},
     avatar: { type: 'icon', icon: 'sym_o_smart_display', hue: 160 },
     fileparsers: {
-      transcribe: { enabled: true, mimeTypes: ['video/*'] }
-    }
+      transcribe: { enabled: true, mimeTypes: ['video/*'] },
+    },
   },
   'aiaw-calculator': {
     settings: {},
     avatar: { type: 'icon', icon: 'sym_o_calculate', hue: 270 },
-    fileparsers: {}
+    fileparsers: {},
   },
   'aiaw-whisper': gradioDefaultData(whisperPluginManifest),
   [fluxPluginManifest.id]: {
     ...gradioDefaultData(fluxPluginManifest),
-    avatar: { type: 'icon', icon: 'sym_o_palette', hue: 120 }
+    avatar: { type: 'icon', icon: 'sym_o_palette', hue: 120 },
   },
   'aiaw-emotions': {
     settings: {},
     avatar: { type: 'icon', icon: 'sym_o_mood', hue: 80 },
-    fileparsers: {}
+    fileparsers: {},
   },
   'aiaw-mermaid': {
     settings: {},
     avatar: { type: 'icon', icon: 'sym_o_account_tree', hue: 15 },
-    fileparsers: {}
+    fileparsers: {},
   },
   [docParsePlugin.pluginId]: docParsePlugin.defaultData,
   [webSearchPlugin.pluginId]: webSearchPlugin.defaultData,
-  [artifacts.pluginId]: artifacts.defaultData
+  [artifacts.pluginId]: artifacts.defaultData,
 }
 
 export {
@@ -847,5 +979,5 @@ export {
   whisperPlugin,
   fluxPlugin,
   emotionsPlugin,
-  mermaidPlugin
+  mermaidPlugin,
 }

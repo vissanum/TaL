@@ -1,4 +1,8 @@
-import { type DocumentInitParameters, type PDFDocumentProxy, type TextItem } from 'pdfjs-dist/types/src/display/api'
+import {
+  type DocumentInitParameters,
+  type PDFDocumentProxy,
+  type TextItem,
+} from 'pdfjs-dist/types/src/display/api'
 import { webpSupported } from './image-process'
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/build/pdf.mjs'
 
@@ -11,7 +15,7 @@ export async function getDocumentProxy(
     isEvalSupported: false,
     // See: https://github.com/mozilla/pdf.js/issues/4244#issuecomment-1479534301
     useSystemFonts: true,
-    ...options
+    ...options,
   }).promise
 
   return pdf
@@ -21,18 +25,19 @@ export function isPDFDocumentProxy(data: unknown): data is PDFDocumentProxy {
   return typeof data === 'object' && data !== null && '_pdfInfo' in data
 }
 
-GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@5.2.133/build/pdf.worker.min.mjs'
+GlobalWorkerOptions.workerSrc =
+  'https://unpkg.com/pdfjs-dist@5.2.133/build/pdf.worker.min.mjs'
 
 export function extractText(
   data: DocumentInitParameters['data'] | PDFDocumentProxy,
-  options?: { mergePages?: false },
+  options?: { mergePages?: false }
 ): Promise<{
   totalPages: number
   text: string[]
 }>
 export function extractText(
   data: DocumentInitParameters['data'] | PDFDocumentProxy,
-  options: { mergePages: true },
+  options: { mergePages: true }
 ): Promise<{
   totalPages: number
   text: string
@@ -52,29 +57,30 @@ export async function extractText(
 
   return {
     totalPages: pdf.numPages,
-    text: options?.mergePages ? texts.join('\n').replace(/\s+/g, ' ') : texts
+    text: options?.mergePages ? texts.join('\n').replace(/\s+/g, ' ') : texts,
   }
 }
 
-async function getPageText(document: PDFDocumentProxy, pageNumber: number): Promise<string> {
+async function getPageText(
+  document: PDFDocumentProxy,
+  pageNumber: number
+): Promise<string> {
   const page = await document.getPage(pageNumber)
   const content = await page.getTextContent()
 
-  return (
-    (content.items as TextItem[])
-      .filter(item => item.str != null)
-      .map(item => item.str + (item.hasEOL ? '\n' : ''))
-      .join('')
-  )
+  return (content.items as TextItem[])
+    .filter((item) => item.str != null)
+    .map((item) => item.str + (item.hasEOL ? '\n' : ''))
+    .join('')
 }
 
 export async function renderPageAsImage(
   data: DocumentInitParameters['data'],
   pageNumber: number,
   options: {
-    scale?: number;
-    width?: number;
-    height?: number;
+    scale?: number
+    width?: number
+    height?: number
   } = {}
 ): Promise<Blob> {
   if (typeof window === 'undefined') {
@@ -101,12 +107,16 @@ export async function renderPageAsImage(
 
   await page.render({
     canvasContext: context,
-    viewport
+    viewport,
   }).promise
 
   return new Promise<Blob>((resolve) => {
-    canvas.toBlob((blob) => {
-      resolve(blob)
-    }, webpSupported ? 'image/webp' : 'image/png', 0.8)
+    canvas.toBlob(
+      (blob) => {
+        resolve(blob)
+      },
+      webpSupported ? 'image/webp' : 'image/png',
+      0.8
+    )
   })
 }

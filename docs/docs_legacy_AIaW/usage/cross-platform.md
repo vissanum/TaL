@@ -22,6 +22,6 @@ In this way, PWA achieves the same convenience and user experience as local appl
 
 The installation button is usually on the right side of the address bar (PC) or in the browser menu (mobile phone)
 
-![](res/pc-install-btn.png "Chrome Desktop")
+![](res/pc-install-btn.png 'Chrome Desktop')
 
 <img src="./res/mobile-install-btn.webp" width="300px" title="Chrome Mobile">

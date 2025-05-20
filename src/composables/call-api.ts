@@ -18,12 +18,20 @@ export function useCallApi({ workspace, dialog }) {
       settings._dialogId = dialog.value.id
     }
     removeUndefinedProps(settings)
-    const { valid } = new Validator(plugin.settings as Schema).validate(settings)
+    const { valid } = new Validator(plugin.settings as Schema).validate(
+      settings
+    )
     return { valid, settings }
   }
 
-  async function callApi(plugin: Plugin, api: PluginApi, args): Promise<{ result?: ApiResultItem[], error?: string }> {
-    const { valid: argValid } = new Validator(api.parameters as Schema).validate(args)
+  async function callApi(
+    plugin: Plugin,
+    api: PluginApi,
+    args
+  ): Promise<{ result?: ApiResultItem[]; error?: string }> {
+    const { valid: argValid } = new Validator(
+      api.parameters as Schema
+    ).validate(args)
     if (!argValid) {
       return { result: [], error: t('callApi.argValidationFailed') }
     }

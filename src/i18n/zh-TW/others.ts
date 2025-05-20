@@ -5,7 +5,7 @@ export default {
     pluginsMarket: '插件市場',
     assistantsMarket: '助手市場',
     account: '帳號',
-    modelPricing: '模型價格'
+    modelPricing: '模型價格',
   },
   values: {
     apiAddress: 'API 地址',
@@ -19,7 +19,7 @@ export default {
     defaultAnthropicAddress: '預設為 Anthropic 官方地址',
     defaultGoogleAddress: '預設為 Google 官方地址',
     openaiCompatible: 'OpenAI 相容',
-    required: '必填'
+    required: '必填',
   },
   templates: {
     defaultWsIndexContent: `## {'{{ workspace.name }}'}
@@ -37,63 +37,67 @@ export default {
 更多內容詳見<a href="https://docs.aiaw.app/usage/" target="_blank">使用指南</a>
 
 GitHub: <a href="https://github.com/NitroRCr/aiaw" target="_blank">NitroRCr/AIaW</a>
-`
+`,
   },
   mcpClient: {
-    connectingMcpServer: '正在連接 MCP 伺服器...'
+    connectingMcpServer: '正在連接 MCP 伺服器...',
   },
   plugins: {
     time: {
       title: '時間和日期',
-      description: '讓 AI 獲取目前的時間和日期（沒什麼用。可用於測試工具調用是否正常）',
-      prompt: '獲取目前的時間和日期'
+      description:
+        '讓 AI 獲取目前的時間和日期（沒什麼用。可用於測試工具調用是否正常）',
+      prompt: '獲取目前的時間和日期',
     },
     calculator: {
       title: '計算器',
-      description: '提供一個計算器，讓 AI 能夠完成更加複雜的計算'
+      description: '提供一個計算器，讓 AI 能夠完成更加複雜的計算',
     },
     whisper: {
       title: '語音識別：Whisper',
       description: '上傳音訊檔案，通過 Whisper 模型將語音轉換為文字',
       transcribe: {
-        description: '將語音轉換為文字'
+        description: '將語音轉換為文字',
       },
-      taskType: '任務類型'
+      taskType: '任務類型',
     },
     flux: {
       title: '圖像生成: FLUX',
-      description: '讓 AI 調用 FLUX 模型生成圖像。通過 🤗 Spaces 調用，因此是免費的'
+      description:
+        '讓 AI 調用 FLUX 模型生成圖像。通過 🤗 Spaces 調用，因此是免費的',
     },
     videoTranscript: {
       title: '影片轉文字',
       description: '提取影片中的音訊，再將其轉換為文字。以向 AI 提問影片內容',
       transcribe: {
-        description: '將影片轉換為文字'
+        description: '將影片轉換為文字',
       },
-      audioEncoderError: '目前瀏覽器不支援音訊編碼。建議使用最新版的 Chrome/Edge 瀏覽器。',
+      audioEncoderError:
+        '目前瀏覽器不支援音訊編碼。建議使用最新版的 Chrome/Edge 瀏覽器。',
       rangeInput: {
-        label: '時間範圍'
-      }
+        label: '時間範圍',
+      },
     },
     emotions: {
       title: '表情包',
       description: '讓 AI 在回答中使用表情包，使回答更生動',
       displayWidth: {
-        label: '顯示大小'
-      }
+        label: '顯示大小',
+      },
     },
     mermaid: {
       title: 'Mermaid 圖表',
       description: '讓 AI 在回答中使用 Mermaid 語法創建圖表',
-      prompt: '在回答中，如果需要繪製圖表，你可以直接使用 mermaid 語法創建圖表，它們能夠被正常渲染。'
+      prompt:
+        '在回答中，如果需要繪製圖表，你可以直接使用 mermaid 語法創建圖表，它們能夠被正常渲染。',
     },
     mcp: {
       runCommand: '運行命令',
-      cwd: '工作目錄'
-    }
+      cwd: '工作目錄',
+    },
   },
   artifactsPlugin: {
-    description: '修改 Artifact'
+    description: '修改 Artifact',
   },
   update: {
     updating: '更新中...',
@@ -103,26 +107,26 @@ GitHub: <a href="https://github.com/NitroRCr/aiaw" target="_blank">NitroRCr/AIaW
     install: '安裝',
     downloadedNewVersion: '已下載新版本：{version}',
     installedNewVersion: '已安裝新版本：{version}',
-    relaunch: '重啟'
+    relaunch: '重啟',
   },
   stores: {
     plugins: {
-      stdioRequireDesktop: '僅桌面版支持 STDIO 類型 MCP 插件'
+      stdioRequireDesktop: '僅桌面版支持 STDIO 類型 MCP 插件',
     },
     assistants: {
-      newAssistant: '新助手'
+      newAssistant: '新助手',
     },
     workspaces: {
       newFolder: '新文件夾',
-      newWorkspace: '新工作區'
+      newWorkspace: '新工作區',
     },
     providers: {
-      newProvider: '新服務商'
-    }
+      newProvider: '新服務商',
+    },
   },
   db: {
     exampleWorkspace: '示例工作區',
-    defaultAssistant: '預設助手'
+    defaultAssistant: '預設助手',
   },
   webSearchPlugin: {
     title: '網絡搜索與爬取',
@@ -135,11 +139,13 @@ GitHub: <a href="https://github.com/NitroRCr/aiaw" target="_blank">NitroRCr/AIaW
     defaultEnginesCaption: '逗號分隔的搜索引擎列表，留空則遵循服務端配置',
     resultsLimit: '結果數量限制',
     resultsLimitCaption: '限制單次搜索結果的數量',
-    configureSearxngMessage: '請在服務端配置 SearXNG 實例，或在插件設定中配置 SearXNG URL'
+    configureSearxngMessage:
+      '請在服務端配置 SearXNG 實例，或在插件設定中配置 SearXNG URL',
   },
   docParsePlugin: {
     title: '文檔解析',
-    description: '解析文檔（PDF、Word、Excel、PPT 等）內容，並轉換為 Markdown 文本',
+    description:
+      '解析文檔（PDF、Word、Excel、PPT 等）內容，並轉換為 Markdown 文本',
     llamaParseDescription: '調用 LlamaParse 解析文檔',
     pdfExtractTextLabel: '提取 PDF 文本',
     pdfExtractTextDescription: '提取 PDF 中的文本內容',
@@ -153,18 +159,20 @@ GitHub: <a href="https://github.com/NitroRCr/aiaw" target="_blank">NitroRCr/AIaW
     pptxParseDescription: '提取 PPTX 中的文本內容',
     rangeInput: {
       label: '頁碼範圍',
-      hint: '例：1-3,5'
+      hint: '例：1-3,5',
     },
     ocrLanguage: 'OCR 語言',
     pagesLimitDialog: {
       title: '頁數過多',
-      message: '當前要渲染的文檔截圖數量過多（>{limit}），過多的圖片可能導致加載緩慢，並影響模型的理解效果。建議指定頁碼範圍，重新解析。是否繼續解析？',
+      message:
+        '當前要渲染的文檔截圖數量過多（>{limit}），過多的圖片可能導致加載緩慢，並影響模型的理解效果。建議指定頁碼範圍，重新解析。是否繼續解析？',
       cancel: '取消',
-      continue: '繼續解析'
+      continue: '繼續解析',
     },
     emptyPagesDialog: {
       title: '空頁過多',
-      message: '超過一半的頁面解析結果為空，這可能是因為該 PDF 文檔由掃描圖片構成，而此解析器只能提取文檔中的文字。建議使用「@:{docParsePlugin.pdfScreenshotLabel}」解析器重新解析。'
-    }
-  }
+      message:
+        '超過一半的頁面解析結果為空，這可能是因為該 PDF 文檔由掃描圖片構成，而此解析器只能提取文檔中的文字。建議使用「@:{docParsePlugin.pdfScreenshotLabel}」解析器重新解析。',
+    },
+  },
 }

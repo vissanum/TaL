@@ -4,10 +4,7 @@
       {{ $t('assistantView.header') }}
     </q-toolbar-title>
   </view-common-header>
-  <q-page-container
-    v-if="assistant"
-    bg-sur-c-low
-  >
+  <q-page-container v-if="assistant" bg-sur-c-low>
     <q-page
       pb-2
       bg-sur
@@ -15,39 +12,22 @@
       :style-fn="pageFhStyle"
     >
       <q-list>
-        <a-tip
-          tip-key="assistant-effect-scope"
-          rd-0
-        >
+        <a-tip tip-key="assistant-effect-scope" rd-0>
           {{ $t('assistantView.effectScopeTip') }}
-          <router-link
-            to="/settings"
-            pri-link
-          >
+          <router-link to="/settings" pri-link>
             {{ $t('assistantView.settingsPage') }}
           </router-link>
         </a-tip>
-        <q-item-label
-          header
-          id="assistant"
-        >
+        <q-item-label header id="assistant">
           {{ $t('assistantView.assistant') }}
         </q-item-label>
         <q-item>
           <q-item-section>{{ $t('assistantView.name') }}</q-item-section>
           <q-item-section side>
-            <a-input
-              class="w-150px"
-              filled
-              dense
-              v-model="assistant.name"
-            />
+            <a-input class="w-150px" filled dense v-model="assistant.name" />
           </q-item-section>
         </q-item>
-        <q-item
-          clickable
-          @click="pickAvatar"
-        >
+        <q-item clickable @click="pickAvatar">
           <q-item-section>{{ $t('assistantView.avatar') }}</q-item-section>
           <q-item-section side>
             <a-avatar :avatar="assistant.avatar" />
@@ -58,12 +38,7 @@
             {{ $t('assistantView.roleSetting') }}
           </q-item-section>
           <q-item-section>
-            <a-input
-              filled
-              v-model="assistant.prompt"
-              autogrow
-              clearable
-            />
+            <a-input filled v-model="assistant.prompt" autogrow clearable />
           </q-item-section>
         </q-item>
         <q-item>
@@ -84,52 +59,32 @@
             {{ $t('assistantView.promptVars') }}
           </q-item-section>
           <q-item-section>
-            <prompt-var-editor
-              ml-2
-              v-model="assistant.promptVars"
-            />
+            <prompt-var-editor ml-2 v-model="assistant.promptVars" />
           </q-item-section>
         </q-item>
-        <q-item-label
-          caption
-          p="x-4 y-2"
-          text-on-sur-var
-        >
+        <q-item-label caption p="x-4 y-2" text-on-sur-var>
           {{ $t('assistantView.promptVarsGuide1') }}
           <a
             href="https://docs.aiaw.app/usage/prompt-vars.html"
             target="_blank"
             pri-link
-          >{{ $t('assistantView.promptVarsGuide2') }}</a>
+            >{{ $t('assistantView.promptVarsGuide2') }}</a
+          >
         </q-item-label>
         <q-separator spaced />
-        <q-item-label
-          header
-          id="model"
-        >
+        <q-item-label header id="model">
           {{ $t('assistantView.model') }}
         </q-item-label>
         <model-input-items v-model="assistant.model" />
-        <q-item-label
-          caption
-          p="x-4 y-2"
-          text-on-sur-var
-        >
+        <q-item-label caption p="x-4 y-2" text-on-sur-var>
           {{ $t('assistantView.modelEmptyTip') }}
         </q-item-label>
         <q-separator spaced />
-        <q-item-label
-          header
-          id="provider"
-        >
+        <q-item-label header id="provider">
           {{ $t('assistantView.provider') }}
         </q-item-label>
         <provider-input-items v-model="assistant.provider" />
-        <q-item-label
-          caption
-          p="x-4 y-2"
-          text-on-sur-var
-        >
+        <q-item-label caption p="x-4 y-2" text-on-sur-var>
           {{ $t('assistantView.providerEmptyTip') }}
         </q-item-label>
         <q-separator spaced />
@@ -143,10 +98,7 @@
         </q-item>
         <enable-plugins-items :assistant-id="assistant.id" />
         <q-separator spaced />
-        <q-item-label
-          header
-          id="generate-settings"
-        >
+        <q-item-label header id="generate-settings">
           {{ $t('assistantView.generateSettings') }}
         </q-item-label>
         <q-item>
@@ -224,15 +176,15 @@
           </q-item-section>
         </q-item>
         <q-separator spaced />
-        <q-item-label
-          header
-          id="model-params"
-        >
+        <q-item-label header id="model-params">
           {{ $t('assistantView.modelParams') }}
         </q-item-label>
         <q-item>
           <q-item-section>
-            <q-item-label>{{ $t('assistantView.temperature') }}<code>temperature</code></q-item-label>
+            <q-item-label
+              >{{ $t('assistantView.temperature')
+              }}<code>temperature</code></q-item-label
+            >
             <q-item-label caption>
               {{ $t('assistantView.temperatureTip') }}
             </q-item-label>
@@ -250,7 +202,9 @@
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label>{{ $t('assistantView.topP') }}<code>topP</code></q-item-label>
+            <q-item-label
+              >{{ $t('assistantView.topP') }}<code>topP</code></q-item-label
+            >
             <q-item-label caption>
               {{ $t('assistantView.topPTip') }}
             </q-item-label>
@@ -268,7 +222,10 @@
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label>{{ $t('assistantView.presencePenalty') }}<code>presencePenalty</code></q-item-label>
+            <q-item-label
+              >{{ $t('assistantView.presencePenalty')
+              }}<code>presencePenalty</code></q-item-label
+            >
             <q-item-label caption>
               {{ $t('assistantView.presencePenaltyTip') }}
             </q-item-label>
@@ -286,7 +243,10 @@
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label>{{ $t('assistantView.frequencyPenalty') }}<code>frequencyPenalty</code></q-item-label>
+            <q-item-label
+              >{{ $t('assistantView.frequencyPenalty')
+              }}<code>frequencyPenalty</code></q-item-label
+            >
             <q-item-label caption>
               {{ $t('assistantView.frequencyPenaltyTip') }}
             </q-item-label>
@@ -304,7 +264,10 @@
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label>{{ $t('assistantView.stopSequences') }}<code>stopSequences</code></q-item-label>
+            <q-item-label
+              >{{ $t('assistantView.stopSequences')
+              }}<code>stopSequences</code></q-item-label
+            >
             <q-item-label caption>
               {{ $t('assistantView.stopSequencesTip') }}
             </q-item-label>
@@ -326,7 +289,10 @@
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label>{{ $t('assistantView.maxTokens') }}<code>maxTokens</code></q-item-label>
+            <q-item-label
+              >{{ $t('assistantView.maxTokens')
+              }}<code>maxTokens</code></q-item-label
+            >
             <q-item-label caption>
               {{ $t('assistantView.maxTokensTip') }}
             </q-item-label>
@@ -344,7 +310,9 @@
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label>{{ $t('assistantView.seed') }}<code>seed</code></q-item-label>
+            <q-item-label
+              >{{ $t('assistantView.seed') }}<code>seed</code></q-item-label
+            >
             <q-item-label caption>
               {{ $t('assistantView.seedTip') }}
             </q-item-label>
@@ -360,18 +328,11 @@
             />
           </q-item-section>
         </q-item>
-        <q-item-label
-          caption
-          p="x-4 y-2"
-          text-on-sur-var
-        >
+        <q-item-label caption p="x-4 y-2" text-on-sur-var>
           {{ $t('assistantView.notAllParamsSupported') }}
         </q-item-label>
         <q-separator spaced />
-        <q-item-label
-          header
-          id="model-params"
-        >
+        <q-item-label header id="model-params">
           {{ $t('assistantView.metadata') }}
         </q-item-label>
         <q-item>
@@ -379,12 +340,7 @@
             <q-item-label>{{ $t('assistantView.author') }}</q-item-label>
           </q-item-section>
           <q-item-section side>
-            <a-input
-              class="w-150px"
-              filled
-              dense
-              v-model="assistant.author"
-            />
+            <a-input class="w-150px" filled dense v-model="assistant.author" />
           </q-item-section>
         </q-item>
         <q-item>
@@ -419,11 +375,13 @@
           <q-item-section>
             <q-item-label>{{ $t('assistantView.export') }}</q-item-label>
             <q-item-label caption>
-              {{ $t('assistantView.exportTip1') }}<a
+              {{ $t('assistantView.exportTip1')
+              }}<a
                 href="https://docs.aiaw.app/usage/assistants.html#分享助手"
                 target="_blank"
                 pri-link
-              >{{ $t('assistantView.exportTip2') }}</a>
+                >{{ $t('assistantView.exportTip2') }}</a
+              >
             </q-item-label>
           </q-item-section>
           <q-item-section side>
@@ -491,8 +449,10 @@ defineEmits(['toggle-drawer'])
 
 const store = useAssistantsStore()
 const assistant = syncRef<Assistant>(
-  () => store.assistants.find(a => a.id === props.id),
-  val => { store.put(toRaw(val)) },
+  () => store.assistants.find((a) => a.id === props.id),
+  (val) => {
+    store.put(toRaw(val))
+  },
   { valueDeep: true }
 )
 
@@ -502,9 +462,9 @@ function pickAvatar() {
     component: PickAvatarDialog,
     componentProps: {
       model: assistant.value.avatar,
-      defaultTab: 'ai'
-    }
-  }).onOk(avatar => {
+      defaultTab: 'ai',
+    },
+  }).onOk((avatar) => {
     assistant.value.avatar = avatar
   })
 }
@@ -518,11 +478,34 @@ async function exportAssistant(target: 'file' | 'clipboard') {
   let { avatar } = assistant.value
   if (avatar.type === 'image') {
     const avatarImage = await db.avatarImages.get(avatar.imageId)
-    const base64 = await blobToBase64(new Blob([avatarImage.contentBuffer], { type: avatarImage.mimeType }))
+    const base64 = await blobToBase64(
+      new Blob([avatarImage.contentBuffer], { type: avatarImage.mimeType })
+    )
     avatar = { type: 'url', url: base64 }
   }
-  const { name, prompt, promptVars, promptTemplate, model, modelSettings, author, homepage, description } = assistant.value
-  const json = JSON.stringify({ name, avatar, prompt, promptVars, promptTemplate, model, modelSettings, author, homepage, description })
+  const {
+    name,
+    prompt,
+    promptVars,
+    promptTemplate,
+    model,
+    modelSettings,
+    author,
+    homepage,
+    description,
+  } = assistant.value
+  const json = JSON.stringify({
+    name,
+    avatar,
+    prompt,
+    promptVars,
+    promptTemplate,
+    model,
+    modelSettings,
+    author,
+    homepage,
+    description,
+  })
   if (target === 'file') {
     exportFile(`${name}.json`, json)
   } else {

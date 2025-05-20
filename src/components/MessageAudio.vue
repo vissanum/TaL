@@ -1,9 +1,5 @@
 <template>
-  <audio
-    v-if="url"
-    :src="url"
-    controls
-  />
+  <audio v-if="url" :src="url" controls />
 </template>
 
 <script setup lang="ts">
@@ -12,7 +8,7 @@ import { StoredItem } from 'src/utils/types'
 import { toRef } from 'vue'
 
 const props = defineProps<{
-  audio: StoredItem,
+  audio: StoredItem
 }>()
 
 defineEmits(['remove'])

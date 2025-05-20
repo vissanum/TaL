@@ -12,7 +12,7 @@ import { onMounted } from 'vue'
 import { checkUpdate, ready } from './utils/update'
 
 defineOptions({
-  name: 'App'
+  name: 'App',
 })
 
 useSetTheme()
@@ -21,7 +21,7 @@ useFirstVisit()
 useSubscriptionNotify()
 
 const router = useRouter()
-router.afterEach(to => {
+router.afterEach((to) => {
   if (to.meta.title) {
     document.title = `${to.meta.title} - AI as Workspace`
   }
@@ -31,5 +31,4 @@ onMounted(() => {
   ready()
   checkUpdate()
 })
-
 </script>

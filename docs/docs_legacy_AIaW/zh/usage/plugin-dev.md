@@ -26,6 +26,7 @@ Gradio 应用在提供简单的界面的同时，也提供了 API。AIaW 的 Gra
 下面以内置的「图像生成: FLUX」插件为例，介绍 Gradio 插件的配置文件格式：
 
 ::: code-group
+
 ```json [配置文件]
 {
   "id": "hf-000000000000000000000001",
@@ -37,10 +38,13 @@ Gradio 应用在提供简单的界面的同时，也提供了 API。AIaW 的 Gra
     "icon": "sym_o_palette",
     "hue": 80
   },
-  "endpoints": [/* 省略，稍后具体介绍 */],
+  "endpoints": [
+    /* 省略，稍后具体介绍 */
+  ],
   "noRoundtrip": true
 }
 ```
+
 ```typescript [TS 类型定义]
 interface GradioPluginManifest {
   id: string
@@ -56,6 +60,7 @@ interface GradioPluginManifest {
   homepage?: string
 }
 ```
+
 :::
 
 - `id`: 插件的 ID；每个插件的 ID 必须不同
@@ -66,10 +71,12 @@ interface GradioPluginManifest {
 - `avatar`: 插件的图标；[具体说明](#avatar)
 - `endpoints`: 插件的接口定义；工具调用/文件解析器/信息获取 都定义在此处；[具体说明](#endpoints)
 - `baseURL`: Gradio 应用的地址。对于托管在 HF Spaces 的 Gradio 应用，有两种写法：
+
   - 路径：如 `black-forest-labs/FLUX.1-schnell`
   - 链接：如 `https://black-forest-labs-flux-1-schnell.hf.space`
 
   这两种格式都可以。不过，由于中国大陆屏蔽了 HuggingFace 主站，但没有屏蔽 `*.hf.space`，我们建议**始终使用后一种写法**（即使用链接），以避免中国大陆的用户无法调用插件。通过观察两种格式不难发现，由路径简单改写即可得到对应的链接。
+
 - `noRoundtrip`: 可选；默认情况下，调用工具之后，会携带调用结果再次调用LLM，以根据调用结果生成回答。不过由于这是图像生成插件，生成图像后无需助手继续回答，故将其设置为 `true` 以禁用此行为。
 - `author`: 可选；插件的作者
 - `homepage`: 可选；插件/作者的主页
@@ -79,6 +86,7 @@ interface GradioPluginManifest {
 `avatar` 属性指定了插件的默认图标；支持不同类型的图标
 
 ::: code-group
+
 ```json [示例：图标]
 {
   "type": "icon",
@@ -86,18 +94,21 @@ interface GradioPluginManifest {
   "hue": 80
 }
 ```
+
 ```json [示例：文字]
 {
   "type": "text",
   "text": "🍉"
 }
 ```
+
 ```json [示例：图片链接]
 {
   "type": "url",
   "url": "https://url.to.my/image.avif"
 }
 ```
+
 ```typescript [TS 类型定义]
 interface TextAvatar {
   type: 'text'
@@ -116,6 +127,7 @@ interface IconAvatar {
 }
 type Avatar = TextAvatar | UrlAvatar | IconAvatar
 ```
+
 :::
 
 对于 `icon` 类型的图标，可在 [Material Symbols](https://fonts.google.com/icons) 选取图标，将图标名称写为下划线格式，并添加 `sym_o_` 前缀。如名称为 `Photo Camera` 的图标，`icon` 属性值为 `sym_o_photo_camera`。
@@ -131,6 +143,7 @@ type Avatar = TextAvatar | UrlAvatar | IconAvatar
 `endpoints` 定义了插件可调用的接口。Gradio 类型插件调用的是 Gradio 应用的接口。在 HF Space 页面的下方点击「通过 API 使用」，即可看到该应用的接口和参数。
 
 `endpoint` 可定义为以下三种类型：
+
 - `tool`: 工具调用
 - `fileparser`: 文件解析器
 - `info`: 信息获取
@@ -187,15 +200,12 @@ type Avatar = TextAvatar | UrlAvatar | IconAvatar
         "type": "float"
       }
     ],
-    "outputIdxs": [
-      0
-    ],
-    "showComponents": [
-      "image"
-    ]
+    "outputIdxs": [0],
+    "showComponents": ["image"]
   }
 ]
 ```
+
 ```typescript [TS 类型定义]
 interface GradioManifestFileparser {
   type: 'fileparser'
@@ -223,8 +233,12 @@ interface GradioManifestInfo {
   inputs: GradioApiInput[]
   outputIdxs: number[]
 }
-type GradioManifestEndpoint = GradioManifestFileparser | GradioManifestTool | GradioManifestInfo
+type GradioManifestEndpoint =
+  | GradioManifestFileparser
+  | GradioManifestTool
+  | GradioManifestInfo
 ```
+
 :::
 
 #### 工具调用
@@ -239,6 +253,7 @@ type GradioManifestEndpoint = GradioManifestFileparser | GradioManifestTool | Gr
 - `inputs`: 定义接口的输入参数；[具体说明](#inputs)
 - `outputIdxs`: 选取 Gradio 接口返回值的索引数组；如，值为 `[0]`，则仅选取返回值中索引为 `0` 的一项（即第一项）作为工具调用结果数组的唯一一项。它是一个数组，意味着如果接口有多个返回值的话，你可以选取多项作为调用结果。
 - `showComponents`: 可选；定义调用结果的每一项展示给用户所用的组件。可用的组件有：
+
   - `textbox`: 用于展示文本；
   - `markdown`: 用于展示 markdown 格式文本
   - `image`: 用于展示图片
@@ -249,12 +264,12 @@ type GradioManifestEndpoint = GradioManifestFileparser | GradioManifestTool | Gr
 
   上方示例的值为 `["image"]`，因为调用结果只有一个图片，使用 `image` 组件将其展示给用户。如果不填 `showComponents`，则不会展示调用结果
 
-
 ##### inputs
 
 `inputs` 定义了接口的输入参数
 
 ::: code-group
+
 ```json [示例值]
 [
   {
@@ -297,6 +312,7 @@ type GradioManifestEndpoint = GradioManifestFileparser | GradioManifestTool | Gr
   }
 ]
 ```
+
 ```typescript [TS 类型定义]
 interface GradioFixedInput {
   name: string
@@ -318,8 +334,12 @@ interface GradioRequiredInput {
   paramType: 'required'
   type: string
 }
-type GradioApiInput = GradioFixedInput | GradioOptionalInput | GradioRequiredInput
+type GradioApiInput =
+  | GradioFixedInput
+  | GradioOptionalInput
+  | GradioRequiredInput
 ```
+
 :::
 
 - `name`: Gradio 应用接口中该参数的名称
@@ -335,6 +355,7 @@ type GradioApiInput = GradioFixedInput | GradioOptionalInput | GradioRequiredInp
 `endpoints` 的元素也可以是文件解析器（`fileparser`）；以「语音识别：Whisper」插件的文件解析器为例：
 
 ::: code-group
+
 ```json [示例值]
 {
   "type": "fileparser",
@@ -345,9 +366,7 @@ type GradioApiInput = GradioFixedInput | GradioOptionalInput | GradioRequiredInp
     {
       "name": "audio",
       "type": "file",
-      "mimeTypes": [
-        "audio/*"
-      ],
+      "mimeTypes": ["audio/*"],
       "paramType": "file"
     },
     {
@@ -358,11 +377,10 @@ type GradioApiInput = GradioFixedInput | GradioOptionalInput | GradioRequiredInp
       "value": "transcribe"
     }
   ],
-  "outputIdxs": [
-    0
-  ]
+  "outputIdxs": [0]
 }
 ```
+
 ```typescript [TS 类型定义]
 interface GradioFileInput {
   name: string
@@ -383,7 +401,10 @@ interface GradioFixedInput {
   value
   description?: string
 }
-type GradioFileparserInput = GradioFileInput | GradioRangeInput | GradioFixedInput
+type GradioFileparserInput =
+  | GradioFileInput
+  | GradioRangeInput
+  | GradioFixedInput
 interface GradioManifestFileparser {
   type: 'fileparser'
   name: string
@@ -393,6 +414,7 @@ interface GradioManifestFileparser {
   outputIdxs: number[]
 }
 ```
+
 :::
 
 它有以下属性：
@@ -468,6 +490,7 @@ interface ApiResultItem {
 通过 `promptVars` 可定义插件的变量，变量可在插件的 `prompt` 中使用；变量的值可在插件功能页面更改。使用变量可以允许用户对插件的提示词进行微调。
 
 ::: code-group
+
 ```json [示例值]
 [
   {
@@ -479,6 +502,7 @@ interface ApiResultItem {
   }
 ]
 ```
+
 ```typescript [TS 类型定义]
 type PromptVarValue = string | number | boolean | string[]
 interface PromptVar {
@@ -490,22 +514,23 @@ interface PromptVar {
   default?: PromptVarValue
 }
 ```
+
 :::
 
 此外，还有几个「通用提示词变量」，可以在插件的 `prompt` 中使用：
 
-| 变量名 | 内容 | 示例值 |
-| ----- | ---- | ---- |
-| _currentTime | 当前时间 | "Tue Dec 10 2024 17:22:11 GMT+0800 (中国标准时间)" |
-| _userLanguage | 用户语言 `navigator.language` | "zh-CN" |
-| _workspaceId | 工作区 ID | "1ielm0e6n464itr2ps" |
-| _workspaceName | 工作区名称 | "示例工作区" |
-| _assistantId | 助手 ID | "1ielm0e6n464itssd3" |
-| _assistantName | 助手名称 | "默认助手" |
-| _dialogId | 对话 ID | "1ielm5fg6464ittksm" |
-| _modelId | 模型 ID | "gpt-4o" |
-| _isDarkMode | 当前是否为深色模式 | false |
-| _platform | 根据用户使用的平台信息 | quasar 的 Platform 对象。详见[这里](https://quasar.dev/options/platform-detection#properties) |
+| 变量名          | 内容                          | 示例值                                                                                        |
+| --------------- | ----------------------------- | --------------------------------------------------------------------------------------------- |
+| \_currentTime   | 当前时间                      | "Tue Dec 10 2024 17:22:11 GMT+0800 (中国标准时间)"                                            |
+| \_userLanguage  | 用户语言 `navigator.language` | "zh-CN"                                                                                       |
+| \_workspaceId   | 工作区 ID                     | "1ielm0e6n464itr2ps"                                                                          |
+| \_workspaceName | 工作区名称                    | "示例工作区"                                                                                  |
+| \_assistantId   | 助手 ID                       | "1ielm0e6n464itssd3"                                                                          |
+| \_assistantName | 助手名称                      | "默认助手"                                                                                    |
+| \_dialogId      | 对话 ID                       | "1ielm5fg6464ittksm"                                                                          |
+| \_modelId       | 模型 ID                       | "gpt-4o"                                                                                      |
+| \_isDarkMode    | 当前是否为深色模式            | false                                                                                         |
+| \_platform      | 根据用户使用的平台信息        | quasar 的 Platform 对象。详见[这里](https://quasar.dev/options/platform-detection#properties) |
 
 ### 仅提示词插件
 

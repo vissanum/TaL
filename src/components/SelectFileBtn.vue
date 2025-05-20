@@ -17,8 +17,8 @@
             cursor-pointer
           >
             <div text="xl center out">
-              {{ $t('selectFileBtn.clickToSelect') }}<br>
-              {{ $t('selectFileBtn.dragHere') }}<br>
+              {{ $t('selectFileBtn.clickToSelect') }}<br />
+              {{ $t('selectFileBtn.dragHere') }}<br />
               {{ $t('selectFileBtn.paste') }}
             </div>
           </div>
@@ -32,7 +32,7 @@
       @change="onInput"
       un-hidden
       multiple
-    >
+    />
   </q-btn>
 </template>
 

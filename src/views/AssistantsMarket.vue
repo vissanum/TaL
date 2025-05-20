@@ -12,20 +12,12 @@
     >
       <q-menu>
         <q-list>
-          <q-item
-            clickable
-            v-close-popup
-            @click="fileInput.click()"
-          >
+          <q-item clickable v-close-popup @click="fileInput.click()">
             <q-item-section>
               {{ $t('assistantsMarket.selectFile') }}
             </q-item-section>
           </q-item>
-          <q-item
-            clickable
-            v-close-popup
-            @click="clipboardImport"
-          >
+          <q-item clickable v-close-popup @click="clipboardImport">
             <q-item-section>
               {{ $t('assistantsMarket.importFromClipboard') }}
             </q-item-section>
@@ -38,14 +30,11 @@
         accept=".json"
         un-hidden
         @change="onFileInput"
-      >
+      />
     </q-btn>
   </view-common-header>
   <q-page-container>
-    <q-page
-      p-2
-      :style-fn="pageFhStyle"
-    >
+    <q-page p-2 :style-fn="pageFhStyle">
       <div>
         <a-input
           :label="$t('assistantsMarket.search')"
@@ -53,14 +42,8 @@
           v-model="query"
         />
       </div>
-      <q-virtual-scroll
-        mt-2
-        v-slot="{ item, index }"
-        :items="filterList"
-      >
-        <q-item
-          :key="index"
-        >
+      <q-virtual-scroll mt-2 v-slot="{ item, index }" :items="filterList">
+        <q-item :key="index">
           <q-item-section avatar>
             <a-avatar :avatar="item.avatar" />
           </q-item-section>
@@ -81,20 +64,12 @@
             >
               <q-menu>
                 <q-list>
-                  <q-item
-                    clickable
-                    v-close-popup
-                    @click="addToGlobal(item)"
-                  >
+                  <q-item clickable v-close-popup @click="addToGlobal(item)">
                     <q-item-section>
                       {{ $t('assistantsMarket.addToGlobal') }}
                     </q-item-section>
                   </q-item>
-                  <q-item
-                    clickable
-                    v-close-popup
-                    @click="addToWorkspace(item)"
-                  >
+                  <q-item clickable v-close-popup @click="addToWorkspace(item)">
                     <q-item-section>
                       {{ $t('assistantsMarket.addToWorkspace') }}
                     </q-item-section>
@@ -133,7 +108,11 @@ const list = reactive([])
 
 const filterList = computed(() =>
   query.value
-    ? list.filter(item => caselessIncludes(item.name, query.value) || caselessIncludes(item.description, query.value))
+    ? list.filter(
+        (item) =>
+          caselessIncludes(item.name, query.value) ||
+          caselessIncludes(item.description, query.value)
+      )
     : list
 )
 
@@ -143,22 +122,26 @@ const { locale } = useI18n()
 function load() {
   loading.value = true
   fetch(`/json/assistants.${locale.value}.json`)
-    .then(res => res.json())
-    .then(data => {
+    .then((res) => res.json())
+    .then((data) => {
       list.push(...data)
-    }).catch(err => {
+    })
+    .catch((err) => {
       console.error(err)
       $q.notify({
         message: t('assistantsMarket.loadError'),
         color: 'err-c',
         textColor: 'on-err-c',
-        actions: [{
-          label: t('assistantsMarket.retry'),
-          color: 'on-sur',
-          handler: load
-        }]
+        actions: [
+          {
+            label: t('assistantsMarket.retry'),
+            color: 'on-sur',
+            handler: load,
+          },
+        ],
       })
-    }).finally(() => {
+    })
+    .finally(() => {
       loading.value = false
     })
 }
@@ -173,9 +156,9 @@ function addToWorkspace(item) {
   $q.dialog({
     component: SelectWorkspaceDialog,
     componentProps: {
-      accept: 'workspace'
-    }
-  }).onOk(selected => {
+      accept: 'workspace',
+    },
+  }).onOk((selected) => {
     add(item, selected)
   })
 }
@@ -183,34 +166,48 @@ function add(item, workspaceId) {
   if (!new Validator(MarketAssistantSchema).validate(item).valid) {
     $q.notify({
       message: t('assistantsMarket.formatError'),
-      color: 'negative'
+      color: 'negative',
     })
     return
   }
-  const { name, avatar, prompt, promptVars, promptTemplate, model, modelSettings, author, homepage, description } = toRaw(item)
-  store.add({
+  const {
     name,
     avatar,
     prompt,
-    promptVars: promptVars ?? [],
-    promptTemplate: promptTemplate ?? AssistantDefaultPrompt,
-    workspaceId,
+    promptVars,
+    promptTemplate,
     model,
-    modelSettings: modelSettings ?? { ...defaultModelSettings },
+    modelSettings,
     author,
     homepage,
-    description
-  }).then(() => {
-    $q.notify({
-      message: t('assistantsMarket.added')
+    description,
+  } = toRaw(item)
+  store
+    .add({
+      name,
+      avatar,
+      prompt,
+      promptVars: promptVars ?? [],
+      promptTemplate: promptTemplate ?? AssistantDefaultPrompt,
+      workspaceId,
+      model,
+      modelSettings: modelSettings ?? { ...defaultModelSettings },
+      author,
+      homepage,
+      description,
     })
-  }).catch(err => {
-    console.error(err)
-    $q.notify({
-      message: t('assistantsMarket.addError'),
-      color: 'negative'
+    .then(() => {
+      $q.notify({
+        message: t('assistantsMarket.added'),
+      })
     })
-  })
+    .catch((err) => {
+      console.error(err)
+      $q.notify({
+        message: t('assistantsMarket.addError'),
+        color: 'negative',
+      })
+    })
 }
 
 const fileInput = ref<HTMLInputElement>()
@@ -226,7 +223,7 @@ async function clipboardImport() {
   } catch (err) {
     $q.notify({
       message: t('assistantsMarket.importError'),
-      color: 'negative'
+      color: 'negative',
     })
   }
 }

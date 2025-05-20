@@ -1,13 +1,6 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-    :persistent="model !== value"
-  >
-    <q-card
-      w="xs:90vw sm:80vw md:70vw lg:60vw xl:50vw"
-      important:max-w-none
-    >
+  <q-dialog ref="dialogRef" @hide="onDialogHide" :persistent="model !== value">
+    <q-card w="xs:90vw sm:80vw md:70vw lg:60vw xl:50vw" important:max-w-none>
       <q-card-section>
         <div class="text-h6">
           {{ props.title }}
@@ -50,11 +43,10 @@ const props = defineProps<{
   model: string
 }>()
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const value = ref(props.model)
 
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent()
 </script>

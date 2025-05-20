@@ -8,11 +8,13 @@ export function useFilterOptions(options: MaybeRef<string[]>) {
       return
     }
     update(() => {
-      filteredOptions.value = unref(options).filter(v => v.toLowerCase().includes(val.toLowerCase()))
+      filteredOptions.value = unref(options).filter((v) =>
+        v.toLowerCase().includes(val.toLowerCase())
+      )
     })
   }
   return {
     filteredOptions,
-    filterFn
+    filterFn,
   }
 }

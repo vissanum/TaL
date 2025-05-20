@@ -15,30 +15,30 @@ export function useOrder(loading: Ref<boolean>, onDialogOK: (res) => void) {
       const res = await fetch(`${BudgetBaseURL}${path}`, {
         method: 'POST',
         body: JSON.stringify({
-          item
+          item,
         }),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${db.cloud.currentUser.value.accessToken}`
-        }
+          Authorization: `Bearer ${db.cloud.currentUser.value.accessToken}`,
+        },
       })
       if (!res.ok) throw new Error('Failed to order')
       const body = await res.json()
       onDialogOK({
         orderId: body.order_id,
-        payUrl: body.pay_url
+        payUrl: body.pay_url,
       })
     } catch (error) {
       console.error(error)
       $q.notify({
         message: t('order.failure'),
-        color: 'negative'
+        color: 'negative',
       })
     } finally {
       loading.value = false
     }
   }
   return {
-    order
+    order,
   }
 }

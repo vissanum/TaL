@@ -1,8 +1,16 @@
 import { EventSource, type ErrorEvent, type EventSourceInit } from 'eventsource'
 
 import { Transport } from '@modelcontextprotocol/sdk/shared/transport.js'
-import { JSONRPCMessage, JSONRPCMessageSchema } from '@modelcontextprotocol/sdk/types.js'
-import { auth, AuthResult, OAuthClientProvider, UnauthorizedError } from '@modelcontextprotocol/sdk/client/auth.js'
+import {
+  JSONRPCMessage,
+  JSONRPCMessageSchema,
+} from '@modelcontextprotocol/sdk/types.js'
+import {
+  auth,
+  AuthResult,
+  OAuthClientProvider,
+  UnauthorizedError,
+} from '@modelcontextprotocol/sdk/client/auth.js'
 
 export class SseError extends Error {
   constructor(
@@ -16,7 +24,7 @@ export class SseError extends Error {
 
 type RequestInit = globalThis.RequestInit
 type HeadersInit = globalThis.HeadersInit
-type FetchLike = (url: string | URL, init?: RequestInit) => Promise<Response>;
+type FetchLike = (url: string | URL, init?: RequestInit) => Promise<Response>
 
 /**
  * Configuration options for the `SSEClientTransport`.
@@ -36,7 +44,7 @@ export type SSEClientTransportOptions = {
    *
    * `UnauthorizedError` might also be thrown when sending any message over the SSE transport, indicating that the session has expired, and needs to be re-authed and reconnected.
    */
-  authProvider?: OAuthClientProvider;
+  authProvider?: OAuthClientProvider
 
   /**
    * Customizes the initial SSE request to the server (the request that begins the stream).
@@ -46,18 +54,18 @@ export type SSEClientTransportOptions = {
    * also given. This can be worked around by setting the `Authorization` header
    * manually.
    */
-  eventSourceInit?: EventSourceInit;
+  eventSourceInit?: EventSourceInit
 
   /**
    * Customizes recurring POST requests to the server.
    */
-  requestInit?: RequestInit;
+  requestInit?: RequestInit
 
   /**
    * Customizes the fetch implementation.
    */
-  fetch?: FetchLike;
-};
+  fetch?: FetchLike
+}
 
 /**
  * Client transport for SSE: this will connect to a server using Server-Sent Events for receiving
@@ -77,10 +85,7 @@ export class SSEClientTransport implements Transport {
   onerror?: (error: Error) => void
   onmessage?: (message: JSONRPCMessage) => void
 
-  constructor(
-    url: URL,
-    opts?: SSEClientTransportOptions
-  ) {
+  constructor(url: URL, opts?: SSEClientTransportOptions) {
     this._url = url
     this._eventSourceInit = opts?.eventSourceInit
     this._requestInit = opts?.requestInit
@@ -125,13 +130,16 @@ export class SSEClientTransport implements Transport {
       this._eventSource = new EventSource(
         this._url.href,
         this._eventSourceInit ?? {
-          fetch: (url, init) => this._commonHeaders().then((headers) => this._fetch(url, {
-            ...init,
-            headers: {
-              ...headers,
-              Accept: 'text/event-stream'
-            }
-          }))
+          fetch: (url, init) =>
+            this._commonHeaders().then((headers) =>
+              this._fetch(url, {
+                ...init,
+                headers: {
+                  ...headers,
+                  Accept: 'text/event-stream',
+                },
+              })
+            ),
         }
       )
       this._abortController = new AbortController()
@@ -205,7 +213,10 @@ export class SSEClientTransport implements Transport {
       throw new UnauthorizedError('No auth provider')
     }
 
-    const result = await auth(this._authProvider, { serverUrl: this._url, authorizationCode })
+    const result = await auth(this._authProvider, {
+      serverUrl: this._url,
+      authorizationCode,
+    })
     if (result !== 'AUTHORIZED') {
       throw new UnauthorizedError('Failed to authorize')
     }
@@ -224,20 +235,25 @@ export class SSEClientTransport implements Transport {
 
     try {
       const commonHeaders = await this._commonHeaders()
-      const headers = new Headers({ ...commonHeaders, ...this._requestInit?.headers })
+      const headers = new Headers({
+        ...commonHeaders,
+        ...this._requestInit?.headers,
+      })
       headers.set('content-type', 'application/json')
       const init = {
         ...this._requestInit,
         method: 'POST',
         headers,
         body: JSON.stringify(message),
-        signal: this._abortController?.signal
+        signal: this._abortController?.signal,
       }
 
       const response = await this._fetch(this._endpoint, init)
       if (!response.ok) {
         if (response.status === 401 && this._authProvider) {
-          const result = await auth(this._authProvider, { serverUrl: this._url })
+          const result = await auth(this._authProvider, {
+            serverUrl: this._url,
+          })
           if (result !== 'AUTHORIZED') {
             throw new UnauthorizedError()
           }

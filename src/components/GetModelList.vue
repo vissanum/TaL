@@ -28,28 +28,33 @@ const { t } = useI18n()
 
 const providersStore = useProvidersStore()
 
-const providerType = computed(() => providersStore.providerTypes.find(pt => pt.name === props.provider?.type))
+const providerType = computed(() =>
+  providersStore.providerTypes.find((pt) => pt.name === props.provider?.type)
+)
 
 function getModelList() {
-  providerType.value.getModelList(props.provider.settings).then(modelList => {
-    $q.dialog({
-      title: t('getModelList.selectModels'),
-      options: {
-        type: 'checkbox',
-        model: models.value.filter(m => modelList.includes(m)),
-        items: modelList.sort().map(m => ({ label: m, value: m }))
-      },
-      cancel: true,
-      ...dialogOptions
-    }).onOk(val => {
-      models.value = val
+  providerType.value
+    .getModelList(props.provider.settings)
+    .then((modelList) => {
+      $q.dialog({
+        title: t('getModelList.selectModels'),
+        options: {
+          type: 'checkbox',
+          model: models.value.filter((m) => modelList.includes(m)),
+          items: modelList.sort().map((m) => ({ label: m, value: m })),
+        },
+        cancel: true,
+        ...dialogOptions,
+      }).onOk((val) => {
+        models.value = val
+      })
     })
-  }).catch(err => {
-    console.error(err)
-    $q.notify({
-      message: t('getModelList.getModelListFailed'),
-      color: 'negative'
+    .catch((err) => {
+      console.error(err)
+      $q.notify({
+        message: t('getModelList.getModelListFailed'),
+        color: 'negative',
+      })
     })
-  })
 }
 </script>

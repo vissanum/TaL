@@ -9,25 +9,22 @@
       item-rd
     >
       <q-item-section avatar>
-        <a-avatar
-          size="md"
-          :avatar="provider.avatar"
-        />
+        <a-avatar size="md" :avatar="provider.avatar" />
       </q-item-section>
       <q-item-section>
         <q-item-label>
           {{ provider.name }}
         </q-item-label>
       </q-item-section>
-      <q-menu
-        context-menu
-      >
+      <q-menu context-menu>
         <q-list style="min-width: 100px">
           <menu-item
             icon="sym_o_check_box"
             :label="$t('customProviders.setAsDefault')"
             @click="setAsDefault(provider)"
-            :class="{ 'route-active': perfs.provider?.type === `custom:${provider.id}` }"
+            :class="{
+              'route-active': perfs.provider?.type === `custom:${provider.id}`,
+            }"
           />
           <menu-item
             icon="sym_o_delete"
@@ -38,16 +35,8 @@
         </q-list>
       </q-menu>
     </q-item>
-    <q-item
-      clickable
-      @click="addItem"
-      text-sec
-      item-rd
-    >
-      <q-item-section
-        avatar
-        min-w-0
-      >
+    <q-item clickable @click="addItem" text-sec item-rd>
+      <q-item-section avatar min-w-0>
         <q-icon name="sym_o_add" />
       </q-item-section>
       <q-item-section>
@@ -91,8 +80,8 @@ function deleteItem({ id, name }: CustomProvider) {
     ok: {
       label: t('customProviders.delete'),
       color: 'err',
-      flat: true
-    }
+      flat: true,
+    },
   }).onOk(() => {
     providersStore.delete(id)
   })

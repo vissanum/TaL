@@ -12,7 +12,7 @@
         text-on-sec-c
         :options="[
           { label: $t('payMethodItem.wxpay'), value: 'wxpay' },
-          { label: $t('payMethodItem.stripe'), value: 'stripe' }
+          { label: $t('payMethodItem.stripe'), value: 'stripe' },
         ]"
       />
     </q-item-section>

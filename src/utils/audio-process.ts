@@ -12,13 +12,20 @@ async function extractAudioBlob(video: Blob, range?: [number, number]) {
   return await encodeAudioBlob(audioBuffer)
 }
 
-function sliceAudioBuffer(audioBuffer: AudioBuffer, [start, end]: [number, number]) {
+function sliceAudioBuffer(
+  audioBuffer: AudioBuffer,
+  [start, end]: [number, number]
+) {
   const channels = audioBuffer.numberOfChannels
   const rate = audioBuffer.sampleRate
   const startOffset = rate * start
   const endOffset = rate * end
   const frameCount = endOffset - startOffset
-  const newAudioBuffer = new AudioContext().createBuffer(channels, frameCount, rate)
+  const newAudioBuffer = new AudioContext().createBuffer(
+    channels,
+    frameCount,
+    rate
+  )
   const tmpArray = new Float32Array(frameCount)
   for (let channel = 0; channel < channels; channel++) {
     audioBuffer.copyFromChannel(tmpArray, channel, startOffset)
@@ -33,28 +40,30 @@ async function encodeAudioBlob(audioBuffer: AudioBuffer) {
     audio: {
       codec: 'A_OPUS',
       numberOfChannels: audioBuffer.numberOfChannels,
-      sampleRate: audioBuffer.sampleRate
-    }
+      sampleRate: audioBuffer.sampleRate,
+    },
   })
   const audioEncoder = new window.AudioEncoder({
     output: (chunk, meta) => muxer.addAudioChunk(chunk, meta),
-    error: console.error
+    error: console.error,
   })
   audioEncoder.configure({
     codec: 'opus',
     sampleRate: audioBuffer.sampleRate,
     numberOfChannels: audioBuffer.numberOfChannels,
-    bitrate: 96_000
+    bitrate: 96_000,
   })
   const signal = bufferToF32Planar(audioBuffer)
-  audioEncoder.encode(new window.AudioData({
-    format: 'f32-planar',
-    sampleRate: audioBuffer.sampleRate,
-    numberOfChannels: audioBuffer.numberOfChannels,
-    numberOfFrames: audioBuffer.length,
-    timestamp: 0,
-    data: signal
-  }))
+  audioEncoder.encode(
+    new window.AudioData({
+      format: 'f32-planar',
+      sampleRate: audioBuffer.sampleRate,
+      numberOfChannels: audioBuffer.numberOfChannels,
+      numberOfFrames: audioBuffer.length,
+      timestamp: 0,
+      data: signal,
+    })
+  )
   await audioEncoder.flush()
   muxer.finalize()
   const { buffer } = muxer.target
@@ -62,10 +71,10 @@ async function encodeAudioBlob(audioBuffer: AudioBuffer) {
 }
 
 /**
-* Convert an audio buffer into a planar float 32 array
-* @param input processed audio buffer
-* @returns Typed array
-*/
+ * Convert an audio buffer into a planar float 32 array
+ * @param input processed audio buffer
+ * @returns Typed array
+ */
 function bufferToF32Planar(input: AudioBuffer) {
   const result = new Float32Array(input.length * input.numberOfChannels)
 

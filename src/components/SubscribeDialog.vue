@@ -1,8 +1,5 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
+  <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card min-w="320px">
       <q-card-section>
         <div class="text-h6">
@@ -16,25 +13,19 @@
               <q-item-label>
                 {{ $t('subscribeDialog.duration') }}
               </q-item-label>
-              <q-item-label
-                caption
-                v-if="payMethod === 'wxpay'"
-              >
-                {{ $t('subscribeDialog.priceCNY', { price: SyncServicePrice }) }}
+              <q-item-label caption v-if="payMethod === 'wxpay'">
+                {{
+                  $t('subscribeDialog.priceCNY', { price: SyncServicePrice })
+                }}
               </q-item-label>
-              <q-item-label
-                caption
-                v-else
-              >
-                {{ $t('subscribeDialog.priceUSD', { price: SyncServicePriceUSD }) }}
+              <q-item-label caption v-else>
+                {{
+                  $t('subscribeDialog.priceUSD', { price: SyncServicePriceUSD })
+                }}
               </q-item-label>
             </q-item-section>
             <q-item-section side>
-              <a-input
-                class="w-50px"
-                v-model.number="amount"
-                type="number"
-              />
+              <a-input class="w-50px" v-model.number="amount" type="number" />
             </q-item-section>
           </q-item>
           <q-item v-if="payMethod === 'stripe'">
@@ -79,17 +70,21 @@
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
 import { useOrder } from 'src/composables/order'
-import { StripeFee, SyncServicePrice, SyncServicePriceUSD } from 'src/utils/config'
+import {
+  StripeFee,
+  SyncServicePrice,
+  SyncServicePriceUSD,
+} from 'src/utils/config'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import PayMethodItem from './PayMethodItem.vue'
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const { locale } = useI18n()
-const payMethod = ref<'wxpay' | 'stripe'>(locale.value === 'zh-CN' ? 'wxpay' : 'stripe')
+const payMethod = ref<'wxpay' | 'stripe'>(
+  locale.value === 'zh-CN' ? 'wxpay' : 'stripe'
+)
 
 const amount = ref<number>(locale.value === 'zh-CN' ? 1 : 3)
 const payAmount = computed(() => {
@@ -101,10 +96,13 @@ const payAmount = computed(() => {
   }
 })
 
-const valid = computed(() => amount.value > 0 && amount.value < 100 && amount.value % 1 === 0)
+const valid = computed(
+  () => amount.value > 0 && amount.value < 100 && amount.value % 1 === 0
+)
 const loading = ref(false)
 
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent()
 
 const { order } = useOrder(loading, onDialogOK)
 </script>

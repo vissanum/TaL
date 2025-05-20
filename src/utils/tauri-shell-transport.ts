@@ -1,5 +1,8 @@
 import { Command, Child } from '@tauri-apps/plugin-shell'
-import { serializeMessage, deserializeMessage } from '@modelcontextprotocol/sdk/shared/stdio.js'
+import {
+  serializeMessage,
+  deserializeMessage,
+} from '@modelcontextprotocol/sdk/shared/stdio.js'
 import { Transport } from '@modelcontextprotocol/sdk/shared/transport.js'
 import { JSONRPCMessage } from '@modelcontextprotocol/sdk/types.js'
 
@@ -44,20 +47,20 @@ export type TauriShellServerParameters = {
   /**
    * 要启动的可执行文件。
    */
-  command: string;
+  command: string
   /**
    * 传递给可执行文件的命令行参数。
    */
-  args?: string[];
+  args?: string[]
   /**
    * 启动进程时使用的环境变量。
    */
-  env?: Record<string, string>;
+  env?: Record<string, string>
   /**
    * 进程的工作目录。
    */
-  cwd?: string;
-};
+  cwd?: string
+}
 
 /**
  * 基于 @tauri-apps/plugin-shell 的 transport 实现 —— 用于在浏览器（前端）环境下调用后端进程。
@@ -90,7 +93,7 @@ export class TauriShellClientTransport implements Transport {
       {
         cwd: this._serverParams.cwd,
         env: this._serverParams.env,
-        encoding: 'utf-8'
+        encoding: 'utf-8',
       }
     )
 

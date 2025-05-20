@@ -36,7 +36,7 @@ export default {
     syncServiceType: 'Cloud Sync Service',
     apiBudgetType: 'Model Quota (CNY)',
     apiBudgetUsdType: 'Model Quota (USD)',
-    amount: 'Amount'
+    amount: 'Amount',
   },
   modelPricing: {
     modelPrice: 'Model Price',
@@ -44,7 +44,8 @@ export default {
     modelPerformanceDescription: 'Model performance leaderboard for reference',
     freeModelDisclaimer:
       'There are a few free models with a price of 0, which are mainly experimental models. Availability of free models is not guaranteed.',
-    performanceNote: 'Model metrics/rankings are for reference only. The actual effect of the model shall prevail.',
+    performanceNote:
+      'Model metrics/rankings are for reference only. The actual effect of the model shall prevail.',
     usageCalculator: 'Usage Calculator',
     budgetLabel: 'Budget (CNY)',
     modelLabel: 'Model',
@@ -53,38 +54,40 @@ export default {
     getModelPriceFailed: 'Failed to get model price',
     inputPrice: 'Input Price',
     outputPrice: 'Output Price',
-    usageDescription: 'All models are charged according to the official API price of each service provider.',
-    tokenOutputNote: 'Calculated as 1.4 Chinese characters per Token output (new GPT model) or 1 Chinese character (other models) or 1.8 Chinese characters (domestic models). The actual ratio fluctuates and is slightly larger on average, but input costs also need to be considered.',
+    usageDescription:
+      'All models are charged according to the official API price of each service provider.',
+    tokenOutputNote:
+      'Calculated as 1.4 Chinese characters per Token output (new GPT model) or 1 Chinese character (other models) or 1.8 Chinese characters (domestic models). The actual ratio fluctuates and is slightly larger on average, but input costs also need to be considered.',
     currencyCNY: '￥',
     currencyUSD: '$',
     unitKTokens: 'K Tokens',
     unitMTokens: 'M Tokens',
-    modelName: 'Model'
+    modelName: 'Model',
   },
   pluginsPage: {
-    installedPlugins: 'Installed Plugins'
+    installedPlugins: 'Installed Plugins',
   },
   setProviderPage: {
     providerSet: 'Provider set to: {baseURL}',
     restore: 'Restore',
-    providerSetFailed: 'Failed to set provider: incorrect format'
+    providerSetFailed: 'Failed to set provider: incorrect format',
   },
   settingsPage: {
     customProviders: 'Custom Providers',
-    customProviderUsage: 'Refer to the custom provider\'s',
-    usageGuide: 'Usage Guide'
+    customProviderUsage: "Refer to the custom provider's",
+    usageGuide: 'Usage Guide',
   },
   errorNotFound: {
-    message: 'There\'s nothing here...'
+    message: "There's nothing here...",
   },
   assistantsPage: {
-    globalAssistant: 'Global Assistant'
+    globalAssistant: 'Global Assistant',
   },
   workspacePage: {
     closeArtifact: 'Close',
     closeAllArtifacts: 'Close All Artifacts',
     workspaceHome: 'Workspace Home',
-    workspaceSettings: 'Workspace Settings'
+    workspaceSettings: 'Workspace Settings',
   },
   mainLayout: {
     workspace: 'Workspace | Workspaces',
@@ -95,6 +98,6 @@ export default {
     currentVersion: 'Current Version',
     changeLog: 'Change Log',
     webVersion: 'Web Version',
-    localClient: 'Local Client'
-  }
+    localClient: 'Local Client',
+  },
 }

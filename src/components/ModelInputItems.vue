@@ -11,11 +11,7 @@
         dense
       >
         <template #option="{ opt, selected, itemProps }">
-          <model-item
-            :model="opt"
-            :selected
-            v-bind="itemProps"
-          />
+          <model-item :model="opt" :selected v-bind="itemProps" />
         </template>
       </autocomplete-input>
     </q-item-section>
@@ -80,7 +76,12 @@ import { useProvidersStore } from 'src/stores/providers'
 
 const model = defineModel<Model>()
 function setModel(name: string) {
-  model.value = name ? models.find(m => m.name === name) || { name, inputTypes: InputTypes.default } : null
+  model.value = name
+    ? models.find((m) => m.name === name) || {
+        name,
+        inputTypes: InputTypes.default,
+      }
+    : null
 }
 
 const providersStore = useProvidersStore()

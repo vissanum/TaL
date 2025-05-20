@@ -14,10 +14,10 @@ config({
         copyCode: {
           text: 'content_copy',
           successTips: 'check',
-          failTips: 'error'
-        }
-      }
-    }
+          failTips: 'error',
+        },
+      },
+    },
   },
   markdownItPlugins(plugins) {
     return [
@@ -25,7 +25,7 @@ config({
       {
         type: 'xss',
         plugin: XSSPlugin,
-        options: {}
+        options: {},
       },
       {
         type: 'linkAttr',
@@ -37,17 +37,17 @@ config({
             return !href.startsWith('#')
           },
           attrs: {
-            target: '_blank'
-          }
-        }
+            target: '_blank',
+          },
+        },
       },
       {
         type: 'footnote',
         plugin: Footnote,
-        options: {}
-      }
+        options: {},
+      },
     ]
-  }
+  },
 })
 
 class RouterLink extends HTMLElement {
@@ -58,11 +58,15 @@ class RouterLink extends HTMLElement {
   }
 
   connectedCallback() {
-    this.shadowRoot.querySelector('span').addEventListener('click', this.onClick.bind(this))
+    this.shadowRoot
+      .querySelector('span')
+      .addEventListener('click', this.onClick.bind(this))
   }
 
   disconnectedCallback() {
-    this.shadowRoot.querySelector('span').removeEventListener('click', this.onClick.bind(this))
+    this.shadowRoot
+      .querySelector('span')
+      .removeEventListener('click', this.onClick.bind(this))
   }
 
   onClick(event) {
@@ -83,6 +87,6 @@ export function useMdPreviewProps() {
     codeTheme: perfs.mdCodeTheme,
     autoFoldThreshold: perfs.mdAutoFoldThreshold ?? Infinity,
     noMermaid: perfs.mdNoMermaid,
-    mdHeadingId: (text, level, index) => `${text}-${level}-${index}`
+    mdHeadingId: (text, level, index) => `${text}-${level}-${index}`,
   }))
 }

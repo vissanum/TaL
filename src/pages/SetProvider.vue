@@ -17,34 +17,40 @@ const { t } = useI18n()
 
 const { openLastWorkspace } = useOpenLastWorkspace()
 
-until(() => userPerfsStore.ready).toBeTruthy().then(() => {
-  try {
-    const provider = JSON.parse(route.query.provider as string)
-    if (!new Validator(ProviderSchema).validate(provider)) {
-      throw new Error('Invalid provider schema')
+until(() => userPerfsStore.ready)
+  .toBeTruthy()
+  .then(() => {
+    try {
+      const provider = JSON.parse(route.query.provider as string)
+      if (!new Validator(ProviderSchema).validate(provider)) {
+        throw new Error('Invalid provider schema')
+      }
+      const bak = userPerfsStore.perfs.provider
+      userPerfsStore.perfs.provider = provider
+      $q.notify({
+        message: t('setProviderPage.providerSet', {
+          baseURL: provider.settings.baseURL,
+        }),
+        color: 'positive',
+        actions: [
+          {
+            label: t('setProviderPage.restore'),
+            handler: () => {
+              userPerfsStore.perfs.provider = bak
+            },
+            color: 'white',
+          },
+        ],
+        timeout: 6000,
+      })
+    } catch (e) {
+      console.error(e)
+      $q.notify({
+        message: t('setProviderPage.providerSetFailed'),
+        color: 'negative',
+      })
+    } finally {
+      openLastWorkspace()
     }
-    const bak = userPerfsStore.perfs.provider
-    userPerfsStore.perfs.provider = provider
-    $q.notify({
-      message: t('setProviderPage.providerSet', { baseURL: provider.settings.baseURL }),
-      color: 'positive',
-      actions: [{
-        label: t('setProviderPage.restore'),
-        handler: () => {
-          userPerfsStore.perfs.provider = bak
-        },
-        color: 'white'
-      }],
-      timeout: 6000
-    })
-  } catch (e) {
-    console.error(e)
-    $q.notify({
-      message: t('setProviderPage.providerSetFailed'),
-      color: 'negative'
-    })
-  } finally {
-    openLastWorkspace()
-  }
-})
+  })
 </script>

@@ -1,7 +1,5 @@
 <template>
-  <q-menu
-    context-menu
-  >
+  <q-menu context-menu>
     <q-list style="min-width: 100px">
       <menu-item
         v-if="artifact.open"
@@ -60,11 +58,11 @@ function renameItem({ id, name }) {
       model: name,
       type: 'text',
       label: t('artifactItemMenu.rename'),
-      isValid: v => v.trim() && v !== name
+      isValid: (v) => v.trim() && v !== name,
     },
     cancel: true,
-    ...dialogOptions
-  }).onOk(newName => {
+    ...dialogOptions,
+  }).onOk((newName) => {
     db.artifacts.update(id, { name: newName.trim() })
   })
 }
@@ -72,9 +70,9 @@ function moveItem({ id }) {
   $q.dialog({
     component: SelectWorkspaceDialog,
     componentProps: {
-      accept: 'workspace'
-    }
-  }).onOk(workspaceId => {
+      accept: 'workspace',
+    },
+  }).onOk((workspaceId) => {
     db.artifacts.update(id, { workspaceId })
   })
 }
@@ -89,9 +87,9 @@ function deleteItem({ id, name }) {
     ok: {
       label: t('artifactItemMenu.deleteConfirmOk'),
       color: 'err',
-      flat: true
+      flat: true,
     },
-    ...dialogOptions
+    ...dialogOptions,
   }).onOk(() => {
     db.artifacts.delete(id)
   })
@@ -101,6 +99,4 @@ function saveItem(artifact: Artifact) {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

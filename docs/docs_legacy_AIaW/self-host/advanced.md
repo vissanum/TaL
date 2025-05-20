@@ -101,11 +101,11 @@ Finally, deploy the output static files.
 
 Here is the feature comparison table of different deployment methods again:
 
-| Feature \ Deployment Method | Static Deployment (Frontend Only) | Quick Docker Deployment | Advanced Deployment (Self-Built) | aiaw.app |
-| --- | --- | --- | --- | --- |
-| Basic Features | √ | √ | √ | √ |
-| Plugin Market / Assistant Market / Gradio Plugins | √ | √ | √ | √ |
-| LobeChat Plugins | × | √ | √ | √ |
-| Document Parsing Plugin | × | Requires `LLAMA_CLOUD_API_KEY` | Requires `LLAMA_CLOUD_API_KEY` | √ |
-| Cloud Synchronization | Requires DexieCloud Configuration | × | Requires DexieCloud Configuration | √ |
-| Out-of-the-Box Model Service | × | × | × | √ |
+| Feature \ Deployment Method                       | Static Deployment (Frontend Only) | Quick Docker Deployment        | Advanced Deployment (Self-Built)  | aiaw.app |
+| ------------------------------------------------- | --------------------------------- | ------------------------------ | --------------------------------- | -------- |
+| Basic Features                                    | √                                 | √                              | √                                 | √        |
+| Plugin Market / Assistant Market / Gradio Plugins | √                                 | √                              | √                                 | √        |
+| LobeChat Plugins                                  | ×                                 | √                              | √                                 | √        |
+| Document Parsing Plugin                           | ×                                 | Requires `LLAMA_CLOUD_API_KEY` | Requires `LLAMA_CLOUD_API_KEY`    | √        |
+| Cloud Synchronization                             | Requires DexieCloud Configuration | ×                              | Requires DexieCloud Configuration | √        |
+| Out-of-the-Box Model Service                      | ×                                 | ×                              | ×                                 | √        |

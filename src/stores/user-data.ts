@@ -3,7 +3,7 @@ import { persistentReactive } from 'src/composables/persistent-reactive'
 
 interface UserData {
   lastWorkspaceId: string
-  noobAlertDismissed: boolean,
+  noobAlertDismissed: boolean
   tipDismissed: Record<string, boolean>
   prodExpiredNotifiedTimestamp: number
   evalExpiredNotified: boolean
@@ -15,7 +15,7 @@ export const useUserDataStore = defineStore('user-data', () => {
     noobAlertDismissed: false,
     tipDismissed: {},
     prodExpiredNotifiedTimestamp: null,
-    evalExpiredNotified: false
+    evalExpiredNotified: false,
   })
   return { data, ready }
 })

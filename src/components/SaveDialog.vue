@@ -1,9 +1,5 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-    no-route-dismiss
-  >
+  <q-dialog ref="dialogRef" @hide="onDialogHide" no-route-dismiss>
     <q-card min-w="320px">
       <q-card-section>
         <div class="text-h6">
@@ -45,9 +41,8 @@ defineProps<{
   name: string
 }>()
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent()
 </script>

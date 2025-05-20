@@ -7,7 +7,9 @@ import { DefaultWsIndexContent } from 'src/utils/templates'
 import { useI18n } from 'vue-i18n'
 
 export const useWorkspacesStore = defineStore('workspaces', () => {
-  const workspaces = useLiveQuery(() => db.workspaces.toArray(), { initialValue: [] as Workspace[] })
+  const workspaces = useLiveQuery(() => db.workspaces.toArray(), {
+    initialValue: [] as Workspace[],
+  })
   const { t } = useI18n()
   async function addWorkspace(props: Partial<Workspace>) {
     return await db.workspaces.add({
@@ -22,9 +24,9 @@ export const useWorkspacesStore = defineStore('workspaces', () => {
       listOpen: {
         assistants: true,
         artifacts: false,
-        dialogs: true
+        dialogs: true,
       },
-      ...props
+      ...props,
     } as Workspace)
   }
 
@@ -35,7 +37,7 @@ export const useWorkspacesStore = defineStore('workspaces', () => {
       avatar: { type: 'icon', icon: 'sym_o_folder' },
       type: 'folder',
       parentId: '$root',
-      ...props
+      ...props,
     })
   }
 
@@ -52,16 +54,30 @@ export const useWorkspacesStore = defineStore('workspaces', () => {
     for (const key of keys) {
       await deleteItem(key)
     }
-    await db.transaction('rw', [db.workspaces, db.dialogs, db.messages, db.items, db.assistants, db.artifacts], async () => {
-      await db.dialogs.where('workspaceId').equals(id).eachKey(dialogId => {
-        db.messages.where('dialogId').equals(dialogId).delete()
-        db.items.where('dialogId').equals(dialogId).delete()
-      })
-      await db.dialogs.where('workspaceId').equals(id).delete()
-      await db.assistants.where('workspaceId').equals(id).delete()
-      await db.artifacts.where('workspaceId').equals(id).delete()
-      await db.workspaces.delete(id)
-    })
+    await db.transaction(
+      'rw',
+      [
+        db.workspaces,
+        db.dialogs,
+        db.messages,
+        db.items,
+        db.assistants,
+        db.artifacts,
+      ],
+      async () => {
+        await db.dialogs
+          .where('workspaceId')
+          .equals(id)
+          .eachKey((dialogId) => {
+            db.messages.where('dialogId').equals(dialogId).delete()
+            db.items.where('dialogId').equals(dialogId).delete()
+          })
+        await db.dialogs.where('workspaceId').equals(id).delete()
+        await db.assistants.where('workspaceId').equals(id).delete()
+        await db.artifacts.where('workspaceId').equals(id).delete()
+        await db.workspaces.delete(id)
+      }
+    )
     return true
   }
 
@@ -71,6 +87,6 @@ export const useWorkspacesStore = defineStore('workspaces', () => {
     addFolder,
     updateItem,
     putItem,
-    deleteItem
+    deleteItem,
   }
 })

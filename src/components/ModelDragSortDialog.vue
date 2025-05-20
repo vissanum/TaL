@@ -1,8 +1,5 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
+  <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card min-w="320px">
       <q-card-section>
         <div class="text-h6">
@@ -11,11 +8,7 @@
       </q-card-section>
       <q-card-section p-2>
         <q-list>
-          <vue-draggable
-            v-model="list"
-            ghost-class="bg-sec-c"
-            :animation="200"
-          >
+          <vue-draggable v-model="list" ghost-class="bg-sec-c" :animation="200">
             <model-item
               v-for="model of list"
               :key="model"
@@ -65,13 +58,12 @@ const props = defineProps<{
 
 const list = ref([...props.models])
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 function sortByName() {
   list.value.sort((a, b) => a.localeCompare(b))
 }
 
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent()
 </script>

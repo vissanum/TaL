@@ -27,7 +27,7 @@ const typeMap = {
   number: 'number',
   toggle: 'boolean',
   select: 'string',
-  'multi-select': 'array'
+  'multi-select': 'array',
 } as const
 
 if (model.value == null || model.value === '') {

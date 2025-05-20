@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "AI as Workspace"
-  text: "新一代 LLM 客户端"
+  name: 'AI as Workspace'
+  text: '新一代 LLM 客户端'
   tagline: AIaW 是全功能、轻量级、可拓展的 AI 客户端
   image: /ui.webp
   actions:
@@ -23,4 +23,3 @@ features:
   - title: 高度可拓展性
     details: 通过提示词变量和模板语法构建动态可复用的提示词<br>可将任意 Gradio 应用配置为插件<br>插件不仅仅是工具调用
 ---
-

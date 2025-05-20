@@ -5,9 +5,7 @@
     </q-toolbar-title>
   </view-common-header>
   <q-page-container bg-sur-c-low>
-    <q-page
-      bg-sur
-    >
+    <q-page bg-sur>
       <md-preview
         bg-sur
         rd-lg
@@ -36,11 +34,17 @@ defineEmits(['toggle-drawer'])
 const store = useWorkspacesStore()
 const workspace = syncRef(
   inject('workspace') as Ref<Workspace>,
-  val => { store.putItem(toRaw(val)) },
+  (val) => {
+    store.putItem(toRaw(val))
+  },
   { valueDeep: true }
 )
 
-const contentMd = computed(() => engine.parseAndRenderSync(workspace.value.indexContent, { workspace: workspace.value }))
+const contentMd = computed(() =>
+  engine.parseAndRenderSync(workspace.value.indexContent, {
+    workspace: workspace.value,
+  })
+)
 
 useSetTitle(computed(() => workspace.value?.name))
 

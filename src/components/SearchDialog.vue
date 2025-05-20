@@ -1,20 +1,7 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    v-model="open"
-    @hide="onDialogHide"
-    position="top"
-  >
-    <q-card
-      mx-4
-      important:bg-sur
-      min-w="min(500px, 90vw)"
-    >
-      <div
-        p-2
-        flex
-        gap-2
-      >
+  <q-dialog ref="dialogRef" v-model="open" @hide="onDialogHide" position="top">
+    <q-card mx-4 important:bg-sur min-w="min(500px, 90vw)">
+      <div p-2 flex gap-2>
         <a-input
           v-model="q"
           @keyup.enter="search"
@@ -36,15 +23,13 @@
           toggle-text-color="on-pri-c"
           v-model="global"
           no-caps
-          :options="[{ label: $t('searchDialog.workspace'), value: false }, { label: $t('searchDialog.global'), value: true }]"
+          :options="[
+            { label: $t('searchDialog.workspace'), value: false },
+            { label: $t('searchDialog.global'), value: true },
+          ]"
         />
       </div>
-      <div
-        v-if="results"
-        max-h="80vh"
-        overflow-y-auto
-        pb-1
-      >
+      <div v-if="results" max-h="80vh" overflow-y-auto pb-1>
         <q-list ref="listRef">
           <q-item v-if="!results.length">
             <q-item-section>
@@ -64,10 +49,7 @@
               <q-item-label>
                 {{ r.title }}
               </q-item-label>
-              <q-item-label
-                caption
-                v-if="r.preview"
-              >
+              <q-item-label caption v-if="r.preview">
                 {{ r.preview }}
               </q-item-label>
             </q-item-section>
@@ -90,9 +72,7 @@ const props = defineProps<{
   workspaceId: string
 }>()
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const open = defineModel<boolean>({ required: true })
 
@@ -111,14 +91,19 @@ watchEffect(async () => {
     : await db.dialogs.where('workspaceId').equals(props.workspaceId).toArray()
   const messages = global.value
     ? await db.messages.toArray()
-    : await db.messages.where('dialogId').anyOf(dialogs.value.map(d => d.id)).toArray()
-  docs.value = messages.map(m => ({
+    : await db.messages
+        .where('dialogId')
+        .anyOf(dialogs.value.map((d) => d.id))
+        .toArray()
+  docs.value = messages.map((m) => ({
     id: m.id,
     dialogId: m.dialogId,
     content: m.contents
-      .filter(c => c.type === 'assistant-message' || c.type === 'user-message')
-      .map(c => c.text)
-      .join('\n')
+      .filter(
+        (c) => c.type === 'assistant-message' || c.type === 'user-message'
+      )
+      .map((c) => c.text)
+      .join('\n'),
   }))
   search()
 })
@@ -135,25 +120,35 @@ const results = ref<Result[]>(null)
 const listRef = ref<QList>()
 function search() {
   if (!q.value) return
-  const hits = docs.value.filter(d => caselessIncludes(d.content, q.value)).slice(0, 100)
+  const hits = docs.value
+    .filter((d) => caselessIncludes(d.content, q.value))
+    .slice(0, 100)
   unmark()
   results.value = [
-    ...hits.map(h => {
-      const dialog = dialogs.value.find(d => d.id === h.dialogId)
-      return dialog && {
-        workspaceId: dialog.workspaceId,
-        dialogId: dialog.id,
-        title: dialog.name,
-        preview: h.content.match(new RegExp(`^.*${escapeRegex(q.value)}.*$`, 'im'))[0],
-        route: getRoute(dialog.msgTree, h.id)
-      }
-    }).filter(Boolean),
-    ...dialogs.value.filter(d => caselessIncludes(d.name, q.value)).map(d => ({
-      workspaceId: d.workspaceId,
-      dialogId: d.id,
-      title: d.name,
-      route: []
-    }))
+    ...hits
+      .map((h) => {
+        const dialog = dialogs.value.find((d) => d.id === h.dialogId)
+        return (
+          dialog && {
+            workspaceId: dialog.workspaceId,
+            dialogId: dialog.id,
+            title: dialog.name,
+            preview: h.content.match(
+              new RegExp(`^.*${escapeRegex(q.value)}.*$`, 'im')
+            )[0],
+            route: getRoute(dialog.msgTree, h.id),
+          }
+        )
+      })
+      .filter(Boolean),
+    ...dialogs.value
+      .filter((d) => caselessIncludes(d.name, q.value))
+      .map((d) => ({
+        workspaceId: d.workspaceId,
+        dialogId: d.id,
+        title: d.name,
+        route: [],
+      })),
   ].reverse()
   nextTick(() => {
     highlight()
@@ -173,13 +168,19 @@ function highlight() {
   mark.mark(q.value)
 }
 
-watch(open, val => {
-  val && results.value && nextTick(() => {
-    highlight()
-  })
+watch(open, (val) => {
+  val &&
+    results.value &&
+    nextTick(() => {
+      highlight()
+    })
 })
 
-function getRoute(tree: Record<string, string[]>, target: string, curr = '$root') {
+function getRoute(
+  tree: Record<string, string[]>,
+  target: string,
+  curr = '$root'
+) {
   for (const [i, v] of tree[curr].entries()) {
     if (v === target) return [i]
     const route = getRoute(tree, target, v)

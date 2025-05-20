@@ -18,9 +18,21 @@ const { t } = useI18n()
 const { perfs } = useUserPerfsStore()
 
 const options = new Map()
-options.set('auto', { title: t('darkSwitchBtn.switchToDark'), icon: 'sym_o_dark_mode', next: true })
-options.set(true, { title: t('darkSwitchBtn.switchToLight'), icon: 'sym_o_light_mode', next: false })
-options.set(false, { title: t('darkSwitchBtn.switchToAuto'), icon: 'sym_o_brightness_auto', next: 'auto' })
+options.set('auto', {
+  title: t('darkSwitchBtn.switchToDark'),
+  icon: 'sym_o_dark_mode',
+  next: true,
+})
+options.set(true, {
+  title: t('darkSwitchBtn.switchToLight'),
+  icon: 'sym_o_light_mode',
+  next: false,
+})
+options.set(false, {
+  title: t('darkSwitchBtn.switchToAuto'),
+  icon: 'sym_o_brightness_auto',
+  next: 'auto',
+})
 
 const curr = computed(() => options.get(perfs.darkMode))
 

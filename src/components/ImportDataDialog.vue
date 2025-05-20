@@ -1,18 +1,12 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
+  <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card min-w="320px">
       <q-card-section>
         <div class="text-h6">
           {{ $t('importDataDialog.title') }}
         </div>
       </q-card-section>
-      <q-card-section
-        py-0
-        px-2
-      >
+      <q-card-section py-0 px-2>
         <div px-2>
           <q-file
             v-model="file"
@@ -24,11 +18,11 @@
           <q-checkbox
             v-model="options.overwrite"
             :label="$t('importDataDialog.overwrite')"
-          /><br>
+          /><br />
           <q-checkbox
             v-model="options.force"
             :label="$t('importDataDialog.force')"
-          /><br>
+          /><br />
           <q-checkbox
             color="err"
             v-model="options.clear"
@@ -69,12 +63,10 @@ const file = ref<File>(null)
 const options = reactive({
   overwrite: true,
   force: false,
-  clear: false
+  clear: false,
 })
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const $q = useQuasar()
 const loading = ref(false)
@@ -85,23 +77,27 @@ function importData() {
     acceptMissingTables: force,
     acceptVersionDiff: force,
     overwriteValues: overwrite,
-    clearTablesBeforeImport: clear
-  }).then(() => {
-    $q.notify({
-      message: t('importDataDialog.importSuccess'),
-      color: 'positive'
-    })
-    onDialogOK()
-  }).catch(e => {
-    console.error(e)
-    $q.notify({
-      message: t('importDataDialog.importFailed', { message: e.message }),
-      color: 'negative'
-    })
-  }).finally(() => {
-    loading.value = false
+    clearTablesBeforeImport: clear,
   })
+    .then(() => {
+      $q.notify({
+        message: t('importDataDialog.importSuccess'),
+        color: 'positive',
+      })
+      onDialogOK()
+    })
+    .catch((e) => {
+      console.error(e)
+      $q.notify({
+        message: t('importDataDialog.importFailed', { message: e.message }),
+        color: 'negative',
+      })
+    })
+    .finally(() => {
+      loading.value = false
+    })
 }
 
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent()
 </script>

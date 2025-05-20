@@ -12,29 +12,17 @@
     >
       <q-menu>
         <q-list>
-          <q-item
-            clickable
-            v-close-popup
-            @click="fileInput.click()"
-          >
+          <q-item clickable v-close-popup @click="fileInput.click()">
             <q-item-section>
               {{ $t('pluginsMarket.selectConfig') }}
             </q-item-section>
           </q-item>
-          <q-item
-            clickable
-            v-close-popup
-            @click="clipboardImport"
-          >
+          <q-item clickable v-close-popup @click="clipboardImport">
             <q-item-section>
               {{ $t('pluginsMarket.importFromClipboard') }}
             </q-item-section>
           </q-item>
-          <q-item
-            clickable
-            v-close-popup
-            @click="addMcpPlugin"
-          >
+          <q-item clickable v-close-popup @click="addMcpPlugin">
             <q-item-section>
               {{ $t('pluginsMarket.addMcpPlugin') }}
             </q-item-section>
@@ -47,57 +35,32 @@
         accept=".json"
         un-hidden
         @change="onFileInput"
-      >
+      />
     </q-btn>
   </view-common-header>
   <q-page-container>
-    <q-page
-      p-2
-      :style-fn="pageFhStyle"
-    >
-      <a-tip
-        v-if="IsTauri"
-        tip-key="mcp-plugin-usage"
-        mb-2
-      >
+    <q-page p-2 :style-fn="pageFhStyle">
+      <a-tip v-if="IsTauri" tip-key="mcp-plugin-usage" mb-2>
         {{ $t('pluginsMarket.mcpPluginTip') }}
-        <a
-          href="https://docs.aiaw.app/usage/mcp.html"
-          target="_blank"
-          pri-link
-        >
+        <a href="https://docs.aiaw.app/usage/mcp.html" target="_blank" pri-link>
           {{ $t('pluginsMarket.mcpPluginGuide') }}
         </a>
       </a-tip>
-      <a-tip
-        v-if="$q.screen.xs"
-        tip-key="plugins-market-right-drawer"
-        mb-2
-      >
+      <a-tip v-if="$q.screen.xs" tip-key="plugins-market-right-drawer" mb-2>
         {{ $t('pluginsMarket.rightDrawerTip') }}
       </a-tip>
       <div>
-        <a-input
-          :label="$t('pluginsMarket.search')"
-          outlined
-          v-model="query"
-        />
+        <a-input :label="$t('pluginsMarket.search')" outlined v-model="query" />
       </div>
       <q-list mt-2>
-        <q-item
-          v-for="item in filterList"
-          :key="item.id"
-        >
+        <q-item v-for="item in filterList" :key="item.id">
           <q-item-section avatar>
             <a-avatar :avatar="item.avatar" />
           </q-item-section>
           <q-item-section>
             <q-item-label>
-              {{ item.title }}<plugin-type-badge
-                :type="item.type"
-                ml-2
-                lh="1.1em"
-              />
+              {{ item.title
+              }}<plugin-type-badge :type="item.type" ml-2 lh="1.1em" />
             </q-item-label>
             <q-item-label caption>
               {{ item.description }}
@@ -142,10 +105,12 @@ const filterList = computed(() => {
   let res = list
   if (query.value) {
     res = res.filter(
-      item => caselessIncludes(item.title, query.value) || caselessIncludes(item.description, query.value)
+      (item) =>
+        caselessIncludes(item.title, query.value) ||
+        caselessIncludes(item.description, query.value)
     )
   }
-  if (!IsTauri) res = res.filter(item => item.type !== 'mcp')
+  if (!IsTauri) res = res.filter((item) => item.type !== 'mcp')
   return res
 })
 
@@ -155,22 +120,26 @@ const { t, locale } = useI18n()
 function load() {
   loading.value = true
   fetch(`/json/plugins.${locale.value}.json`)
-    .then(res => res.json())
-    .then(data => {
+    .then((res) => res.json())
+    .then((data) => {
       list.push(...data)
-    }).catch(err => {
+    })
+    .catch((err) => {
       console.error(err)
       $q.notify({
         message: t('pluginsMarket.loadError'),
         color: 'err-c',
         textColor: 'on-err-c',
-        actions: [{
-          label: t('pluginsMarket.retry'),
-          color: 'on-sur',
-          handler: load
-        }]
+        actions: [
+          {
+            label: t('pluginsMarket.retry'),
+            color: 'on-sur',
+            handler: load,
+          },
+        ],
       })
-    }).finally(() => {
+    })
+    .finally(() => {
       loading.value = false
     })
 }
@@ -189,7 +158,7 @@ async function clipboardImport() {
 
 function addMcpPlugin() {
   $q.dialog({
-    component: AddMcpPluginDialog
+    component: AddMcpPluginDialog,
   })
 }
 </script>

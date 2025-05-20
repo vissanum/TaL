@@ -12,8 +12,8 @@
     cursor-pointer
   >
     <div text="xl center out">
-      {{ $t('imageInputArea.clickToSelect') }}<br>
-      {{ $t('imageInputArea.dragHere') }}<br>
+      {{ $t('imageInputArea.clickToSelect') }}<br />
+      {{ $t('imageInputArea.dragHere') }}<br />
       {{ $t('imageInputArea.paste') }}
     </div>
     <input
@@ -22,7 +22,7 @@
       accept="image/*"
       @change="onInput"
       un-hidden
-    >
+    />
   </div>
 </template>
 
@@ -57,6 +57,4 @@ addEventListener('paste', onPaste)
 onUnmounted(() => removeEventListener('paste', onPaste))
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

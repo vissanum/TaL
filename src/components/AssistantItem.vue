@@ -1,19 +1,8 @@
 <template>
   <q-item>
-    <q-item-section
-      avatar
-      min-w-0
-    >
-      <a-avatar
-        v-if="assistant"
-        size="30px"
-        :avatar="assistant.avatar"
-      />
-      <q-icon
-        v-else
-        name="sym_o_error"
-        text-warn
-      />
+    <q-item-section avatar min-w-0>
+      <a-avatar v-if="assistant" size="30px" :avatar="assistant.avatar" />
+      <q-icon v-else name="sym_o_error" text-warn />
     </q-item-section>
     <q-item-section>
       <q-item-label whitespace-nowrap>

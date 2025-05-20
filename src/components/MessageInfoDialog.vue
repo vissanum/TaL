@@ -1,12 +1,13 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
+  <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card min-w="300px">
       <q-card-section>
         <div class="text-h6">
-          {{ message.type === 'user' ? $t('messageInfoDialog.userMessageInfo') : $t('messageInfoDialog.assistantMessageInfo') }}
+          {{
+            message.type === 'user'
+              ? $t('messageInfoDialog.userMessageInfo')
+              : $t('messageInfoDialog.assistantMessageInfo')
+          }}
         </div>
       </q-card-section>
       <q-card-section p-0>
@@ -48,7 +49,10 @@
               {{ $t('messageInfoDialog.tokenUsage') }}
             </q-item-section>
             <q-item-section side>
-              {{ $t('messageInfoDialog.prompt') }}{{ message.usage.promptTokens }} ，{{ $t('messageInfoDialog.completion') }}{{ message.usage.completionTokens }}
+              {{ $t('messageInfoDialog.prompt')
+              }}{{ message.usage.promptTokens }} ，{{
+                $t('messageInfoDialog.completion')
+              }}{{ message.usage.completionTokens }}
             </q-item-section>
           </q-item>
         </q-list>
@@ -75,15 +79,14 @@ const props = defineProps<{
   message: Message
 }>()
 
-const length = computed(() => props.message.contents.filter(
-  c => c.type === 'assistant-message' || c.type === 'user-message'
-).reduce((prev, cur) => prev + cur.text.length, 0))
+const length = computed(() =>
+  props.message.contents
+    .filter((c) => c.type === 'assistant-message' || c.type === 'user-message')
+    .reduce((prev, cur) => prev + cur.text.length, 0)
+)
 const createdAt = computed(() => idDateString(props.message.id))
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
-
 </script>

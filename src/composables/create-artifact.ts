@@ -18,7 +18,7 @@ export function useCreateArtifact(workspace: Ref<Workspace>) {
       open: true,
       workspaceId: workspace.value.id,
       tmp: '',
-      ...props
+      ...props,
     })
     router.push({ query: { artifactId: id } })
     return id

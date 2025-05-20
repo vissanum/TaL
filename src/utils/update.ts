@@ -1,4 +1,8 @@
-import { check as tauriCheckUpdate, type Update as TauriUpdateManifest, type DownloadEvent } from '@tauri-apps/plugin-updater'
+import {
+  check as tauriCheckUpdate,
+  type Update as TauriUpdateManifest,
+  type DownloadEvent,
+} from '@tauri-apps/plugin-updater'
 import { relaunch as tauriRelaunch } from '@tauri-apps/plugin-process'
 import { fetch, IsTauri, TauriPlatform } from './platform-api' // IsWeb eliminado
 import version from 'src/version.json'
@@ -9,19 +13,19 @@ import { invoke } from '@tauri-apps/api/core'
 
 // TODO: TaL - Esta URL debe apuntar al repositorio de releases de TaL para la auto-actualización.
 const BaseURL = 'https://github.com/NitroRCr/AIaW/releases/latest/download'
-type Version = typeof version; // Tipo para la estructura de tu version.json
+type Version = typeof version // Tipo para la estructura de tu version.json
 const { t } = i18n.global // Mover aquí para que esté disponible para las funciones auxiliares
 
 // --- Funciones Auxiliares (Definidas antes de su uso) ---
 function wrapNotify(message: string, actions: QNotifyAction[]) {
   return Notify.create({
     message,
-    actions: actions.map(a => ({ ...a, textColor: 'inv-pri' })),
+    actions: actions.map((a) => ({ ...a, textColor: 'inv-pri' })),
     color: 'inv-sur',
     textColor: 'inv-on-sur',
     position: 'top',
     timeout: 0,
-    multiLine: true
+    multiLine: true,
   })
 }
 
@@ -42,8 +46,11 @@ async function tauriUpdate(latestVersionInfo: Version, force: boolean) {
       return
     }
 
-    const isDeb = currentOsPlatform === 'linux' && await invoke('is_deb_package')
-    const updateManifest: TauriUpdateManifest | null = await tauriCheckUpdate(isDeb ? { target: 'linux-deb' } : {})
+    const isDeb =
+      currentOsPlatform === 'linux' && (await invoke('is_deb_package'))
+    const updateManifest: TauriUpdateManifest | null = await tauriCheckUpdate(
+      isDeb ? { target: 'linux-deb' } : {}
+    )
 
     if (!updateManifest) {
       return
@@ -62,7 +69,9 @@ async function tauriUpdate(latestVersionInfo: Version, force: boolean) {
             case 'Started': {
               // Almacenamos el contentLength si está disponible
               totalSizeForProgress = event.data.contentLength
-              Loading.show({ message: t('update.downloading', { progress: 0 }) })
+              Loading.show({
+                message: t('update.downloading', { progress: 0 }),
+              })
               // console.log('Download started. Content length (optional):', totalSizeForProgress);
               break
             }
@@ -78,7 +87,9 @@ async function tauriUpdate(latestVersionInfo: Version, force: boolean) {
                 // Si es el tamaño del chunk, necesitaríamos acumularlo nosotros mismos.
                 // Asumiremos por ahora que chunkLength es el total acumulado por el evento Progress.
                 // El plugin de Tauri es más probable que dé el total de bytes descargados en chunkLength aquí.
-                percent = Math.round((progressData.chunkLength / totalSizeForProgress) * 100)
+                percent = Math.round(
+                  (progressData.chunkLength / totalSizeForProgress) * 100
+                )
               } else {
                 // Si no tenemos totalSizeForProgress, no podemos calcular un porcentaje exacto.
                 // Podríamos mostrar un spinner indeterminado o solo los bytes descargados.
@@ -86,7 +97,9 @@ async function tauriUpdate(latestVersionInfo: Version, force: boolean) {
                 // O podrías mostrar los bytes: message: t('update.downloadingBytes', { bytes: progressData.chunkLength })
               }
 
-              Loading.show({ message: t('update.downloading', { progress: percent }) })
+              Loading.show({
+                message: t('update.downloading', { progress: percent }),
+              })
               break
             }
             case 'Finished': {
@@ -106,18 +119,21 @@ async function tauriUpdate(latestVersionInfo: Version, force: boolean) {
         wrapNotify(
           t('update.downloadedNewVersion', { version: updateManifest.version }),
           // ... (resto de la lógica de notificación y botones sin cambios) ...
-          [{
-            label: t('update.ignore'),
-            handler: () => {
-              ignoreUpdate(updateManifest.version)
-            }
-          }, {
-            label: t('update.installAndRelaunch'),
-            handler: async () => {
-              await updateManifest.install()
-              await tauriRelaunch()
-            }
-          }]
+          [
+            {
+              label: t('update.ignore'),
+              handler: () => {
+                ignoreUpdate(updateManifest.version)
+              },
+            },
+            {
+              label: t('update.installAndRelaunch'),
+              handler: async () => {
+                await updateManifest.install()
+                await tauriRelaunch()
+              },
+            },
+          ]
         )
       } catch (downloadError) {
         if (downloadInProgress) {
@@ -153,7 +169,10 @@ async function checkUpdate() {
     const force = version.versionCode <= latest.forceUpdateFrom
     await tauriUpdate(latest, force)
   } catch (error) {
-    console.error('Update check: Error fetching or processing update information.', error)
+    console.error(
+      'Update check: Error fetching or processing update information.',
+      error
+    )
   }
 }
 
@@ -161,7 +180,4 @@ async function ready() {
   // console.log('Update "ready" function: No operations to perform after Capacitor removal.');
 }
 
-export {
-  checkUpdate,
-  ready
-}
+export { checkUpdate, ready }

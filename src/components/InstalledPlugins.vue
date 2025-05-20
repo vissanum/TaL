@@ -1,7 +1,7 @@
 <template>
   <q-list>
     <q-item
-      v-for="plugin in pluginsStore.plugins.filter(p => p.available)"
+      v-for="plugin in pluginsStore.plugins.filter((p) => p.available)"
       :key="plugin.id"
       clickable
       :to="`/plugins/${plugin.id}`"
@@ -17,17 +17,11 @@
       </q-item-section>
       <q-item-section>
         <q-item-label>
-          {{ plugin.title }}<plugin-type-badge
-            :type="plugin.type"
-            ml-2
-            lh="1.2em"
-          />
+          {{ plugin.title
+          }}<plugin-type-badge :type="plugin.type" ml-2 lh="1.2em" />
         </q-item-label>
       </q-item-section>
-      <q-item-section
-        side
-        important:pl-1
-      >
+      <q-item-section side important:pl-1>
         <q-btn
           flat
           dense
@@ -64,8 +58,8 @@ function deleteItem(plugin) {
     ok: {
       label: t('installedPlugins.uninstall'),
       color: 'err',
-      flat: true
-    }
+      flat: true,
+    },
   }).onOk(() => {
     pluginsStore.uninstall(plugin.id)
   })

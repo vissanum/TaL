@@ -11,11 +11,14 @@ import { SSEClientTransport } from './mcp-sse-transport'
 
 const KeepAliveTimeout = 300e3
 
-const pool = new Map<string, {
-  conf: TransportConf
-  client: Client
-  timeoutId: number
-}>()
+const pool = new Map<
+  string,
+  {
+    conf: TransportConf
+    client: Client
+    timeoutId: number
+  }
+>()
 
 const { t } = i18n.global
 
@@ -33,28 +36,35 @@ export async function getClient(key: string, transportConf: TransportConf) {
       await client.close()
     }
   }
-  const client = new Client({
-    name: 'aiaw',
-    version
-  }, {
-    capabilities: {
-      tools: {},
-      resources: {}
+  const client = new Client(
+    {
+      name: 'aiaw',
+      version,
+    },
+    {
+      capabilities: {
+        tools: {},
+        resources: {},
+      },
     }
-  })
+  )
   Notify.create({
-    message: t('mcpClient.connectingMcpServer')
+    message: t('mcpClient.connectingMcpServer'),
   })
   if (transportConf.type === 'stdio') {
     const pf = platform()
-    await client.connect(new TauriShellClientTransport({
-      command: pf === 'windows' ? 'cmd' : 'sh',
-      args: [pf === 'windows' ? '/c' : '-c', transportConf.command],
-      env: transportConf.env,
-      cwd: transportConf.cwd
-    }))
+    await client.connect(
+      new TauriShellClientTransport({
+        command: pf === 'windows' ? 'cmd' : 'sh',
+        args: [pf === 'windows' ? '/c' : '-c', transportConf.command],
+        env: transportConf.env,
+        cwd: transportConf.cwd,
+      })
+    )
   } else {
-    await client.connect(new SSEClientTransport(new URL(transportConf.url), { fetch }))
+    await client.connect(
+      new SSEClientTransport(new URL(transportConf.url), { fetch })
+    )
   }
   const timeoutId = window.setTimeout(() => {
     client.close()
@@ -64,7 +74,7 @@ export async function getClient(key: string, transportConf: TransportConf) {
     window.clearTimeout(pool.get(key).timeoutId)
     pool.delete(key)
   }
-  client.onerror = err => {
+  client.onerror = (err) => {
     console.error(err)
   }
   return client

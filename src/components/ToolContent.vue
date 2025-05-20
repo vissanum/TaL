@@ -1,11 +1,6 @@
 <template>
   <div>
-    <q-expansion-item
-      bg-sur-c-low
-      of-hidden
-      rd-md
-      v-if="pluginsStore.ready"
-    >
+    <q-expansion-item bg-sur-c-low of-hidden rd-md v-if="pluginsStore.ready">
       <template #header>
         <q-item-section avatar>
           <a-avatar :avatar="pluginData.avatar" />
@@ -19,10 +14,7 @@
           </q-item-label>
         </q-item-section>
         <q-item-section side>
-          <q-spinner
-            v-if="content.status === 'calling'"
-            size="sm"
-          />
+          <q-spinner v-if="content.status === 'calling'" size="sm" />
           <q-icon
             v-else-if="content.status === 'completed'"
             name="sym_o_check_circle"
@@ -43,14 +35,8 @@
         />
       </template>
     </q-expansion-item>
-    <div
-      v-if="content.result && api?.showComponents"
-      mt-1
-    >
-      <template
-        v-for="(component, index) in api.showComponents"
-        :key="index"
-      >
+    <div v-if="content.result && api?.showComponents" mt-1>
+      <template v-for="(component, index) in api.showComponents" :key="index">
         <md-preview
           v-if="['markdown', 'textbox'].includes(component)"
           :model-value="itemMap[content.result[index]].contentText"
@@ -60,7 +46,12 @@
         />
         <md-preview
           v-else-if="['json', 'code'].includes(component)"
-          :model-value="wrapCode(itemMap[content.result[index]].contentText, component === 'json' ? 'json' : '')"
+          :model-value="
+            wrapCode(
+              itemMap[content.result[index]].contentText,
+              component === 'json' ? 'json' : ''
+            )
+          "
           v-bind="mdPreviewProps"
           bg-sur-c-low
           rd-md
@@ -96,12 +87,15 @@ const props = defineProps<{
 }>()
 
 const pluginsStore = usePluginsStore()
-const plugin = computed(() => pluginsStore.plugins.find(p => p.id === props.content.pluginId))
-const api = computed(() => plugin.value?.apis.find(a => a.name === props.content.name))
+const plugin = computed(() =>
+  pluginsStore.plugins.find((p) => p.id === props.content.pluginId)
+)
+const api = computed(() =>
+  plugin.value?.apis.find((a) => a.name === props.content.name)
+)
 const pluginData = computed(() => pluginsStore.data[props.content.pluginId])
 
-const contentTemplate =
-`### ${t('toolContent.callParams')}
+const contentTemplate = `### ${t('toolContent.callParams')}
 
 \`\`\`json
 {{ content.args | json: 2 }}
@@ -125,10 +119,10 @@ const contentMd = computed(() => {
   const { content } = props
   return engine.parseAndRenderSync(contentTemplate, {
     content,
-    result: content.result?.map(id => {
+    result: content.result?.map((id) => {
       const { name, type, mimeType, contentText } = itemMap.value[id]
       return { name, type, mimeType, contentText }
-    })
+    }),
   })
 })
 

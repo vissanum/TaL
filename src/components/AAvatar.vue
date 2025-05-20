@@ -1,8 +1,5 @@
 <template>
-  <q-avatar
-    v-if="avatar.type === 'text'"
-    :style
-  >
+  <q-avatar v-if="avatar.type === 'text'" :style>
     {{ avatar.text }}
   </q-avatar>
   <image-avatar
@@ -16,11 +13,8 @@
     :style
     :font-size
   />
-  <q-avatar
-    v-else-if="avatar.type === 'url'"
-    :style
-  >
-    <img :src="avatar.url">
+  <q-avatar v-else-if="avatar.type === 'url'" :style>
+    <img :src="avatar.url" />
   </q-avatar>
   <q-avatar
     v-else-if="avatar.type === 'svg'"
@@ -45,13 +39,15 @@ const $q = useQuasar()
 const style = computed(() => {
   if (!props.avatar.hue) return {}
   const { hue } = props.avatar
-  return $q.dark.isActive ? {
-    color: hctToHex(hue, 40, 90),
-    backgroundColor: hctToHex(hue, 40, 30)
-  } : {
-    color: hctToHex(hue, 40, 10),
-    backgroundColor: hctToHex(hue, 40, 90)
-  }
+  return $q.dark.isActive
+    ? {
+        color: hctToHex(hue, 40, 90),
+        backgroundColor: hctToHex(hue, 40, 30),
+      }
+    : {
+        color: hctToHex(hue, 40, 10),
+        backgroundColor: hctToHex(hue, 40, 90),
+      }
 })
 
 const fontSize = '0.6em'

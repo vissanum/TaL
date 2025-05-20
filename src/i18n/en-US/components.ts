@@ -14,10 +14,11 @@ export default {
     cancel: 'Cancel',
     install: 'Install',
     installFailed: 'Installation failed',
-    stdioPlatformTip: 'Only the desktop version supports STDIO type MCP plugins, and the current platform only supports SSE type'
+    stdioPlatformTip:
+      'Only the desktop version supports STDIO type MCP plugins, and the current platform only supports SSE type',
   },
   abortableBtn: {
-    stop: 'Stop'
+    stop: 'Stop',
   },
   artifactsExpansion: {
     searchPlaceholder: 'Search Artifacts...',
@@ -28,11 +29,11 @@ export default {
     selectFile: 'Select File',
     createArtifact: 'Create Artifact',
     name: 'Name',
-    nonTextFile: 'Non-text file: {name}'
+    nonTextFile: 'Non-text file: {name}',
   },
   dialogsExpansion: {
     search: 'Search Dialogs...',
-    dialogs: 'Dialogs'
+    dialogs: 'Dialogs',
   },
   artifactItemMenu: {
     save: 'Save',
@@ -41,20 +42,21 @@ export default {
     download: 'Download',
     delete: 'Delete',
     deleteConfirmTitle: 'Delete Artifact',
-    deleteConfirmMessage: 'Are you sure you want to delete the artifact "{name}"?',
-    deleteConfirmOk: 'Delete'
+    deleteConfirmMessage:
+      'Are you sure you want to delete the artifact "{name}"?',
+    deleteConfirmOk: 'Delete',
   },
   addInfoBtn: {
     attachment: 'Attachment',
-    parameter: 'Parameter'
+    parameter: 'Parameter',
   },
   accountBtn: {
     account: 'Account',
-    login: 'Log In'
+    login: 'Log In',
   },
   copyBtn: {
     title: 'Copy',
-    copyFailed: 'Copy failed'
+    copyFailed: 'Copy failed',
   },
   convertArtifactDialog: {
     title: 'Convert to Artifact',
@@ -63,11 +65,11 @@ export default {
     reserveOriginal: 'Reserve Original',
     cancel: 'Cancel',
     autoName: 'Auto Name',
-    ok: 'OK'
+    ok: 'OK',
   },
   aTip: {
     tip: 'TIP',
-    dismiss: 'Dismiss'
+    dismiss: 'Dismiss',
   },
   assistantsExpansion: {
     createDialog: 'Create Dialog',
@@ -75,20 +77,21 @@ export default {
     moveToWorkspace: 'Move to Workspace',
     delete: 'Delete',
     deleteConfirmTitle: 'Delete Assistant',
-    deleteConfirmMessage: 'Are you sure you want to delete the assistant "{name}"?',
+    deleteConfirmMessage:
+      'Are you sure you want to delete the assistant "{name}"?',
     createAssistant: 'Create Assistant',
-    assistants: 'Assistants'
+    assistants: 'Assistants',
   },
   customProviders: {
     delete: 'Delete',
     deleteProvider: 'Delete Provider',
     deleteConfirm: 'Are you sure you want to delete the provider "{name}"?',
     createProvider: 'Create Provider',
-    setAsDefault: 'Set as Default'
+    setAsDefault: 'Set as Default',
   },
   assistantItem: {
     unselected: 'Unselected',
-    global: 'Global'
+    global: 'Global',
   },
   importDataDialog: {
     title: 'Import User Data',
@@ -99,18 +102,18 @@ export default {
     cancel: 'Cancel',
     import: 'Import',
     importSuccess: 'Import successful',
-    importFailed: 'Import failed: {message}'
+    importFailed: 'Import failed: {message}',
   },
   imageInputArea: {
     clickToSelect: 'Click to Select Image',
     dragHere: 'Drag Here',
-    paste: 'Or Ctrl+V to Paste'
+    paste: 'Or Ctrl+V to Paste',
   },
   hueSliderDialog: {
     title: 'Pick a Color',
     hue: 'Hue',
     cancel: 'Cancel',
-    ok: 'OK'
+    ok: 'OK',
   },
   dialogList: {
     createDialog: 'Create Dialog',
@@ -122,13 +125,14 @@ export default {
     copyContent: 'Copy Content',
     delete: 'Delete',
     deleteConfirmTitle: 'Delete Dialog',
-    deleteConfirmMessage: 'Are you sure you want to delete the dialog "{name}"?',
-    deleteConfirmOk: 'Delete'
+    deleteConfirmMessage:
+      'Are you sure you want to delete the dialog "{name}"?',
+    deleteConfirmOk: 'Delete',
   },
   darkSwitchBtn: {
     switchToDark: 'Switch to Dark Mode',
     switchToLight: 'Switch to Light Mode',
-    switchToAuto: 'Switch to Auto'
+    switchToAuto: 'Switch to Auto',
   },
   messageInfoDialog: {
     userMessageInfo: 'User Message Info',
@@ -140,17 +144,18 @@ export default {
     tokenUsage: 'Token Usage',
     prompt: 'Prompt:',
     completion: 'Completion:',
-    ok: 'OK'
+    ok: 'OK',
   },
   installPluginBtn: {
     installed: 'Installed',
     install: 'Install',
-    installFailed: 'Installation failed:'
+    installFailed: 'Installation failed:',
   },
   installedPlugins: {
     uninstallPlugin: 'Uninstall Plugin',
-    uninstallConfirm: 'Are you sure you want to uninstall the plugin "{title}"?',
-    uninstall: 'Uninstall'
+    uninstallConfirm:
+      'Are you sure you want to uninstall the plugin "{title}"?',
+    uninstall: 'Uninstall',
   },
   messageItem: {
     quote: 'Quote',
@@ -171,8 +176,9 @@ export default {
     fold: 'Fold',
     reasoningContent: 'Reasoning Content',
     deleteBranch: 'Delete Branch',
-    deleteBranchMessage: 'Are you sure you want to delete this message branch? This message and all subsequent messages will be deleted.',
-    delete: 'Delete'
+    deleteBranchMessage:
+      'Are you sure you want to delete this message branch? This message and all subsequent messages will be deleted.',
+    delete: 'Delete',
   },
   parseFilesDialog: {
     parseFiles: 'Parse Files',
@@ -180,21 +186,22 @@ export default {
     cancel: 'Cancel',
     parse: 'Parse',
     parser: 'Parser',
-    parseFailed: 'Failed to parse "{file}": {error}'
+    parseFailed: 'Failed to parse "{file}": {error}',
   },
   modelInputItems: {
     model: 'Model',
     multimodalCapabilities: 'Multimodal Capabilities',
-    multimodalCapabilitiesCaption: 'Modify the multimodal capabilities configuration of the model',
+    multimodalCapabilitiesCaption:
+      'Modify the multimodal capabilities configuration of the model',
     userInputTypes: 'User Input Support Types',
     assistantMessageTypes: 'Assistant Message Support Types',
-    toolResultTypes: 'Tool Result Support Types'
+    toolResultTypes: 'Tool Result Support Types',
   },
   platformEnabledInput: {
     alwaysEnabled: 'Always Enabled',
     desktopOnly: 'Desktop Only',
     mobileOnly: 'Mobile Only',
-    alwaysDisabled: 'Always Disabled'
+    alwaysDisabled: 'Always Disabled',
   },
   pickAvatarDialog: {
     ai: 'AI',
@@ -210,28 +217,29 @@ export default {
     cancel: 'Cancel',
     confirm: 'Confirm',
     textLabel: 'Text',
-    textHint: 'Support Emoji'
+    textHint: 'Support Emoji',
   },
   payDialog: {
     pay: 'Pay',
-    refreshAfterPay: 'After payment, click "Completed Payment" to refresh the data. If the payment is not triggered, please manually copy the payment link and open it in the browser.',
+    refreshAfterPay:
+      'After payment, click "Completed Payment" to refresh the data. If the payment is not triggered, please manually copy the payment link and open it in the browser.',
     cancel: 'Cancel',
     paymentLink: 'Payment Link',
-    completePayment: 'Completed Payment'
+    completePayment: 'Completed Payment',
   },
   saveDialog: {
     title: 'Save Changes',
     message: 'Do you want to save the changes to "{name}"?',
     cancel: 'Cancel',
-    dontSave: 'Don\'t Save',
-    save: 'Save'
+    dontSave: "Don't Save",
+    save: 'Save',
   },
   jsonInputDialog: {
     cancel: 'Cancel',
-    ok: 'OK'
+    ok: 'OK',
   },
   providerInputItems: {
-    provider: 'Provider'
+    provider: 'Provider',
   },
   promptVarItem: {
     variableName: 'Variable Name',
@@ -245,20 +253,20 @@ export default {
     number: 'Number',
     toggle: 'Toggle',
     select: 'Select',
-    multiSelect: 'Multi Select'
+    multiSelect: 'Multi Select',
   },
   promptVarEditor: {
-    addVariable: 'Add Variable'
+    addVariable: 'Add Variable',
   },
   pluginTypeBadge: {
     builtin: 'Built-in',
     lobechat: 'LobeChat',
     gradio: 'Gradio',
-    mcp: 'MCP'
+    mcp: 'MCP',
   },
   textareaDialog: {
     cancel: 'Cancel',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
   },
   subscribeDialog: {
     title: 'Subscribe to Cloud Sync Service',
@@ -268,29 +276,29 @@ export default {
     amountDue: 'Amount Due',
     paymentMethod: 'Payment Method',
     cancel: 'Cancel',
-    order: 'Order'
+    order: 'Order',
   },
   selectWorkspaceDialog: {
     selectWorkspace: 'Select Workspace',
     selectFolder: 'Select Folder',
     cancel: 'Cancel',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
   },
   selectFileBtn: {
     clickToSelect: 'Click to Select File',
     dragHere: 'Drag Here',
-    paste: 'Or Ctrl+V to Paste'
+    paste: 'Or Ctrl+V to Paste',
   },
   viewFileDialog: {
     fileSize: 'File Size',
     fileType: 'File Type',
     copy: 'Copy',
     download: 'Download',
-    ok: 'OK'
+    ok: 'OK',
   },
   varsInput: {
     addVariable: 'Add Variable',
-    variableName: 'Variable Name'
+    variableName: 'Variable Name',
   },
   topupDialog: {
     title: 'Recharge Model Service',
@@ -300,25 +308,25 @@ export default {
     transactionFee: 'Transaction Fee',
     payableAmount: 'Payable Amount',
     cancel: 'Cancel',
-    order: 'Order'
+    order: 'Order',
   },
   payMethodItem: {
     paymentMethod: 'Payment Method',
     wxpay: 'WeChat Pay',
-    stripe: 'Bank Card'
+    stripe: 'Bank Card',
   },
   toolContent: {
     toolCall: 'Tool Call',
     callParams: 'Call Parameters',
     callResult: 'Call Result',
-    errorMessage: 'Error Message'
+    errorMessage: 'Error Message',
   },
   workspaceNav: {
     workspace: 'Workspace',
-    folder: 'Folder'
+    folder: 'Folder',
   },
   workspaceListSelect: {
-    root: 'Root Directory'
+    root: 'Root Directory',
   },
   workspaceListItem: {
     rename: 'Rename',
@@ -326,34 +334,34 @@ export default {
     newWorkspace: 'New Workspace',
     newFolder: 'New Folder',
     moveTo: 'Move To',
-    delete: 'Delete'
+    delete: 'Delete',
   },
   modelOptionsBtn: {
     modelOptions: 'Model Options',
     reasoningEffort: 'Reasoning Effort',
-    useSearchGrounding: 'Use Search'
+    useSearchGrounding: 'Use Search',
   },
   subproviderInput: {
-    modelList: 'Model List'
+    modelList: 'Model List',
   },
   getModelList: {
     getModelList: 'Get Model List',
     selectModels: 'Select Models',
-    getModelListFailed: 'Failed to Get Model List'
+    getModelListFailed: 'Failed to Get Model List',
   },
   modelDragSortDialog: {
     title: 'Drag to Sort',
     sortByName: 'Sort by Name',
     cancel: 'Cancel',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
   },
   searchDialog: {
     placeholder: 'Search Messages...',
     noResults: 'No results found...',
     workspace: 'Workspace',
-    global: 'Global'
+    global: 'Global',
   },
   enablePluginsMenu: {
-    moreInfo: 'More Info'
-  }
+    moreInfo: 'More Info',
+  },
 }

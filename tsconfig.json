@@ -1,6 +1,4 @@
 {
   "extends": "./.quasar/tsconfig.json",
-  "exclude": [
-    "./src-tauri"
-  ]
+  "exclude": ["./src-tauri"]
 }

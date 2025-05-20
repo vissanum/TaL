@@ -1,8 +1,5 @@
 <template>
-  <q-header
-    bg-sur-c-low
-    text-on-sur
-  >
+  <q-header bg-sur-c-low text-on-sur>
     <q-toolbar>
       <q-btn
         v-if="backTo"
@@ -49,6 +46,4 @@ const props = defineProps<{
 }>()
 const back = useBack(props.backTo)
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,8 +1,5 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
+  <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card style="width: min(90vw, 500px)">
       <q-card-section>
         <div class="text-h6">
@@ -50,11 +47,12 @@ const props = defineProps<{
 }>()
 
 const value = ref(props.model)
-const valid = computed(() => new Validator(props.schema as Schema).validate(value.value).valid)
+const valid = computed(
+  () => new Validator(props.schema as Schema).validate(value.value).valid
+)
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent()
 </script>

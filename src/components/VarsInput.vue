@@ -1,25 +1,14 @@
 <template>
   <div>
-    <q-item
-      v-for="(_, key) in model"
-      :key
-    >
+    <q-item v-for="(_, key) in model" :key>
       <q-item-section avatar>
         {{ key }}
       </q-item-section>
       <q-item-section>
-        <a-input
-          v-model="model[key]"
-          v-bind="inputProps"
-        />
+        <a-input v-model="model[key]" v-bind="inputProps" />
       </q-item-section>
       <q-item-section side>
-        <q-btn
-          flat
-          round
-          icon="sym_o_close"
-          @click="delete model[key]"
-        />
+        <q-btn flat round icon="sym_o_close" @click="delete model[key]" />
       </q-item-section>
     </q-item>
     <q-item>
@@ -57,11 +46,11 @@ function add() {
     prompt: {
       model: '',
       type: 'text',
-      label: t('varsInput.variableName')
+      label: t('varsInput.variableName'),
     },
     cancel: true,
-    ...dialogOptions
-  }).onOk(name => {
+    ...dialogOptions,
+  }).onOk((name) => {
     model.value[name] = ''
   })
 }

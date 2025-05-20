@@ -31,21 +31,13 @@
           py-1.5
           min-h-0
         >
-          <q-item-section
-            avatar
-            min-w-0
-          >
-            <a-avatar
-              size="30px"
-              :avatar="assistant.avatar"
-            />
+          <q-item-section avatar min-w-0>
+            <a-avatar size="30px" :avatar="assistant.avatar" />
           </q-item-section>
           <q-item-section>
             {{ assistant.name }}
           </q-item-section>
-          <q-menu
-            context-menu
-          >
+          <q-menu context-menu>
             <q-list style="min-width: 100px">
               <menu-item
                 v-if="workspaceId !== '$root'"
@@ -81,10 +73,7 @@
           item-rd
           min-h="42px"
         >
-          <q-item-section
-            avatar
-            min-w-0
-          >
+          <q-item-section avatar min-w-0>
             <q-icon name="sym_o_add" />
           </q-item-section>
           <q-item-section>
@@ -111,17 +100,21 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 const props = defineProps<{
-  workspaceId: string,
-  dense?: boolean,
+  workspaceId: string
+  dense?: boolean
   label?: string
 }>()
 
 const assistantsStore = useAssistantsStore()
 
-const assistants = computed(() => assistantsStore.assistants.filter(a => a.workspaceId === props.workspaceId))
+const assistants = computed(() =>
+  assistantsStore.assistants.filter((a) => a.workspaceId === props.workspaceId)
+)
 
 function getLink(id) {
-  return props.workspaceId === '$root' ? `/assistants/${id}` : `/workspaces/${props.workspaceId}/assistants/${id}`
+  return props.workspaceId === '$root'
+    ? `/assistants/${id}`
+    : `/workspaces/${props.workspaceId}/assistants/${id}`
 }
 const router = useRouter()
 async function addItem() {
@@ -137,9 +130,9 @@ function moveToWorkspace(id) {
   $q.dialog({
     component: SelectWorkspaceDialog,
     componentProps: {
-      accept: 'workspace'
-    }
-  }).onOk(workspaceId => {
+      accept: 'workspace',
+    },
+  }).onOk((workspaceId) => {
     move(id, workspaceId)
   })
 }
@@ -151,9 +144,9 @@ function deleteItem({ id, name }) {
     ok: {
       label: t('assistantsExpansion.delete'),
       color: 'err',
-      flat: true
+      flat: true,
     },
-    ...dialogOptions
+    ...dialogOptions,
   }).onOk(() => {
     assistantsStore.delete(id)
   })

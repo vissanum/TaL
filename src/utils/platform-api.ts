@@ -27,7 +27,8 @@ export const fetch = IsTauri ? tauriFetch : window.fetch.bind(window)
 export async function clipboardReadText(): Promise<string> {
   if (IsTauri) {
     return await tauriClipboardReadText()
-  } else { // IsWeb
+  } else {
+    // IsWeb
     if (navigator.clipboard && navigator.clipboard.readText) {
       try {
         return await navigator.clipboard.readText()
@@ -38,7 +39,9 @@ export async function clipboardReadText(): Promise<string> {
         return ''
       }
     }
-    console.warn('Clipboard API not available or not permitted in this web context.')
+    console.warn(
+      'Clipboard API not available or not permitted in this web context.'
+    )
     return '' // O lanzar un error
   }
 }
@@ -47,7 +50,10 @@ export async function clipboardReadText(): Promise<string> {
 // El propósito exacto de esta constante en AIaW necesitaría ser revisado si se mantiene a largo plazo.
 export const PublicOrigin = IsTauri ? 'tauri://localhost' : location.origin
 
-export async function exportFile(filename: string, data: Blob | string | ArrayBuffer) {
+export async function exportFile(
+  filename: string,
+  data: Blob | string | ArrayBuffer
+) {
   // La lógica de Capacitor ha sido eliminada.
   // webExportFile es de Quasar. Su signatura de retorno puede variar.
   // Si se espera una Promise, y webExportFile no la devuelve, habrá que envolverla o ajustarla.

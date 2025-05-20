@@ -1,8 +1,5 @@
 <template>
-  <template
-    v-for="(sch, key) in schema.properties"
-    :key="key"
-  >
+  <template v-for="(sch, key) in schema.properties" :key="key">
     <json-input
       v-if="sch.type === 'object'"
       :schema="sch as PluginSchema"
@@ -16,7 +13,7 @@
       v-else
       :type="sch.type as any"
       :options="sch.enum as any"
-      :label="sch.title || key as string"
+      :label="sch.title || (key as string)"
       :description="sch.description"
       :component
       :lazy
@@ -24,7 +21,7 @@
       :input-props="{
         type: sch.format === 'password' ? 'password' : undefined,
         placeholder: sch.default,
-        ...inputProps
+        ...inputProps,
       }"
       :item-props
     />

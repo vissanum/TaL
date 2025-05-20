@@ -2,15 +2,12 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "AI as Workspace",
-  description: "新一代 LLM 客户端",
+  title: 'AI as Workspace',
+  description: '新一代 LLM 客户端',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
 
-
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/NitroRCr/AIaW' }
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/NitroRCr/AIaW' }],
     search: {
       provider: 'local',
       options: {
@@ -29,19 +26,17 @@ export default defineConfig({
           searchOptions: {
             fuzzy: 0.2,
             prefix: true,
-            boost: { title: 4, text: 2, titles: 1 }
-          }
+            boost: { title: 4, text: 2, titles: 1 },
+          },
         },
-        detailedView: true
-      }
+        detailedView: true,
+      },
     },
     outline: {
-      level: [2, 3]
-    }
+      level: [2, 3],
+    },
   },
-  head: [
-    ['link', { rel: 'icon', href: '/icon-256x256.png' }]
-  ],
+  head: [['link', { rel: 'icon', href: '/icon-256x256.png' }]],
   locales: {
     root: {
       label: 'English',
@@ -51,7 +46,10 @@ export default defineConfig({
           { text: 'Usage', link: '/usage/' },
           { text: 'Self-Hosting Guide', link: '/self-host/' },
           { text: 'Web Version', link: 'https://aiaw.app' },
-          { text: 'Client Download', link: 'https://github.com/NitroRCr/AIaW/releases/latest' }
+          {
+            text: 'Client Download',
+            link: 'https://github.com/NitroRCr/AIaW/releases/latest',
+          },
         ],
         sidebar: [
           {
@@ -63,24 +61,27 @@ export default defineConfig({
               { text: 'Cross-Platform', link: '/usage/cross-platform' },
               { text: 'Plugins', link: '/usage/plugins' },
               { text: 'MCP Plugin', link: '/usage/mcp' },
-              { text: 'Plugin Configuration & Development', link: '/usage/plugin-dev' },
+              {
+                text: 'Plugin Configuration & Development',
+                link: '/usage/plugin-dev',
+              },
               { text: 'Prompt Variables', link: '/usage/prompt-vars' },
               { text: 'Assistants', link: '/usage/assistants' },
               { text: 'Data & Sync', link: '/usage/data-sync' },
               { text: 'Custom Provider', link: '/usage/custom-provider' },
               { text: 'Share Link', link: '/usage/share-link' },
-              { text: 'Common Issues', link: '/usage/common-issues' }
-            ]
+              { text: 'Common Issues', link: '/usage/common-issues' },
+            ],
           },
           {
             text: 'Self-Hosting Guide',
             items: [
               { text: 'Quick Docker Deployment', link: '/self-host/' },
-              { text: 'Advanced Deployment', link: '/self-host/advanced' }
-            ]
-          }
-        ]
-      }
+              { text: 'Advanced Deployment', link: '/self-host/advanced' },
+            ],
+          },
+        ],
+      },
     },
     zh: {
       label: '中文',
@@ -90,7 +91,10 @@ export default defineConfig({
           { text: '使用文档', link: '/zh/usage/' },
           { text: '自部署指南', link: '/zh/self-host/' },
           { text: '网页版', link: 'https://aiaw.app' },
-          { text: '客户端下载', link: 'https://github.com/NitroRCr/AIaW/releases/latest' }
+          {
+            text: '客户端下载',
+            link: 'https://github.com/NitroRCr/AIaW/releases/latest',
+          },
         ],
         sidebar: [
           {
@@ -108,18 +112,18 @@ export default defineConfig({
               { text: '数据与同步', link: '/zh/usage/data-sync' },
               { text: '自定义服务商', link: '/zh/usage/custom-provider' },
               { text: '中转站对接', link: '/zh/usage/share-link' },
-              { text: '常见问题', link: '/zh/usage/common-issues' }
-            ]
+              { text: '常见问题', link: '/zh/usage/common-issues' },
+            ],
           },
           {
             text: '自部署指南',
             items: [
               { text: 'Docker 快速部署', link: '/zh/self-host/' },
-              { text: '进阶部署', link: '/zh/self-host/advanced' }
-            ]
-          }
-        ]
-      }
-    }
-  }
+              { text: '进阶部署', link: '/zh/self-host/advanced' },
+            ],
+          },
+        ],
+      },
+    },
+  },
 })

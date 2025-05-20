@@ -1,7 +1,10 @@
 <template>
   <div
     flex
-    :class="{ 'flex-row-reverse': message.type === 'user', 'flex-col': colMode }"
+    :class="{
+      'flex-row-reverse': message.type === 'user',
+      'flex-col': colMode,
+    }"
     relative
   >
     <div>
@@ -9,7 +12,7 @@
         flex
         :class="[
           colMode ? 'flex-row items-center' : 'flex-col pos-sticky top-0',
-          message.type === 'assistant' ? 'pl-2' : ''
+          message.type === 'assistant' ? 'pl-2' : '',
         ]"
       >
         <a-avatar
@@ -29,12 +32,12 @@
         </div>
       </div>
     </div>
-    <div
-      min-w-0
-    >
+    <div min-w-0>
       <div
         position-relative
-        :class="message.type === 'user' ? 'min-h-48px' : 'min-h-24px min-w-100px'"
+        :class="
+          message.type === 'user' ? 'min-h-48px' : 'min-h-24px min-w-100px'
+        "
         class="group"
       >
         <div
@@ -60,7 +63,11 @@
             @touchend="onSelect('touch')"
             pos-relative
             overflow-visible
-            v-if="(content.type === 'assistant-message' || content.type === 'user-message') && content.text"
+            v-if="
+              (content.type === 'assistant-message' ||
+                content.type === 'user-message') &&
+              content.text
+            "
           >
             <md-preview
               :class="message.type === 'user' ? 'bg-sur-c-low' : 'bg-sur'"
@@ -121,13 +128,17 @@
             gap-2
           >
             <message-image
-              v-for="image in content.items.map(id => itemMap[id]).filter(i => i.mimeType?.startsWith('image/'))"
+              v-for="image in content.items
+                .map((id) => itemMap[id])
+                .filter((i) => i.mimeType?.startsWith('image/'))"
               :key="image.id"
               :image
               h="100px"
             />
             <message-file
-              v-for="file in content.items.map(id => itemMap[id]).filter(i => !i.mimeType?.startsWith('image/'))"
+              v-for="file in content.items
+                .map((id) => itemMap[id])
+                .filter((i) => !i.mimeType?.startsWith('image/'))"
               :key="file.id"
               :file
             />
@@ -139,14 +150,7 @@
             :class="colMode ? 'mx-4' : 'mx-2'"
           />
         </div>
-        <div
-          text-err
-          break-word
-          px-5
-          mt-2
-          pb-2
-          v-if="message.error"
-        >
+        <div text-err break-word px-5 mt-2 pb-2 v-if="message.error">
           {{ message.error }}
         </div>
         <div v-if="perfs.showWarnings && message.warnings?.length">
@@ -190,13 +194,13 @@
         :class="colMode ? 'mx-4' : 'mx-2'"
         v-if="['pending', 'streaming'].includes(message.status)"
       >
-        <q-linear-progress
-          indeterminate
-        />
+        <q-linear-progress indeterminate />
       </div>
       <div
         text-on-sur-var
-        :class="message.type === 'assistant' ? (colMode ? 'mx-4' : 'mx-2') : 'mt-1'"
+        :class="
+          message.type === 'assistant' ? (colMode ? 'mx-4' : 'mx-2') : 'mt-1'
+        "
         flex
         items-center
       >
@@ -219,9 +223,7 @@
             @click="deleteBranch"
           />
         </template>
-        <template
-          v-if="['default', 'failed'].includes(message.status)"
-        >
+        <template v-if="['default', 'failed'].includes(message.status)">
           <copy-btn
             round
             flat
@@ -290,17 +292,18 @@
         </template>
       </div>
     </div>
-    <div
-      v-if="!colMode"
-      w="xs:20px sm:22.5%"
-      shrink-0
-    >
+    <div v-if="!colMode" w="xs:20px sm:22.5%" shrink-0>
       <md-catalog
         pos-sticky
         top-0
         px-2
         pb-4
-        v-if="perfs.messageCatalog && scrollContainer && $q.screen.gt.xs && textContent.text"
+        v-if="
+          perfs.messageCatalog &&
+          scrollContainer &&
+          $q.screen.gt.xs &&
+          textContent.text
+        "
         :editor-id="mdId"
         :scroll-element="scrollContainer"
         :md-heading-id="mdPreviewProps.mdHeadingId"
@@ -312,9 +315,25 @@
 <script setup lang="ts">
 import { MdPreview, MdCatalog } from 'md-editor-v3'
 import { db } from 'src/utils/db'
-import { computed, ComputedRef, inject, nextTick, onUnmounted, reactive, ref, watchEffect } from 'vue'
+import {
+  computed,
+  ComputedRef,
+  inject,
+  nextTick,
+  onUnmounted,
+  reactive,
+  ref,
+  watchEffect,
+} from 'vue'
 import sessions from 'src/utils/sessions'
-import { MessageContent, Message, ApiResultItem, UserMessageContent, AssistantMessageContent, ConvertArtifactOptions } from 'src/utils/types'
+import {
+  MessageContent,
+  Message,
+  ApiResultItem,
+  UserMessageContent,
+  AssistantMessageContent,
+  ConvertArtifactOptions,
+} from 'src/utils/types'
 import CopyBtn from './CopyBtn.vue'
 import AAvatar from './AAvatar.vue'
 import { useAssistantsStore } from 'src/stores/assistants'
@@ -325,7 +344,14 @@ import { copyToClipboard, useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 import PickAvatarDialog from './PickAvatarDialog.vue'
 import MessageFile from './MessageFile.vue'
-import { escapeRegex, genId, idDateString, isPlatformEnabled, textBeginning, wrapCode } from 'src/utils/functions'
+import {
+  escapeRegex,
+  genId,
+  idDateString,
+  isPlatformEnabled,
+  textBeginning,
+  wrapCode,
+} from 'src/utils/functions'
 import MenuItem from './MenuItem.vue'
 import MessageInfoDialog from './MessageInfoDialog.vue'
 import TextareaDialog from './TextareaDialog.vue'
@@ -335,8 +361,8 @@ import { useI18n } from 'vue-i18n'
 import { dialogOptions } from 'src/utils/values'
 
 const props = defineProps<{
-  message: Message,
-  childNum: number,
+  message: Message
+  childNum: number
   scrollContainer: HTMLElement
 }>()
 
@@ -346,21 +372,23 @@ const $q = useQuasar()
 function moreInfo() {
   $q.dialog({
     component: MessageInfoDialog,
-    componentProps: { message: props.message }
+    componentProps: { message: props.message },
   })
 }
 const sourceCodeMode = ref(false)
 
-const contents = computed(() => props.message.contents.map(x => {
-  if (x.type === 'assistant-message' || x.type === 'user-message') {
-    return {
-      ...x,
-      text: sourceCodeMode.value ? wrapCode(x.text, 'markdown', 5) : x.text
+const contents = computed(() =>
+  props.message.contents.map((x) => {
+    if (x.type === 'assistant-message' || x.type === 'user-message') {
+      return {
+        ...x,
+        text: sourceCodeMode.value ? wrapCode(x.text, 'markdown', 5) : x.text,
+      }
     }
-  }
-  // Vue 3.4 computed is lazy. Force it to trigger.
-  return { ...x }
-}))
+    // Vue 3.4 computed is lazy. Force it to trigger.
+    return { ...x }
+  })
+)
 
 const model = defineModel<number>()
 
@@ -368,7 +396,7 @@ const emit = defineEmits<{
   regenerate: []
   edit: []
   quote: [ApiResultItem]
-  'extract-artifact': [[string, RegExp | string, ConvertArtifactOptions]],
+  'extract-artifact': [[string, RegExp | string, ConvertArtifactOptions]]
   rendered: []
   delete: []
 }>()
@@ -376,44 +404,61 @@ const emit = defineEmits<{
 watchEffect(async () => {
   const sessionId = props.message.generatingSession
   if (sessionId) {
-    !await sessions.ping(sessionId) && db.messages.update(props.message.id, {
-      generatingSession: null,
-      status: 'failed',
-      error: 'aborted',
-      contents: props.message.contents.map(content => {
-        if (content.type === 'assistant-tool' && content.status === 'calling') {
-          return {
-            ...content,
-            status: 'failed',
-            error: 'Tool call aborted'
+    !(await sessions.ping(sessionId)) &&
+      db.messages.update(props.message.id, {
+        generatingSession: null,
+        status: 'failed',
+        error: 'aborted',
+        contents: props.message.contents.map((content) => {
+          if (
+            content.type === 'assistant-tool' &&
+            content.status === 'calling'
+          ) {
+            return {
+              ...content,
+              status: 'failed',
+              error: 'Tool call aborted',
+            }
           }
-        }
-        return content
-      }) as MessageContent[]
-    })
+          return content
+        }) as MessageContent[],
+      })
   }
 })
 
-const textIndex = computed(() => props.message.contents.findIndex(c => ['user-message', 'assistant-message'].includes(c.type)))
-const textContent = computed(() => (props.message.contents[textIndex.value] as UserMessageContent | AssistantMessageContent))
+const textIndex = computed(() =>
+  props.message.contents.findIndex((c) =>
+    ['user-message', 'assistant-message'].includes(c.type)
+  )
+)
+const textContent = computed(
+  () =>
+    props.message.contents[textIndex.value] as
+      | UserMessageContent
+      | AssistantMessageContent
+)
 
 const { perfs } = useUserPerfsStore()
 const assistantsStore = useAssistantsStore()
 const avatar = computed(() =>
   props.message.type === 'user'
     ? perfs.userAvatar
-    : assistantsStore.assistants.find(a => a.id === props.message.assistantId)?.avatar
+    : assistantsStore.assistants.find((a) => a.id === props.message.assistantId)
+        ?.avatar
 )
 
 const name = computed(() =>
   props.message.type === 'user'
     ? null
-    : assistantsStore.assistants.find(a => a.id === props.message.assistantId)?.name
+    : assistantsStore.assistants.find((a) => a.id === props.message.assistantId)
+        ?.name
 )
 
 const showArtifacts = inject<ComputedRef>('showArtifacts')
 const denseMode = computed(() => showArtifacts.value || $q.screen.lt.md)
-const colMode = computed(() => denseMode.value && props.message.type === 'assistant')
+const colMode = computed(
+  () => denseMode.value && props.message.type === 'assistant'
+)
 
 const router = useRouter()
 function onAvatarClick() {
@@ -422,24 +467,27 @@ function onAvatarClick() {
   } else if (props.message.type === 'user') {
     $q.dialog({
       component: PickAvatarDialog,
-      componentProps: { model: perfs.userAvatar, defaultTab: 'text' }
-    }).onOk(avatar => { perfs.userAvatar = avatar })
+      componentProps: { model: perfs.userAvatar, defaultTab: 'text' },
+    }).onOk((avatar) => {
+      perfs.userAvatar = avatar
+    })
   }
 }
 
 const showFloatBtns = ref(false)
 const floatBtnStyle = reactive({
   top: undefined,
-  left: undefined
+  left: undefined,
 })
 const textDiv = ref()
 const selected = reactive({
   text: null,
-  original: false
+  original: false,
 })
 function getDataLine(node: Node, ttl = 3) {
   if (ttl === 0) return -1
-  if (node.nodeType !== Node.ELEMENT_NODE) return getDataLine(node.parentElement, ttl - 1)
+  if (node.nodeType !== Node.ELEMENT_NODE)
+    return getDataLine(node.parentElement, ttl - 1)
   const val = (node as Element).getAttribute('data-line')
   return val ? parseInt(val) : getDataLine(node.parentElement, ttl - 1)
 }
@@ -454,15 +502,19 @@ function onSelect(mode: 'mouse' | 'touch') {
     selected.text = text
     selected.original = false
   } else {
-    selected.text = textContent.value.text.split('\n').slice(start, end + 1).join('\n')
+    selected.text = textContent.value.text
+      .split('\n')
+      .slice(start, end + 1)
+      .join('\n')
     selected.original = true
   }
   const range = selection.getRangeAt(0)
   const targetRects = range.getBoundingClientRect()
   const baseRects = textDiv.value[0].getBoundingClientRect()
-  floatBtnStyle.top = targetRects.top < 48 || mode === 'touch'
-    ? targetRects.bottom - baseRects.top + 12 + 'px'
-    : targetRects.top - baseRects.top - 48 + 'px'
+  floatBtnStyle.top =
+    targetRects.top < 48 || mode === 'touch'
+      ? targetRects.bottom - baseRects.top + 12 + 'px'
+      : targetRects.top - baseRects.top - 48 + 'px'
   floatBtnStyle.left = targetRects.left - baseRects.left + 'px'
   showFloatBtns.value = true
 }
@@ -475,11 +527,14 @@ if (perfs.messageSelectionBtn) {
   onUnmounted(() => document.removeEventListener('selectionchange', listener))
 }
 function quote(text: string) {
-  const name = props.message.type === 'assistant' ? t('messageItem.assistantMessageQuote') : t('messageItem.userMessageQuote')
+  const name =
+    props.message.type === 'assistant'
+      ? t('messageItem.assistantMessageQuote')
+      : t('messageItem.userMessageQuote')
   emit('quote', {
     type: 'quote',
     name: `${name}：${textBeginning(text, 10)}`,
-    contentText: text
+    contentText: text,
   })
 }
 function edit() {
@@ -487,11 +542,11 @@ function edit() {
     component: TextareaDialog,
     componentProps: {
       title: t('messageItem.editMessage'),
-      model: textContent.value.text
-    }
-  }).onOk(text => {
+      model: textContent.value.text,
+    },
+  }).onOk((text) => {
     db.messages.update(props.message.id, {
-      [`contents.${textIndex.value}.text`]: text
+      [`contents.${textIndex.value}.text`]: text,
     })
   })
 }
@@ -507,9 +562,9 @@ function deleteBranch() {
     ok: {
       label: t('messageItem.delete'),
       color: 'err',
-      flat: true
+      flat: true,
     },
-    ...dialogOptions
+    ...dialogOptions,
   }).onOk(() => {
     emit('delete')
   })
@@ -519,16 +574,20 @@ const itemMap = inject<ComputedRef>('itemMap')
 
 function convertArtifact(text: string, pattern, lang: string) {
   if (perfs.artifactsAutoName) {
-    emit('extract-artifact', [text, pattern, {
-      lang,
-      reserveOriginal: perfs.artifactsReserveOriginal
-    }])
+    emit('extract-artifact', [
+      text,
+      pattern,
+      {
+        lang,
+        reserveOriginal: perfs.artifactsReserveOriginal,
+      },
+    ])
   } else {
     $q.dialog({
       component: ConvertArtifactDialog,
       componentProps: {
-        lang
-      }
+        lang,
+      },
     }).onOk(async (options: ConvertArtifactOptions) => {
       emit('extract-artifact', [text, pattern, options])
     })
@@ -549,7 +608,7 @@ function onHtmlChanged(inject = false) {
 function injectConvertArtifact() {
   if (!isPlatformEnabled(perfs.artifactsEnabled)) return
   const el: HTMLElement = textDiv.value[0]
-  el.querySelectorAll('.md-editor-code').forEach(code => {
+  el.querySelectorAll('.md-editor-code').forEach((code) => {
     if (code.querySelector('.md-editor-convert-artifact')) return
     const anchor = code.querySelector('.md-editor-collapse-tips')
     const btn = document.createElement('span')
@@ -560,13 +619,19 @@ function injectConvertArtifact() {
       ev.stopPropagation()
       const text = code.querySelector('pre code').textContent
       const lang = code.querySelector('pre code').getAttribute('language')
-      const pattern = new RegExp(`\`{3,}.*\\n${escapeRegex(text)}\\s*\`{3,}`, 'g')
+      const pattern = new RegExp(
+        `\`{3,}.*\\n${escapeRegex(text)}\\s*\`{3,}`,
+        'g'
+      )
       convertArtifact(text, pattern, lang)
     })
     btn.title = t('messageItem.convertToArtifactBtn')
     code.querySelector('.md-editor-code-action').insertBefore(btn, anchor)
-    code.querySelector<HTMLElement>('.md-editor-copy-button').title = t('messageItem.copyCode')
-    code.querySelector<HTMLElement>('.md-editor-collapse-tips').title = t('messageItem.fold')
+    code.querySelector<HTMLElement>('.md-editor-copy-button').title = t(
+      'messageItem.copyCode'
+    )
+    code.querySelector<HTMLElement>('.md-editor-collapse-tips').title =
+      t('messageItem.fold')
   })
 }
 const mdPreviewProps = useMdPreviewProps()

@@ -33,56 +33,106 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/workspaces/:workspaceId/',
         component: WorkspacePage,
-        props: route => ({ id: route.params.workspaceId }),
+        props: (route) => ({ id: route.params.workspaceId }),
         children: [
           { path: '', component: WorkspaceIndex },
           { path: 'settings', component: WorkspaceSettings },
-          { path: 'dialogs/:dialogId', component: DialogView, props: route => ({ id: route.params.dialogId }) },
-          { path: 'assistants/:assistantId', component: AssistantView, props: route => ({ id: route.params.assistantId }) },
+          {
+            path: 'dialogs/:dialogId',
+            component: DialogView,
+            props: (route) => ({ id: route.params.dialogId }),
+          },
+          {
+            path: 'assistants/:assistantId',
+            component: AssistantView,
+            props: (route) => ({ id: route.params.assistantId }),
+          },
           {
             path: 'assistants/:assistantId/plugins/:pluginId',
             component: PluginAdjust,
-            props: route => ({ id: route.params.pluginId, assistantId: route.params.assistantId })
-          }
-        ]
+            props: (route) => ({
+              id: route.params.pluginId,
+              assistantId: route.params.assistantId,
+            }),
+          },
+        ],
       },
       {
         path: '/settings/',
         component: SettingsPage,
         children: [
-          { path: '', component: SettingsView, meta: { title: t('routes.settings') } },
-          { path: 'shortcut-keys', component: ShortcutKeys, meta: { title: t('routes.shortcutKeys') } },
-          { path: 'providers/:id', component: CustomProvider, props: true }
-        ]
+          {
+            path: '',
+            component: SettingsView,
+            meta: { title: t('routes.settings') },
+          },
+          {
+            path: 'shortcut-keys',
+            component: ShortcutKeys,
+            meta: { title: t('routes.shortcutKeys') },
+          },
+          { path: 'providers/:id', component: CustomProvider, props: true },
+        ],
       },
       {
         path: '/plugins/',
         component: PluginsPage,
         children: [
-          { path: '', component: PluginsMarket, meta: { title: t('routes.pluginsMarket') } },
-          { path: ':pluginId', component: PluginSettings, props: route => ({ id: route.params.pluginId }) }
-        ]
+          {
+            path: '',
+            component: PluginsMarket,
+            meta: { title: t('routes.pluginsMarket') },
+          },
+          {
+            path: ':pluginId',
+            component: PluginSettings,
+            props: (route) => ({ id: route.params.pluginId }),
+          },
+        ],
       },
       {
         path: '/assistants/',
         component: AssistantsPage,
         children: [
-          { path: '', component: AssistantsMarket, meta: { title: t('routes.assistantsMarket') } },
-          { path: ':assistantId', component: AssistantView, props: route => ({ id: route.params.assistantId }) },
+          {
+            path: '',
+            component: AssistantsMarket,
+            meta: { title: t('routes.assistantsMarket') },
+          },
+          {
+            path: ':assistantId',
+            component: AssistantView,
+            props: (route) => ({ id: route.params.assistantId }),
+          },
           {
             path: ':assistantId/plugins/:pluginId',
             component: PluginAdjust,
-            props: route => ({ id: route.params.pluginId, assistantId: route.params.assistantId })
-          }
-        ]
+            props: (route) => ({
+              id: route.params.pluginId,
+              assistantId: route.params.assistantId,
+            }),
+          },
+        ],
       },
       { path: '/set-provider', component: SetProvider },
-      ...(DexieDBURL ? [
-        { path: '/account', component: AccountPage, meta: { title: t('routes.account') } }
-      ] : []),
-      ...(DexieDBURL && LitellmBaseURL ? [
-        { path: '/model-pricing', component: ModelPricing, meta: { title: t('routes.modelPricing') } }
-      ] : []),
+      ...(DexieDBURL
+        ? [
+            {
+              path: '/account',
+              component: AccountPage,
+              meta: { title: t('routes.account') },
+            },
+          ]
+        : []),
+      ...(DexieDBURL && LitellmBaseURL
+        ? [
+            {
+              path: '/model-pricing',
+              component: ModelPricing,
+              meta: { title: t('routes.modelPricing') },
+            },
+          ]
+        : []),
       { path: '/', component: EmptyPage },
 
       // Always leave this as last one,
@@ -92,11 +142,11 @@ const routes: RouteRecordRaw[] = [
         component: ErrorNotFound,
         props: {
           drawerToggle: true,
-          timeout: 0
-        }
-      }
-    ]
-  }
+          timeout: 0,
+        },
+      },
+    ],
+  },
 ]
 
 export default routes

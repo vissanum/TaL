@@ -1,11 +1,6 @@
 <template>
   <div flex>
-    <div
-      flex
-      grow
-      flex-wrap
-      gap-2
-    >
+    <div flex grow flex-wrap gap-2>
       <a-input
         v-model="model.name"
         :label="$t('promptVarItem.variableName')"
@@ -49,7 +44,7 @@
         v-model="model.default"
         :input-props="{
           dense: true,
-          filled: true
+          filled: true,
         }"
         class="prompt-var-input-item"
         component="input"
@@ -82,7 +77,7 @@ const options = computed(() => [
   { label: t('promptVarItem.number'), value: 'number' },
   { label: t('promptVarItem.toggle'), value: 'toggle' },
   { label: t('promptVarItem.select'), value: 'select' },
-  { label: t('promptVarItem.multiSelect'), value: 'multi-select' }
+  { label: t('promptVarItem.multiSelect'), value: 'multi-select' },
 ])
 </script>
 <style lang="scss">

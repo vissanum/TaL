@@ -1,8 +1,5 @@
 <template>
-  <div
-    ref="el"
-    class="code-jar hljs"
-  />
+  <div ref="el" class="code-jar hljs" />
 </template>
 <script setup lang="ts">
 import { CodeJar } from 'codejar'
@@ -19,7 +16,7 @@ const model = defineModel<string>()
 
 const el = ref(null)
 
-const tab = computed(() => /\n {2}\w/g.test(model.value) ? '  ' : '    ')
+const tab = computed(() => (/\n {2}\w/g.test(model.value) ? '  ' : '    '))
 
 function highlight(editor: HTMLElement) {
   if (!window.hljs) {
@@ -29,18 +26,19 @@ function highlight(editor: HTMLElement) {
     return
   }
   const code = editor.textContent
-  const html = props.language && window.hljs.getLanguage(props.language)
-    ? window.hljs.highlight(code, { language: props.language, ignoreIllegals: true }).value
-    : window.hljs.highlightAuto(code).value
+  const html =
+    props.language && window.hljs.getLanguage(props.language)
+      ? window.hljs.highlight(code, {
+          language: props.language,
+          ignoreIllegals: true,
+        }).value
+      : window.hljs.highlightAuto(code).value
   editor.innerHTML = html
 }
 
 onMounted(() => {
-  const jar = CodeJar(
-    el.value,
-    withLineNumbers(highlight)
-  )
-  jar.onUpdate(code => {
+  const jar = CodeJar(el.value, withLineNumbers(highlight))
+  jar.onUpdate((code) => {
     model.value = code
   })
   watchEffect(() => {
@@ -48,7 +46,7 @@ onMounted(() => {
   })
   watchEffect(() => {
     jar.updateOptions({
-      tab: tab.value
+      tab: tab.value,
     })
   })
 })
@@ -61,7 +59,8 @@ onMounted(() => {
   overflow: hidden;
 }
 .code-jar {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   color: var(--md-theme-code-block-color);
   background-color: var(--md-theme-code-block-bg-color);
   height: 100%;

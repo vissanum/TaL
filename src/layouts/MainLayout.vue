@@ -9,11 +9,7 @@
       flex
       flex-col
     >
-      <div
-        text-xl
-        px-4
-        pt-4
-      >
+      <div text-xl px-4 pt-4>
         <svg
           fill-on-sur-var
           h="24px"
@@ -21,30 +17,16 @@
           cursor-pointer
           @click="notifyVersion"
         >
-          <use
-            xlink:href="/banner.svg#default"
-          />
+          <use xlink:href="/banner.svg#default" />
         </svg>
       </div>
       <q-separator spaced />
-      <div
-        px-4
-        py-2
-        text-sec
-      >
+      <div px-4 py-2 text-sec>
         {{ t('mainLayout.workspace', 4) }}
       </div>
       <workspace-nav mt-2 />
-      <q-list
-        mt-a
-        mb-2
-      >
-        <q-item
-          clickable
-          to="/assistants"
-          active-class="route-active"
-          item-rd
-        >
+      <q-list mt-a mb-2>
+        <q-item clickable to="/assistants" active-class="route-active" item-rd>
           <q-item-section avatar>
             <q-icon name="sym_o_robot_2" />
           </q-item-section>
@@ -52,12 +34,7 @@
             {{ t('mainLayout.assistants') }}
           </q-item-section>
         </q-item>
-        <q-item
-          clickable
-          to="/plugins"
-          active-class="route-active"
-          item-rd
-        >
+        <q-item clickable to="/plugins" active-class="route-active" item-rd>
           <q-item-section avatar>
             <q-icon name="sym_o_extension" />
           </q-item-section>
@@ -65,12 +42,7 @@
             {{ t('mainLayout.plugins') }}
           </q-item-section>
         </q-item>
-        <q-item
-          clickable
-          to="/settings"
-          active-class="route-active"
-          item-rd
-        >
+        <q-item clickable to="/settings" active-class="route-active" item-rd>
           <q-item-section avatar>
             <q-icon name="sym_o_settings" />
           </q-item-section>
@@ -79,17 +51,8 @@
           </q-item-section>
         </q-item>
         <q-separator spaced />
-        <div
-          px-2
-          flex
-          text-on-sur-var
-          items-center
-        >
-          <account-btn
-            v-if="DexieDBURL"
-            flat
-            no-caps
-          />
+        <div px-2 flex text-on-sur-var items-center>
+          <account-btn v-if="DexieDBURL" flat no-caps />
           <q-btn
             v-else
             flat
@@ -102,12 +65,7 @@
           />
           <q-space />
           <dark-switch-btn />
-          <q-btn
-            flat
-            dense
-            round
-            icon="sym_o_more_vert"
-          >
+          <q-btn flat dense round icon="sym_o_more_vert">
             <q-menu>
               <q-list>
                 <menu-item
@@ -123,10 +81,7 @@
                   href="https://github.com/NitroRCr/AIaW"
                   target="_blank"
                 >
-                  <q-item-section
-                    avatar
-                    min-w-0
-                  >
+                  <q-item-section avatar min-w-0>
                     <q-avatar
                       icon="svguse:/svg/github.svg#icon"
                       size="20px"
@@ -176,7 +131,7 @@ import { IsWeb } from 'src/utils/platform-api'
 import { VueDraggable } from 'vue-draggable-plus'
 
 defineOptions({
-  name: 'MainLayout'
+  name: 'MainLayout',
 })
 
 const uiStore = useUiStateStore()
@@ -192,13 +147,15 @@ function notifyVersion() {
     message: `${t('mainLayout.currentVersion')}: ${version.version}`,
     color: 'inv-sur',
     textColor: 'inv-on-sur',
-    actions: [{
-      label: t('mainLayout.changeLog'),
-      handler: () => {
-        window.open('https://github.com/NitroRCr/AIaW/releases', '_blank')
+    actions: [
+      {
+        label: t('mainLayout.changeLog'),
+        handler: () => {
+          window.open('https://github.com/NitroRCr/AIaW/releases', '_blank')
+        },
+        textColor: 'inv-pri',
       },
-      textColor: 'inv-pri'
-    }]
+    ],
   })
 }
 </script>

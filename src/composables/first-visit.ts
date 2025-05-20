@@ -29,22 +29,26 @@ export function useFirstVisit() {
         cancel: {
           label: t('firstVisit.cancel'),
           noCaps: true,
-          flat: true
+          flat: true,
         },
         persistent: true,
-        ok: serviceAvailable ? {
-          label: t('firstVisit.ok'),
-          noCaps: true,
-          flat: true
-        } : false,
-        ...dialogOptions
-      }).onCancel(() => {
-        router.push('/settings')
-        localData.visited = true
-      }).onOk(() => {
-        db.cloud.login()
-        localData.visited = true
+        ok: serviceAvailable
+          ? {
+              label: t('firstVisit.ok'),
+              noCaps: true,
+              flat: true,
+            }
+          : false,
+        ...dialogOptions,
       })
+        .onCancel(() => {
+          router.push('/settings')
+          localData.visited = true
+        })
+        .onOk(() => {
+          db.cloud.login()
+          localData.visited = true
+        })
     }
   })
 }

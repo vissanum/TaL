@@ -274,12 +274,8 @@
               "type": "float"
             }
           ],
-          "outputIdxs": [
-            0
-          ],
-          "showComponents": [
-            "image"
-          ]
+          "outputIdxs": [0],
+          "showComponents": ["image"]
         }
       ],
       "noRoundtrip": true
@@ -359,12 +355,8 @@
               "type": "str"
             }
           ],
-          "outputIdxs": [
-            0
-          ],
-          "showComponents": [
-            "image"
-          ]
+          "outputIdxs": [0],
+          "showComponents": ["image"]
         }
       ],
       "noRoundtrip": true
@@ -418,12 +410,8 @@
               "type": "bool"
             }
           ],
-          "outputIdxs": [
-            0
-          ],
-          "showComponents": [
-            "audio"
-          ]
+          "outputIdxs": [0],
+          "showComponents": ["audio"]
         }
       ]
     }
@@ -463,12 +451,8 @@
               "type": "str"
             }
           ],
-          "outputIdxs": [
-            0
-          ],
-          "showComponents": [
-            "image"
-          ]
+          "outputIdxs": [0],
+          "showComponents": ["image"]
         }
       ]
     }
@@ -529,12 +513,8 @@
               "type": "float"
             }
           ],
-          "outputIdxs": [
-            0
-          ],
-          "showComponents": [
-            "audio"
-          ]
+          "outputIdxs": [0],
+          "showComponents": ["audio"]
         }
       ]
     }

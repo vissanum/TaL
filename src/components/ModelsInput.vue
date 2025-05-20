@@ -11,11 +11,7 @@
     @filter="filterFn"
   >
     <template #option="{ opt, selected, itemProps }">
-      <model-item
-        :model="opt"
-        :selected
-        v-bind="itemProps"
-      />
+      <model-item :model="opt" :selected v-bind="itemProps" />
     </template>
   </q-select>
 </template>
@@ -29,5 +25,7 @@ import { toRef } from 'vue'
 const model = defineModel<string[]>()
 
 const providersStore = useProvidersStore()
-const { filteredOptions, filterFn } = useFilterOptions(toRef(providersStore, 'modelOptions'))
+const { filteredOptions, filterFn } = useFilterOptions(
+  toRef(providersStore, 'modelOptions')
+)
 </script>

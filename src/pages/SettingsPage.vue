@@ -12,10 +12,7 @@
       header-class="text-lg"
       default-opened
     >
-      <a-tip
-        tip-key="custom-provider-usage"
-        rd-0
-      >
+      <a-tip tip-key="custom-provider-usage" rd-0>
         {{ $t('settingsPage.customProviderUsage') }}
         <a
           href="https://docs.aiaw.app/usage/custom-provider.html"

@@ -10,18 +10,12 @@
     v-model="model"
     class="min-w-120px"
   />
-  <q-item
-    v-else-if="component === 'item'"
-    v-bind="itemProps"
-  >
+  <q-item v-else-if="component === 'item'" v-bind="itemProps">
     <q-item-section>
       <q-item-label>
         {{ label }}
       </q-item-label>
-      <q-item-label
-        v-if="description"
-        caption
-      >
+      <q-item-label v-if="description" caption>
         {{ description }}
       </q-item-label>
     </q-item-section>
@@ -34,11 +28,12 @@
         :input-props="{
           dense: true,
           filled: true,
-          ...inputProps
+          ...inputProps,
         }"
         :class="{
-          'xs:w-200px sm:w-250px': ['string', 'array'].includes(type) && !options,
-          'xs:w-100px sm:w-150px': type === 'number'
+          'xs:w-200px sm:w-250px':
+            ['string', 'array'].includes(type) && !options,
+          'xs:w-100px sm:w-150px': type === 'number',
         }"
       />
     </q-item-section>

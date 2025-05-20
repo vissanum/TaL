@@ -17,6 +17,7 @@ These variables can be used in "Prompt Templates"; their values will be selected
 "Variable Name" is the name used when using the variable in the prompt template; "Label" is the label of the variable value input box during the conversation.
 
 The correspondence between the variable "Type" and JS data types is as follows:
+
 - Text: string
 - Number: number
 - Switch: boolean
@@ -36,4 +37,3 @@ Although prompts are not meant to be "displayed", we still call the process of u
 ## Built-in Variables
 
 This is the default content of the prompt template:
-

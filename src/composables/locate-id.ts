@@ -5,12 +5,12 @@ import { useRoute } from 'vue-router'
 function useLocateId(ready: Ref<unknown>) {
   const route = useRoute()
   onMounted(() => {
-    until(ready).toBeTruthy().then(() => {
-      route.hash && document.querySelector(route.hash)?.scrollIntoView()
-    })
+    until(ready)
+      .toBeTruthy()
+      .then(() => {
+        route.hash && document.querySelector(route.hash)?.scrollIntoView()
+      })
   })
 }
 
-export {
-  useLocateId
-}
+export { useLocateId }

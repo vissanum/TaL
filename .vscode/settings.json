@@ -7,12 +7,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit" // Usar "explicit" o true. "explicit" significa que solo se ejecuta si hay una acción de guardado configurada.
   },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "vue"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
   "eslint.format.enable": false, // Deshabilitar el formateo de ESLint si Prettier lo maneja.
   "typescript.tsdk": "node_modules/typescript/lib",
   "vue.complete.casing.tags": "autoKebab",
@@ -46,7 +41,8 @@
   "[scss]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[rust]": { // Para Rust, rust-analyzer es el formateador (usa rustfmt)
+  "[rust]": {
+    // Para Rust, rust-analyzer es el formateador (usa rustfmt)
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
     "editor.formatOnSave": true
   }

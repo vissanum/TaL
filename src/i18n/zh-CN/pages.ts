@@ -23,8 +23,7 @@ export default {
     remainingBudget: '剩余额度',
     topupButton: '充值',
     orderHistoryHeader: '历史订单',
-    contactDeveloper:
-      '若订单遇到异常，请联系开发者，Email：',
+    contactDeveloper: '若订单遇到异常，请联系开发者，Email：',
     logoutButton: '退出登录',
     licenseOk: '已启用',
     licenseExpired: '已过期',
@@ -36,7 +35,7 @@ export default {
     syncServiceType: '云同步服务',
     apiBudgetType: '模型额度',
     apiBudgetUsdType: '模型额度(USD)',
-    amount: '数量'
+    amount: '数量',
   },
   modelPricing: {
     modelPrice: '模型价格',
@@ -53,38 +52,40 @@ export default {
     getModelPriceFailed: '获取模型价格失败',
     inputPrice: '输入价格',
     outputPrice: '输出价格',
-    usageDescription: '所有模型以各服务商官方API价格扣费，按USD/CNY=7汇率计算。',
-    tokenOutputNote: '按每Token输出1.4个汉字（新GPT模型）或1个汉字（其他模型）或1.8个汉字（国产模型）计算。实际比率有波动，平均而言略大于此值，但还需考虑输入开销',
+    usageDescription:
+      '所有模型以各服务商官方API价格扣费，按USD/CNY=7汇率计算。',
+    tokenOutputNote:
+      '按每Token输出1.4个汉字（新GPT模型）或1个汉字（其他模型）或1.8个汉字（国产模型）计算。实际比率有波动，平均而言略大于此值，但还需考虑输入开销',
     currencyCNY: '￥',
     currencyUSD: '$',
     unitKTokens: 'K Tokens',
     unitMTokens: 'M Tokens',
-    modelName: '模型'
+    modelName: '模型',
   },
   pluginsPage: {
-    installedPlugins: '已安装插件'
+    installedPlugins: '已安装插件',
   },
   setProviderPage: {
     providerSet: '已设置服务商为：{baseURL}',
     restore: '还原',
-    providerSetFailed: '设置服务商失败：格式错误'
+    providerSetFailed: '设置服务商失败：格式错误',
   },
   settingsPage: {
     customProviders: '自定义服务商',
     customProviderUsage: '可参考自定义服务商的',
-    usageGuide: '使用指南'
+    usageGuide: '使用指南',
   },
   errorNotFound: {
-    message: '这里什么都没有...'
+    message: '这里什么都没有...',
   },
   assistantsPage: {
-    globalAssistant: '全局助手'
+    globalAssistant: '全局助手',
   },
   workspacePage: {
     closeArtifact: '关闭',
     closeAllArtifacts: '关闭全部 Artifacts',
     workspaceHome: '工作区主页',
-    workspaceSettings: '工作区设置'
+    workspaceSettings: '工作区设置',
   },
   mainLayout: {
     workspace: '工作区',
@@ -95,6 +96,6 @@ export default {
     currentVersion: '当前版本',
     changeLog: '更新日志',
     webVersion: '网页版',
-    localClient: '本地客户端'
-  }
+    localClient: '本地客户端',
+  },
 }

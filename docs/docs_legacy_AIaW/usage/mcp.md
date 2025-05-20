@@ -31,6 +31,7 @@ After installation, you can enable the plugin in the assistant settings, and the
 When manually adding MCP plugins, you cannot modify all the properties of the plugin. If you need to change more properties or share them with others, you can write a plugin configuration file and then add the plugin through the configuration file.
 
 ::: code-group
+
 ```json [Example Value]
 {
   "id": "mcp-searxng",
@@ -52,21 +53,24 @@ When manually adding MCP plugins, you cannot modify all the properties of the pl
   }
 }
 ```
+
 ```typescript [TS Type Definition]
 interface McpPluginManifest {
   id: string
   title: string
-  transport: {
-    type: "stdio"
-    command: string
-    cwd?: string;
-    env?: {
-      [x: string]: string
-    }
-  } | {
-    type: "sse"
-    url: string
-  }
+  transport:
+    | {
+        type: 'stdio'
+        command: string
+        cwd?: string
+        env?: {
+          [x: string]: string
+        }
+      }
+    | {
+        type: 'sse'
+        url: string
+      }
   avatar?: Avatar
   description?: string
   author?: string
@@ -74,6 +78,7 @@ interface McpPluginManifest {
   noRoundtrip?: boolean
 }
 ```
+
 :::
 
 For the meaning of some attributes, you can refer to [Gradio Plugin](plugin-dev#gradio-plugin)

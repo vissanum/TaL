@@ -14,8 +14,10 @@ export function persistentReactive<T extends object>(key: string, value: T) {
     }
     db.reactives.put({ key, value: toRaw(val) })
   })
-  const source = useLiveQuery(() => db.reactives.get(key), { initialValue: 'initial' as const })
-  watch(source, newVal => {
+  const source = useLiveQuery(() => db.reactives.get(key), {
+    initialValue: 'initial' as const,
+  })
+  watch(source, (newVal) => {
     if (newVal === 'initial') return
     flag = true
     if (newVal) {

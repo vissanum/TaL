@@ -1,6 +1,19 @@
 import { LobeChatPluginManifest, PluginSchema } from '@lobehub/chat-plugin-sdk'
 import { Prompt, Resource, Tool } from '@modelcontextprotocol/sdk/types.js'
-import { Any, Array, Boolean, Literal, Null, Number, Object, Optional, Static, String, TSchema, Union } from '@sinclair/typebox'
+import {
+  Any,
+  Array,
+  Boolean,
+  Literal,
+  Null,
+  Number,
+  Object,
+  Optional,
+  Static,
+  String,
+  TSchema,
+  Union,
+} from '@sinclair/typebox'
 import { LanguageModelUsage } from 'ai'
 
 interface ModelSettings {
@@ -60,7 +73,7 @@ type Avatar = SvgAvatar | TextAvatar | ImageAvatar | UrlAvatar | IconAvatar
 
 const ProviderSchema = Object({
   type: String(),
-  settings: Object(undefined)
+  settings: Object(undefined),
 })
 type Provider = Static<typeof ProviderSchema>
 interface ProviderType {
@@ -114,7 +127,10 @@ interface AssistantToolContent {
   error?: string
 }
 
-type MessageContent = UserMessageContent | AssistantMessageContent | AssistantToolContent
+type MessageContent =
+  | UserMessageContent
+  | AssistantMessageContent
+  | AssistantToolContent
 
 class ApiCallError extends Error {}
 
@@ -173,7 +189,10 @@ interface PluginFileparser {
     hint?: string
     mask?: string
   }
-  execute(args: { file: Blob, range?: string }, settings): Promise<ApiResultItem[]>
+  execute(
+    args: { file: Blob; range?: string },
+    settings
+  ): Promise<ApiResultItem[]>
 }
 
 interface Plugin {
@@ -231,7 +250,10 @@ interface GradioRequiredInput {
   paramType: 'required'
   type: string
 }
-type GradioFileparserInput = GradioFileInput | GradioRangeInput | GradioFixedInput
+type GradioFileparserInput =
+  | GradioFileInput
+  | GradioRangeInput
+  | GradioFixedInput
 interface GradioManifestFileparser {
   type: 'fileparser'
   name: string
@@ -240,7 +262,10 @@ interface GradioManifestFileparser {
   inputs: GradioFileparserInput[]
   outputIdxs: number[]
 }
-type GradioApiInput = GradioFixedInput | GradioOptionalInput | GradioRequiredInput
+type GradioApiInput =
+  | GradioFixedInput
+  | GradioOptionalInput
+  | GradioRequiredInput
 interface GradioManifestTool {
   type: 'tool'
   name: string
@@ -272,7 +297,11 @@ interface GradioManifestInfo {
   outputIdxs: number[]
 }
 
-type GradioManifestEndpoint = GradioManifestFileparser | GradioManifestTool | GradioManifestAction | GradioManifestInfo
+type GradioManifestEndpoint =
+  | GradioManifestFileparser
+  | GradioManifestTool
+  | GradioManifestAction
+  | GradioManifestInfo
 interface GradioPluginManifest {
   id: string
   title: string
@@ -291,12 +320,12 @@ const TransportConfSchema = Union([
     type: Literal('stdio'),
     command: String(),
     env: Optional(Object(undefined)),
-    cwd: Optional(String())
+    cwd: Optional(String()),
   }),
   Object({
     type: Literal('sse'),
-    url: String()
-  })
+    url: String(),
+  }),
 ])
 type TransportConf = Static<typeof TransportConfSchema>
 const McpPluginManifestSchema = Object({
@@ -307,7 +336,7 @@ const McpPluginManifestSchema = Object({
   avatar: Optional(Object(undefined)),
   noRoundtrip: Optional(Boolean()),
   author: Optional(String()),
-  homepage: Optional(String())
+  homepage: Optional(String()),
 })
 type McpPluginManifest = Static<typeof McpPluginManifestSchema>
 interface McpPluginDump extends McpPluginManifest {
@@ -321,21 +350,27 @@ const GradioPluginManifestSchema = Object({
   description: String(),
   baseUrl: String(),
   avatar: Object(undefined),
-  endpoints: Array(Object(undefined))
+  endpoints: Array(Object(undefined)),
 })
 const HuggingPluginManifestSchema = Object({
   name: String(),
   description: String(),
   endpoint: String(),
-  inputs: Array(Object({
-    name: String(),
-    description: Optional(String()),
-    paramType: Union([Literal('fixed'), Literal('optional'), Literal('required')]),
-    type: String(),
-    value: Optional(Any()),
-    default: Optional(Any()),
-    mimeTypes: Optional(String())
-  })),
+  inputs: Array(
+    Object({
+      name: String(),
+      description: Optional(String()),
+      paramType: Union([
+        Literal('fixed'),
+        Literal('optional'),
+        Literal('required'),
+      ]),
+      type: String(),
+      value: Optional(Any()),
+      default: Optional(Any()),
+      mimeTypes: Optional(String()),
+    })
+  ),
   outputComponent: String(),
   outputComponentIdx: Number(),
   showOutput: Boolean(),
@@ -343,16 +378,20 @@ const HuggingPluginManifestSchema = Object({
   baseUrl: String(),
   displayName: String(),
   color: String(),
-  icon: String()
+  icon: String(),
 })
 const LobePluginManifestSchema = Object({
   api: Array(Object(undefined)),
   identifier: String(),
   meta: Object(undefined),
-  type: Optional(Union([Literal('default'), Literal('markdown')]))
+  type: Optional(Union([Literal('default'), Literal('markdown')])),
 })
 type HuggingPluginManifest = Static<typeof HuggingPluginManifestSchema>
-type PluginManifest = LobeChatPluginManifest | GradioPluginManifest | HuggingPluginManifest | McpPluginManifest
+type PluginManifest =
+  | LobeChatPluginManifest
+  | GradioPluginManifest
+  | HuggingPluginManifest
+  | McpPluginManifest
 interface InstalledGradioPlugin {
   id: string
   key: string
@@ -367,7 +406,10 @@ interface InstalledMcpPlugin {
   available: boolean
   manifest: McpPluginDump
 }
-type InstalledPlugin = InstalledLobePlugin | InstalledGradioPlugin | InstalledMcpPlugin
+type InstalledPlugin =
+  | InstalledLobePlugin
+  | InstalledGradioPlugin
+  | InstalledMcpPlugin
 interface PluginData {
   settings
   avatar: Avatar
@@ -457,7 +499,8 @@ interface Assistant {
   homepage?: string
 }
 
-const TSOptional = <T extends TSchema>(schema: T) => Optional(Union([Null(), schema]))
+const TSOptional = <T extends TSchema>(schema: T) =>
+  Optional(Union([Null(), schema]))
 const MarketAssistantSchema = Object({
   name: String(),
   avatar: Object(undefined),
@@ -468,7 +511,7 @@ const MarketAssistantSchema = Object({
   model: TSOptional(Object(undefined)),
   modelSettings: TSOptional(Object(undefined)),
   author: TSOptional(String()),
-  homepage: TSOptional(String())
+  homepage: TSOptional(String()),
 })
 type MarketAssistant = Static<typeof MarketAssistantSchema>
 
@@ -536,7 +579,7 @@ export {
   McpPluginManifestSchema,
   LobePluginManifestSchema,
   MarketAssistantSchema,
-  ProviderSchema
+  ProviderSchema,
 }
 export type {
   Provider,
@@ -600,5 +643,5 @@ export type {
   McpPluginManifest,
   TransportConf,
   Subprovider,
-  CustomProvider
+  CustomProvider,
 }

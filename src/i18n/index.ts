@@ -5,5 +5,5 @@ import zhTW from './zh-TW'
 export default {
   'en-US': enUS,
   'zh-CN': zhCN,
-  'zh-TW': zhTW
+  'zh-TW': zhTW,
 }

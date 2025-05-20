@@ -1,20 +1,6 @@
 <template>
-  <div
-    pos-relative
-    rd-md
-    of-hidden
-    cursor-pointer
-    @click="viewImage"
-  >
-    <img
-      v-if="url"
-      :src="url"
-      w-a
-      h-a
-      max-w-full
-      max-h-full
-      block
-    >
+  <div pos-relative rd-md of-hidden cursor-pointer @click="viewImage">
+    <img v-if="url" :src="url" w-a h-a max-w-full max-h-full block />
     <div
       v-if="removable"
       bg-gradient-top-a
@@ -48,7 +34,7 @@ import { toRef } from 'vue'
 import ViewImageDialog from './ViewImageDialog.vue'
 
 const props = defineProps<{
-  image: StoredItem,
+  image: StoredItem
   removable?: boolean
 }>()
 
@@ -61,8 +47,8 @@ function viewImage() {
   $q.dialog({
     component: ViewImageDialog,
     componentProps: {
-      url: url.value
-    }
+      url: url.value,
+    },
   })
 }
 </script>

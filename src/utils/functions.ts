@@ -7,21 +7,28 @@ import { UsdToCnyRate } from './config'
 function randomHash(digits = 64) {
   const array = new Uint8Array(digits / 8)
   crypto.getRandomValues(array)
-  return Array.from(array).map(i => i.toString(16).padStart(2, '0')).join('')
+  return Array.from(array)
+    .map((i) => i.toString(16).padStart(2, '0'))
+    .join('')
 }
 
 function escapeRegex(str: string) {
   return str.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&')
 }
 function escapeHtml(str: string) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;')
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
 }
 
 function defaultAvatar(text: string): Avatar {
   return {
     type: 'text',
     text,
-    hue: Math.floor(Math.random() * 360)
+    hue: Math.floor(Math.random() * 360),
   }
 }
 
@@ -33,7 +40,9 @@ let count = crypto.getRandomValues(new Uint32Array(1))[0]
 function genId() {
   const timeHash = Date.now().toString(32).padStart(9, '0')
   const countHash = (count++ % 0x20000000).toString(32).padStart(6, '0')
-  const randomHash = (crypto.getRandomValues(new Uint16Array(1))[0] % 0x8000).toString(32).padStart(3, '0')
+  const randomHash = (crypto.getRandomValues(new Uint16Array(1))[0] % 0x8000)
+    .toString(32)
+    .padStart(3, '0')
   return timeHash + countHash + randomHash
 }
 function idTimestamp(id: string) {
@@ -48,7 +57,7 @@ function JSONEqual(a, b) {
 }
 
 function mimeTypeMatch(mimeType: string, mimeTypes: string[]) {
-  return mimeTypes.some(t => {
+  return mimeTypes.some((t) => {
     if (t === '*' || t === mimeType) return true
     const [type, subtype] = t.split('/')
     if (!mimeType.startsWith(type + '/')) return false
@@ -110,19 +119,23 @@ function textBeginning(text: string, length = 10) {
 }
 
 function parsePageRange(range: string) {
-  return range.split(',').map(r => {
-    const [start, end = start] = r.split('-').map(Number)
-    const pages = []
-    for (let i = start; i <= end; i++) {
-      pages.push(i)
-    }
-    return pages
-  }).flat().map(p => p - 1)
+  return range
+    .split(',')
+    .map((r) => {
+      const [start, end = start] = r.split('-').map(Number)
+      const pages = []
+      for (let i = start; i <= end; i++) {
+        pages.push(i)
+      }
+      return pages
+    })
+    .flat()
+    .map((p) => p - 1)
 }
 
 const pageFhStyle = (offset: number, height: number) => ({
   height: `${height - offset}px`,
-  overflowY: 'auto'
+  overflowY: 'auto',
 })
 
 function almostEqual(a: number, b: number, eps = 1e-6) {
@@ -146,15 +159,15 @@ function saveArtifactChanges(artifact: Artifact): Partial<Artifact> {
       ...artifact.versions.slice(0, artifact.currIndex + 1),
       {
         date: new Date(),
-        text: artifact.tmp
-      }
+        text: artifact.tmp,
+      },
     ],
-    currIndex: artifact.currIndex + 1
+    currIndex: artifact.currIndex + 1,
   }
 }
 function restoreArtifactChanges(artifact: Artifact): Partial<Artifact> {
   return {
-    tmp: artifact.versions[artifact.currIndex].text
+    tmp: artifact.versions[artifact.currIndex].text,
   }
 }
 
@@ -204,7 +217,8 @@ function removeUndefinedProps(obj) {
     Largely inspired by MurmurHash2/3, but with a focus on speed/simplicity.
 */
 function cyrb53(str: string, seed = 0) {
-  let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed
+  let h1 = 0xdeadbeef ^ seed,
+    h2 = 0x41c6ce57 ^ seed
   for (let i = 0, ch; i < str.length; i++) {
     ch = str.charCodeAt(i)
     h1 = Math.imul(h1 ^ ch, 2654435761)
@@ -226,7 +240,9 @@ function removeDuplicates(arr: any[]) {
 }
 
 function localePrice(usd: number, fixed = 2) {
-  return i18n.global.locale.value === 'zh-CN' ? `￥${(usd * UsdToCnyRate).toFixed(fixed)}` : `$ ${usd.toFixed(fixed)}`
+  return i18n.global.locale.value === 'zh-CN'
+    ? `￥${(usd * UsdToCnyRate).toFixed(fixed)}`
+    : `$ ${usd.toFixed(fixed)}`
 }
 
 export {
@@ -261,5 +277,5 @@ export {
   cyrb53,
   hash53,
   removeDuplicates,
-  localePrice
+  localePrice,
 }

@@ -9,6 +9,7 @@
 ![配置自定义服务商](res/custom-provider.webp)
 
 其效果为：
+
 - 对于 `gemini-2.0-flash` 和 `gemini-2.0-pro-exp` 模型，使用 Google 服务商
 - 对于 `qwen-2.5-7b` 模型，使用 OpenAI 格式的服务商 `api.silliconflow.cn`，并将模型名重映射为 `Qwen/Qwen2.5-7B-Instruct`
 - 对于其他模型，使用回落服务商（OpenAI 格式的 `api.aiaw.app`）

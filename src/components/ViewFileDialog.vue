@@ -1,22 +1,12 @@
 <template>
-  <q-dialog
-    ref="dialogRef"
-    @hide="onDialogHide"
-  >
-    <q-card
-      important:md:max-w="720px"
-      important:lg:max-w="960px"
-      min-w="300px"
-    >
+  <q-dialog ref="dialogRef" @hide="onDialogHide">
+    <q-card important:md:max-w="720px" important:lg:max-w="960px" min-w="300px">
       <q-card-section bg-sur-c-low>
         <div class="text-h6">
           {{ file.name }}
         </div>
       </q-card-section>
-      <q-card-section
-        p-0
-        bg-sur-c-low
-      >
+      <q-card-section p-0 bg-sur-c-low>
         <div v-if="file.contentText">
           <md-preview
             :model-value="markdown"
@@ -46,9 +36,7 @@
           </q-list>
         </div>
       </q-card-section>
-      <q-card-actions
-        bg-sur-c-low
-      >
+      <q-card-actions bg-sur-c-low>
         <copy-btn
           v-if="file.contentText"
           flat
@@ -91,9 +79,7 @@ const props = defineProps<{
   file: StoredItem
 }>()
 
-defineEmits([
-  ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
 
@@ -110,8 +96,8 @@ const markdown = computed(() => {
   if (splits.length < 2) return file.contentText
   const ext = splits.at(-1)
   return codeExtensions.includes(ext)
-    ? wrapCode((file.contentText), ext)
-    : (file.contentText)
+    ? wrapCode(file.contentText, ext)
+    : file.contentText
 })
 
 function download() {

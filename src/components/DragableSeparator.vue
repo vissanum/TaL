@@ -1,8 +1,5 @@
 <template>
-  <div
-    cursor-ew-resize
-    @mousedown="onMounseDown"
-  />
+  <div cursor-ew-resize @mousedown="onMounseDown" />
 </template>
 
 <script setup lang="ts">
@@ -24,6 +21,12 @@ function onMounseDown(ev: MouseEvent) {
     model.value = res
   }
   addEventListener('mousemove', onMouseMove)
-  addEventListener('mouseup', () => { removeEventListener('mousemove', onMouseMove) }, { once: true })
+  addEventListener(
+    'mouseup',
+    () => {
+      removeEventListener('mousemove', onMouseMove)
+    },
+    { once: true }
+  )
 }
 </script>

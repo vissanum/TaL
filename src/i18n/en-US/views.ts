@@ -10,7 +10,7 @@ export default {
     mcpPluginGuide: 'MCP Plugin Usage Guide',
     search: 'Search',
     loadError: 'Failed to load plugin list',
-    retry: 'Retry'
+    retry: 'Retry',
   },
   assistantView: {
     header: 'Assistant Settings',
@@ -23,7 +23,8 @@ export default {
     promptVarsGuide1: 'Refer to the usage guide for',
     promptVarsGuide2: 'prompt variables/templates',
     model: 'Model',
-    modelEmptyTip: 'Leave blank to use global model settings; this setting will also be overridden by the model switched in the conversation',
+    modelEmptyTip:
+      'Leave blank to use global model settings; this setting will also be overridden by the model switched in the conversation',
     provider: 'Provider',
     providerEmptyTip: 'Leave blank to use global provider settings',
     plugins: 'Plugins',
@@ -34,25 +35,32 @@ export default {
     maxRetries: 'Max Retries',
     maxRetriesTip: 'Maximum number of retries when generation fails',
     maxSteps: 'Max Calls',
-    maxStepsTip: 'When tool call is enabled, the maximum number of times the model is called in a single reply',
+    maxStepsTip:
+      'When tool call is enabled, the maximum number of times the model is called in a single reply',
     contextNum: 'Context Number',
-    contextNumTip: 'Maximum number of contexts including the current user message. Leave blank for no limit',
+    contextNumTip:
+      'Maximum number of contexts including the current user message. Leave blank for no limit',
     promptRole: 'Prompt Role',
     modelParams: 'Model Parameters',
     temperature: 'Temperature',
     temperatureTip: 'The higher the value, the more random the reply',
     topP: 'Top P',
-    topPTip: 'Similar to temperature, but do not change with temperature together',
+    topPTip:
+      'Similar to temperature, but do not change with temperature together',
     presencePenalty: 'Presence Penalty',
-    presencePenaltyTip: 'The higher the value, the more likely it is to expand to new topics',
+    presencePenaltyTip:
+      'The higher the value, the more likely it is to expand to new topics',
     frequencyPenalty: 'Frequency Penalty',
-    frequencyPenaltyTip: 'The higher the value, the more likely it is to reduce repeated words',
+    frequencyPenaltyTip:
+      'The higher the value, the more likely it is to reduce repeated words',
     stopSequences: 'Stop Sequences',
-    stopSequencesTip: 'When the model generates a stop word, it will stop generating. Press Enter to add a value.',
+    stopSequencesTip:
+      'When the model generates a stop word, it will stop generating. Press Enter to add a value.',
     maxTokens: 'Single Reply Limit',
     maxTokensTip: 'Maximum number of tokens generated at once',
     seed: 'Seed',
-    seedTip: 'Seed for random sampling (integer). Used to generate deterministic results.',
+    seedTip:
+      'Seed for random sampling (integer). Used to generate deterministic results.',
     notAllParamsSupported: 'Tip: Not all providers support all parameters',
     metadata: 'Metadata',
     author: 'Author',
@@ -63,8 +71,9 @@ export default {
     exportTip2: 'sharing or publishing',
     exportToFile: 'Export to File',
     exportToClipboard: 'Export to Clipboard',
-    effectScopeTip: 'The scope of assistant settings is the current assistant, and the global provider/default model settings are in',
-    settingsPage: 'Settings Page'
+    effectScopeTip:
+      'The scope of assistant settings is the current assistant, and the global provider/default model settings are in',
+    settingsPage: 'Settings Page',
   },
   assistantsMarket: {
     title: 'Assistants',
@@ -80,14 +89,14 @@ export default {
     formatError: 'Assistant data format error',
     addError: 'Failed to add',
     added: 'Added',
-    importError: 'Import failed'
+    importError: 'Import failed',
   },
   editArtifact: {
     language: 'Language',
     edit: 'Edit',
     preview: 'Preview',
     readable: 'Readable',
-    writable: 'Writable'
+    writable: 'Writable',
   },
   pluginAdjust: {
     infoProvider: 'Info Provider',
@@ -98,10 +107,10 @@ export default {
     globalSettingsTip: 'Tip: The global settings for plugins are in',
     pluginSettings: 'Plugin Settings',
     noConfigurableItems: 'This plugin has no configurable items',
-    pluginFunction: 'Plugin Function'
+    pluginFunction: 'Plugin Function',
   },
   workspaceIndex: {
-    title: 'Workspace Home'
+    title: 'Workspace Home',
   },
   workspaceSettings: {
     title: 'Workspace Settings',
@@ -109,7 +118,7 @@ export default {
     avatar: 'Workspace Icon',
     homeContent: 'Home Content',
     variables: 'Workspace Variables',
-    inputPlaceholder: 'Enter variable content...'
+    inputPlaceholder: 'Enter variable content...',
   },
   pluginSettings: {
     title: 'Plugin Settings',
@@ -122,7 +131,7 @@ export default {
     fileParsing: 'File Parsing',
     enable: 'Enable',
     mimeType: 'MIME Type',
-    settings: 'Settings'
+    settings: 'Settings',
   },
   dialogView: {
     model: 'Model',
@@ -134,16 +143,18 @@ export default {
     settings: 'Settings',
     noobAlert: {
       title: 'Need to create a new conversation?',
-      message: 'A common mistake for new users is to always ask questions in one conversation, even if the questions are not related.\nIn fact, when you ask a new question that is not related to the previous text, you should create a new conversation to avoid the cumulative context leading to a continuous increase in input overhead.',
+      message:
+        'A common mistake for new users is to always ask questions in one conversation, even if the questions are not related.\nIn fact, when you ask a new question that is not related to the previous text, you should create a new conversation to avoid the cumulative context leading to a continuous increase in input overhead.',
       okBtn: 'I will create a new conversation',
-      cancelBtn: 'I know this, no need to remind me'
+      cancelBtn: 'I know this, no need to remind me',
     },
     errors: {
       setAssistant: 'Please set up an assistant',
       configModel: 'Please configure a provider, model, or log in',
       loadPluginList: 'Failed to load plugin list',
-      genTitle: 'Failed to summarize conversation, please check system assistant settings',
-      insufficientQuota: 'Insufficient model service quota'
+      genTitle:
+        'Failed to summarize conversation, please check system assistant settings',
+      insufficientQuota: 'Insufficient model service quota',
     },
     enabledPlugins: 'Enabled Plugins',
     messageTokens: 'Last Message Token Consumption',
@@ -158,45 +169,57 @@ export default {
     hideVars: 'Hide Variables',
     pastedText: 'Pasted text: {text}',
     fileTooLarge: 'File too large (> {maxSize}MB)',
-    summarizeFailed: 'Failed to summarize conversation, please check system assistant settings',
+    summarizeFailed:
+      'Failed to summarize conversation, please check system assistant settings',
     convertedToArtifact: 'Converted to Artifact',
     callPluginInfoFailed: 'Failed to call plugin information: {message}',
     pluginPromptParseFailed: 'Plugin "{title}" prompt template parsing failed',
-    promptParseFailed: 'Prompt parsing failed, please check assistant prompt template',
-    plugins: 'Plugins'
+    promptParseFailed:
+      'Prompt parsing failed, please check assistant prompt template',
+    plugins: 'Plugins',
   },
   settingsView: {
     title: 'Settings',
     defaultProviderHeader: 'Default Provider',
     customProvider: 'Custom Provider',
-    customProviderCaption: 'By creating a custom provider, you can mix and match models from multiple providers.',
+    customProviderCaption:
+      'By creating a custom provider, you can mix and match models from multiple providers.',
     shareLinkLabel: 'Share Link',
-    shareLinkCaption: 'Used to share your provider settings. Others will automatically apply this setting after opening the link.',
+    shareLinkCaption:
+      'Used to share your provider settings. Others will automatically apply this setting after opening the link.',
     copyLinkLabel: 'Copy Link',
-    noProviderConfigured: 'No default provider is currently configured, and we will use the model services we provide by default. See',
+    noProviderConfigured:
+      'No default provider is currently configured, and we will use the model services we provide by default. See',
     accountPage: 'Account',
     pageSuffix: 'Page',
     defaultModelHeader: 'Default Model',
     systemAssistantHeader: 'System Assistant',
-    systemAssistantCaption: 'Used to summarize conversation titles and extract Artifacts. If left blank, the default provider settings will be used.',
+    systemAssistantCaption:
+      'Used to summarize conversation titles and extract Artifacts. If left blank, the default provider settings will be used.',
     featureHeader: 'Features',
     operationHeader: 'Operations',
     autoSummarizeTitle: 'Automatically Summarize Conversation Title',
-    autoSummarizeCaption: 'Automatically summarize the title at the end of the first round of conversation',
+    autoSummarizeCaption:
+      'Automatically summarize the title at the end of the first round of conversation',
     messageSelectionMenu: 'Message Selected Text Menu',
-    messageSelectionCaption: 'Display operation buttons when message text is selected',
+    messageSelectionCaption:
+      'Display operation buttons when message text is selected',
     codePasteOptimize: 'Code Paste Optimization',
-    codePasteCaption: 'Automatically wrap the code copied from VSCode with markdown code blocks when pasting',
+    codePasteCaption:
+      'Automatically wrap the code copied from VSCode with markdown code blocks when pasting',
     quickScrollButton: 'Quick Scroll Button',
-    quickScrollCaption: 'Display a quick scroll button in the lower right corner of the conversation. After closing, you can still use keyboard shortcuts to scroll',
+    quickScrollCaption:
+      'Display a quick scroll button in the lower right corner of the conversation. After closing, you can still use keyboard shortcuts to scroll',
     autoFocusInput: 'Automatically Focus Conversation Input Box',
     autoLockBottom: 'Automatically Lock Bottom When Generating',
     messageContentCatalog: 'Message Content Catalog',
-    messageContentCatalogCaption: 'Display the catalog next to the message when there is enough space',
+    messageContentCatalogCaption:
+      'Display the catalog next to the message when there is enough space',
     artifactsSettings: 'Artifacts Settings',
     enableArtifacts: 'Enable Artifacts Function',
     autoExtractArtifact: 'Automatically Extract Artifact',
-    autoExtractArtifactCaption: 'Automatically extract Artifact from assistant replies',
+    autoExtractArtifactCaption:
+      'Automatically extract Artifact from assistant replies',
     reserveOriginalArtifact: 'Reserve Original Text When Extracting',
     autoNameArtifact: 'Automatically Name Artifact by Default',
     sendKeyShortcut: 'Send Message Shortcut Key',
@@ -215,29 +238,32 @@ export default {
     codeTheme: 'Code Theme',
     disableMermaid: 'Disable Mermaid',
     codeAutoFoldThreshold: 'Code Auto Fold Threshold',
-    codeAutoFoldThresholdCaption: 'Automatically fold code blocks after the number of lines exceeds this number. Do not fold by default',
+    codeAutoFoldThresholdCaption:
+      'Automatically fold code blocks after the number of lines exceeds this number. Do not fold by default',
     dataHeader: 'Data',
     userData: 'User Data',
     export: 'Export',
     import: 'Import',
     restoreDefaultSettings: 'Restore Default Settings',
-    restoreSettingsConfirmation: 'Are you sure you want to restore all settings to default?',
+    restoreSettingsConfirmation:
+      'Are you sure you want to restore all settings to default?',
     followSystem: 'Follow System',
     light: 'Light',
     dark: 'Dark',
     exportFailed: 'Export Failed',
     auto: 'Auto',
-    language: 'Language'
+    language: 'Language',
   },
   customProvider: {
     title: 'Edit Provider',
     name: 'Name',
     icon: 'Icon',
     fallbackProvider: 'Fallback Provider',
-    fallbackProviderCaption: 'When the model used does not match the models of all sub-providers, the fallback provider will be used',
+    fallbackProviderCaption:
+      'When the model used does not match the models of all sub-providers, the fallback provider will be used',
     subproviders: 'Subproviders',
     addSubprovider: 'Add Subprovider',
-    removeSubprovider: 'Remove Subprovider'
+    removeSubprovider: 'Remove Subprovider',
   },
   shortcutKeysView: {
     keyboardShortcuts: 'Keyboard Shortcuts',
@@ -258,6 +284,6 @@ export default {
     createDialog: 'Create Dialog',
     searchDialog: 'Search Dialogs',
     editArtifacts: 'Edit Artifacts',
-    saveArtifact: 'Save Artifact'
-  }
+    saveArtifact: 'Save Artifact',
+  },
 }
