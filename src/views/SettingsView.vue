@@ -543,9 +543,8 @@ function importData() {
 }
 const langOptions = [
   { label: t('settingsView.auto'), value: null },
-  { label: 'English', value: 'en-US' },
-  { label: '简体中文', value: 'zh-CN' },
-  { label: '繁體中文', value: 'zh-TW' },
+  { label: 'Español', value: 'es' },
+  { label: 'English', value: 'en' },
 ]
 
 function sortModels() {

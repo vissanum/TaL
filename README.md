@@ -35,6 +35,7 @@ TaL está siendo construido con un backend completamente reescrito en Rust (Edic
 ### Funcionalidades principales
 
 - **Interacción con IA local y remota:** Capacidad para chatear con LLMs ejecutados localmente y a través de APIs.
+- **Interfaz Multi-idioma:** Soporte para interfaz de usuario en Español (predeterminado) e Inglés.
 - **Retrieval-Augmented Generation (RAG):** Procesamiento y consulta de documentos locales para enriquecer las respuestas de la IA.
 - **Gestión de asistentes:** Creación y personalización de múltiples perfiles de asistentes de IA.
 - **Espacios de trabajo:** Organización de chats, documentos y configuraciones en contextos separados.
@@ -48,12 +49,12 @@ TaL está siendo construido con un backend completamente reescrito en Rust (Edic
 
 Estamos abiertos a contribuciones. Si quieres ayudarnos a mejorar TaL, por favor revisa nuestra guía de contribución y las instrucciones para configurar tu entorno de desarrollo:
 
-- **📜 Guía de contribución:** [`CONTRIBUTING.md`](https://github.com/vissanum/TaL/blob/develop/CONTRIBUTING.md)
-- **🛠️ Configuración del entorno de desarrollo:** [`DEVELOPMENT_ENVIRONMENT_SETUP.md`](https://github.com/vissanum/TaL/blob/develop/DEVELOPMENT_ENVIRONMENT_SETUP.md)
+- **📜 Guía de contribución:** [`CONTRIBUTING.md`](./CONTRIBUTING.md)
+- **🛠️ Configuración del entorno de desarrollo:** [`DEVELOPMENT_ENVIRONMENT_SETUP.md`](./DEVELOPMENT_ENVIRONMENT_SETUP.md)
 
 ## Licencia
 
-TaL se distribuye bajo la licencia BSD 3-Clause. Ver el archivo [`LICENSE`](https://github.com/vissanum/TaL/blob/develop/LICENSE) para más detalles.
+TaL se distribuye bajo la licencia BSD 3-Clause. Ver el archivo [`LICENSE`](./LICENSE) para más detalles.
 Este proyecto se basa en AIaW, también licenciado bajo BSD 3-Clause.
 
 ---

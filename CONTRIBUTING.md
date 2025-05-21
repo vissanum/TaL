@@ -4,7 +4,7 @@
 
 ## Código de conducta
 
-Este proyecto y todos los participantes se rigen por nuestro [Código de Conducta (CODE_OF_CONDUCT.md)](https://github.com/vissanum/TaL/blob/develop/CODE_OF_CONDUCT.md). Al participar, se espera que respetes este código. Por favor, asegúrate de que tus interacciones sean respetuosas y constructivas.
+Este proyecto y todos los participantes se rigen por nuestro [Código de Conducta (CODE_OF_CONDUCT.md)](./CODE_OF_CONDUCT.md). Al participar, se espera que respetes este código. Por favor, asegúrate de que tus interacciones sean respetuosas y constructivas.
 
 ## ¿Cómo puedo contribuir?
 
@@ -26,13 +26,13 @@ Antes de reportar un bug, busca en los Issues existentes para ver si ya ha sido 
 - **Capturas de pantalla o videos:** Si es posible, adjunta imágenes o un video que muestre el bug.
 - **Logs:** Incluye cualquier mensaje de error de la consola de desarrollo (Frontend) o de la terminal donde ejecutaste `tauri dev` (Backend Rust).
 
-Al abrir un nuevo Issue, GitHub te ofrecerá una [plantilla](https://github.com/vissanum/TaL/blob/develop/.github/ISSUE_TEMPLATE/bug_report.md) para 'Reporte de Bug'. Por favor, úsala para proporcionar toda la información necesaria.
+Al abrir un nuevo Issue, GitHub te ofrecerá una [plantilla](./.github/ISSUE_TEMPLATE/bug_report.md) para 'Reporte de Bug'. Por favor, úsala para proporcionar toda la información necesaria.
 
 ## Sugiriendo funcionalidades
 
 Abre un Issue en GitHub y describe la funcionalidad que te gustaría añadir o modificar. Explica por qué crees que sería útil para TaL y, si tienes ideas, cómo podría implementarse. Esto nos permite discutir la idea antes de que inviertas tiempo en desarrollarla.
 
-Al abrir un nuevo Issue, selecciona la [plantilla](https://github.com/vissanum/TaL/blob/develop/.github/ISSUE_TEMPLATE/bug_report.md) para 'Solicitud de Nueva Funcionalidad' si está disponible, o describe tu idea detalladamente.
+Al abrir un nuevo Issue, selecciona la [plantilla](./.github/ISSUE_TEMPLATE/bug_report.md) para 'Solicitud de Nueva Funcionalidad' si está disponible, o describe tu idea detalladamente.
 
 ## Contribuyendo con código o documentación
 
@@ -40,7 +40,7 @@ Sigue estos pasos para enviar tu código o documentación:
 
 ### 1. Configura tu entorno de desarrollo
 
-Consulta el archivo [`DEVELOPMENT_ENVIRONMENT_SETUP.md`](https://github.com/vissanum/TaL/blob/develop/DEVELOPMENT_ENVIRONMENT_SETUP.md) para obtener instrucciones detalladas sobre cómo configurar tu entorno con Rust, Node.js, Quasar/Vue, Tauri y VSCode.
+Consulta el archivo [`DEVELOPMENT_ENVIRONMENT_SETUP.md`](./DEVELOPMENT_ENVIRONMENT_SETUP.md) para obtener instrucciones detalladas sobre cómo configurar tu entorno con Rust, Node.js, Quasar/Vue, Tauri y VSCode.
 
 ### 2. Flujo de trabajo Git
 
@@ -165,5 +165,14 @@ Abre tu Pull Request (PR) lo antes posible (incluso si el trabajo no está termi
   - **Rust:** Pruebas unitarias (`#[test]`), pruebas de integración.
   - **TypeScript/Vue:** Pruebas unitarias de componentes y lógica (e.g., con Vitest).
 - Asegúrate de que todas las pruebas existentes pasen antes de solicitar la revisión de tu PR (`cargo test` para Rust, `pnpm test` o similar para el frontend).
+
+### 7. Internacionalización (i18n)
+
+TaL está diseñado para ser una aplicación multi-idioma, con soporte actual para Español (por defecto) e Inglés.
+
+- **Modificación de Textos:** Si tu contribución implica añadir o modificar textos visibles para el usuario en la interfaz, es crucial que estos textos se gestionen a través de nuestro sistema de i18n.
+- **Archivos de Idioma:** Deberás añadir o actualizar las claves de traducción correspondientes en los archivos ubicados en `src/i18n/es/` para español y `src/i18n/en/` para inglés.
+- **Guía Detallada:** Consulta la sección "Internacionalización (i18n)" en el archivo [`DEVELOPMENT_ENVIRONMENT_SETUP.md`](./DEVELOPMENT_ENVIRONMENT_SETUP.md) para obtener instrucciones detalladas sobre la estructura de archivos, cómo añadir nuevas cadenas y cómo incorporar soporte para nuevos idiomas.
+- **Consistencia:** Por favor, asegúrate de que cualquier nuevo texto siga el tono y estilo de las traducciones existentes.
 
 Al seguir estas pautas, ayudas a mantener la calidad y coherencia del proyecto TaL. ¡Gracias de nuevo por tu contribución!
