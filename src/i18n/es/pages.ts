@@ -1,0 +1,105 @@
+export default {
+  accountPage: {
+    accountTitle: 'Cuenta',
+    infoHeader: 'Información',
+    emailLabel: 'Correo electrónico',
+    cloudSyncHeader: 'Sincronización en la nube',
+    cloudSyncDescription:
+      'Servicio de sincronización en la nube en tiempo real entre dispositivos, que puede sincronizar todos los datos como espacios de trabajo, conversaciones, asistentes, configuraciones y plugins.',
+    cloudSyncPrice: 'El precio es de {priceUSD} USD /mes',
+    statusLabel: 'Estado',
+    evalLabel: 'Prueba',
+    evalDaysLeft: 'Días de prueba restantes: {days}',
+    subscribeButton: 'Suscribirse',
+    subscribedLabel: 'Suscrito',
+    validUntil: 'Válido hasta el {date}',
+    renewButton: 'Renovar',
+    modelServicesHeader: 'Servicios de modelos',
+    modelServicesDescription:
+      'Utiliza diversos modelos avanzados de diferentes proveedores de servicios en un solo lugar, incluyendo deepseek-reasoner, claude-3-7-sonnet, o4-mini, etc., sin configuración. La cuota se cobra según el uso y es permanentemente válida. Los cargos se deducen según el precio original oficial de la API.',
+    modelPricingLink: 'Precios de modelos',
+    usingDefaultService: 'Usando (como proveedor global predeterminado)',
+    customService: 'No utilizado (proveedor global personalizado configurado)',
+    remainingBudget: 'Presupuesto restante',
+    topupButton: 'Recargar',
+    orderHistoryHeader: 'Historial de pedidos',
+    contactDeveloper:
+      'Si encuentras alguna anomalía en tu pedido, por favor contacta al desarrollador, correo electrónico:',
+    logoutButton: 'Cerrar sesión',
+    licenseOk: 'Habilitado',
+    licenseExpired: 'Expirado',
+    licenseDeactivated: 'Desactivado',
+    licenseUnknown: 'Desconocido',
+    orderId: 'ID del pedido',
+    paymentTime: 'Fecha de pago',
+    orderType: 'Tipo',
+    syncServiceType: 'Servicio de sincronización en la nube',
+    apiBudgetType: 'Cuota de modelos (CNY)',
+    apiBudgetUsdType: 'Cuota de modelos (USD)',
+    amount: 'Importe',
+  },
+  modelPricing: {
+    modelPrice: 'Precio del modelo',
+    modelPerformance: 'Rendimiento del modelo',
+    modelPerformanceDescription:
+      'Clasificación del rendimiento de modelos como referencia',
+    freeModelDisclaimer:
+      'Hay algunos modelos gratuitos con un precio de 0, que son principalmente modelos experimentales. La disponibilidad de los modelos gratuitos no está garantizada.',
+    performanceNote:
+      'Las métricas/clasificaciones de los modelos son solo de referencia. Prevalecerá el efecto real del modelo.',
+    usageCalculator: 'Calculadora de uso',
+    budgetLabel: 'Presupuesto (CNY)',
+    modelLabel: 'Modelo',
+    outputLabel: 'Palabras de salida',
+    availableModels: 'Modelos disponibles',
+    getModelPriceFailed: 'Falló la obtención del precio del modelo',
+    inputPrice: 'Precio de entrada',
+    outputPrice: 'Precio de salida',
+    usageDescription:
+      'Todos los modelos se cobran según el precio oficial de la API de cada proveedor de servicios.',
+    tokenOutputNote:
+      'Calculado como 1.4 caracteres chinos por token de salida (nuevo modelo GPT) o 1 caracter chino (otros modelos) o 1.8 caracteres chinos (modelos nacionales). La proporción real fluctúa y es ligeramente mayor en promedio, pero también se deben considerar los costos de entrada.',
+    currencyCNY: '￥',
+    currencyUSD: '$',
+    unitKTokens: 'K Tokens',
+    unitMTokens: 'M Tokens',
+    modelName: 'Modelo',
+  },
+  pluginsPage: {
+    installedPlugins: 'Plugins instalados',
+  },
+  setProviderPage: {
+    providerSet: 'Proveedor establecido en: {baseURL}',
+    restore: 'Restaurar',
+    providerSetFailed:
+      'Falló el establecimiento del proveedor: formato incorrecto',
+  },
+  settingsPage: {
+    customProviders: 'Proveedores personalizados',
+    customProviderUsage: 'Consulta la del proveedor personalizado',
+    usageGuide: 'Guía de uso',
+  },
+  errorNotFound: {
+    message: 'No hay nada aquí...',
+  },
+  assistantsPage: {
+    globalAssistant: 'Asistente global',
+  },
+  workspacePage: {
+    closeArtifact: 'Cerrar artefacto',
+    closeAllArtifacts: 'Cerrar todos los artefactos',
+    workspaceHome: 'Inicio del espacio de trabajo',
+    workspaceSettings: 'Configuración del espacio de trabajo',
+  },
+  mainLayout: {
+    workspace: 'Espacio de trabajo | Espacios de trabajo',
+    assistants: 'Asistentes',
+    plugins: 'Plugins',
+    settings: 'Configuración',
+    usageGuide: 'Guía de uso',
+    currentVersion: 'Versión actual',
+    changeLog: 'Registro de cambios',
+    webVersion: 'Versión web',
+    localClient: 'Cliente local',
+  },
+}

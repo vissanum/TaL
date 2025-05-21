@@ -3,7 +3,7 @@
     <q-drawer
       v-model="uiStore.mainDrawerOpen"
       show-if-above
-      :width="locale.startsWith('zh') ? 250 : 270"
+      :width="locale.startsWith('es') ? 250 : 270"
       :breakpoint="1200"
       bg-sur-c
       flex

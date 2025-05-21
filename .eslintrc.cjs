@@ -9,13 +9,13 @@ module.exports = {
   // `parser: 'vue-eslint-parser'` is already included with any 'plugin:vue/**' config and should be omitted
   parserOptions: {
     parser: require.resolve('@typescript-eslint/parser'),
-    extraFileExtensions: ['.vue']
+    extraFileExtensions: ['.vue'],
   },
 
   env: {
     browser: true,
     es2021: true,
-    node: true
+    node: true,
   },
 
   // Rules order is important, please avoid shuffling them
@@ -35,8 +35,7 @@ module.exports = {
     // 'plugin:vue/vue3-recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
 
     'standard',
-    'eslint-config-prettier'
-
+    'eslint-config-prettier',
   ],
 
   plugins: [
@@ -45,8 +44,7 @@ module.exports = {
 
     // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-files
     // required to lint *.vue files
-    'vue'
-
+    'vue',
   ],
 
   globals: {
@@ -56,12 +54,11 @@ module.exports = {
     __QUASAR_SSR_CLIENT__: 'readonly',
     __QUASAR_SSR_PWA__: 'readonly',
     process: 'readonly',
-    chrome: 'readonly'
+    chrome: 'readonly',
   },
 
   // add your custom rules here
   rules: {
-
     // allow async-await
     'generator-star-spacing': 'off',
     // allow paren-less arrow functions
@@ -99,11 +96,11 @@ module.exports = {
     'space-before-function-paren': 'off',
     'no-prototype-builtins': 'off',
 
-    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
     'no-redeclare': 'off',
     '@typescript-eslint/no-redeclare': 'error',
 
     // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  }
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+  },
 }

@@ -240,7 +240,7 @@ function removeDuplicates(arr: any[]) {
 }
 
 function localePrice(usd: number, fixed = 2) {
-  return i18n.global.locale.value === 'zh-CN'
+  return i18n.global.locale.value === 'es'
     ? `￥${(usd * UsdToCnyRate).toFixed(fixed)}`
     : `$ ${usd.toFixed(fixed)}`
 }

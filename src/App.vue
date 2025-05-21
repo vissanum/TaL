@@ -23,7 +23,7 @@ useSubscriptionNotify()
 const router = useRouter()
 router.afterEach((to) => {
   if (to.meta.title) {
-    document.title = `${to.meta.title} - AI as Workspace`
+    document.title = `${to.meta.title} - Tal`
   }
 })
 

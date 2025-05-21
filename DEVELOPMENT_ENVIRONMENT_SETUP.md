@@ -301,7 +301,7 @@ Para asegurar una colaboración efectiva y un historial de cambios limpio y comp
   Se sigue la especificación de [Conventional Commits](https://www.conventionalcommits.org/) para los mensajes de commit. Esto es crucial para la claridad del historial y para futuras automatizaciones (como la generación de changelogs).
 
 - **Guía Detallada:**
-  Encontrarás todos los detalles sobre el flujo de trabajo de Git, la estructura de ramas, cómo nombrar tus ramas, la convención exacta para los mensajes de commit y el proceso de Pull Request en nuestra **[Guía de Contribución (`CONTRIBUTING.md`)](https://github.com/vissanum/TaL/blob/develop/CONTRIBUTING.md)**. Es **fundamental** leer y seguir estas pautas al contribuir al proyecto.
+  Encontrarás todos los detalles sobre el flujo de trabajo de Git, la estructura de ramas, cómo nombrar tus ramas, la convención exacta para los mensajes de commit y el proceso de Pull Request en nuestra **[Guía de Contribución (`CONTRIBUTING.md`)](./CONTRIBUTING.md)**. Es **fundamental** leer y seguir estas pautas al contribuir al proyecto.
 
 ### 9. Script de Diagnóstico del Entorno
 
@@ -347,10 +347,111 @@ Para ayudarte a verificar rápidamente si tu entorno de desarrollo cumple con lo
 
 ## Internacionalización (i18n)
 
-- El proyecto utiliza `vue-i18n` para la internacionalización del frontend.
-- Los archivos de localización se encuentran en `src/i18n/`.
-- Si contribuyes con traducciones o modificas textos que requieren traducción, asegúrate de seguir la estructura existente y actualizar los archivos de idioma correspondientes.
-- [Más detalles se añadirán aquí sobre el flujo de trabajo específico de i18n si es necesario].
+- El proyecto utiliza `vue-i18n` (actualmente v11.x con API de Composición) para la internacionalización del frontend.
+- Los archivos de localización se encuentran en el directorio `src/i18n/`.
+
+### Estructura y Flujo de Trabajo
+
+Actualmente, TaL soporta los siguientes idiomas:
+
+- **Español (`es`):** Idioma por defecto de la aplicación.
+- **Inglés (`en`):** Idioma de fallback.
+
+La configuración y los archivos de idioma se gestionan de la siguiente manera:
+
+- **Configuración Principal:**
+  - `src/boot/i18n.ts`: Archivo de arranque de Quasar que inicializa `vue-i18n`, configura el idioma por defecto (`es`), el idioma de fallback (`en`), y maneja la carga de los paquetes de idioma de Quasar. También observa cambios en `localData.language` para permitir el cambio de idioma en tiempo de ejecución.
+  - `quasar.config.js`: Configura `lang: 'es'` en la sección `framework` para el paquete de idioma inicial de Quasar y registra el boot file `i18n`.
+- **Archivos de Traducción:**
+  - `src/i18n/index.ts`: Archivo central que importa y exporta todos los módulos de idioma soportados.
+  - `src/i18n/es/`: Directorio que contiene todos los archivos de traducción para el español.
+    - `index.ts`: Importa y exporta todas las cadenas de los demás archivos `.ts` de este directorio.
+    - `components.ts`, `composables.ts`, `others.ts`, `pages.ts`, `views.ts`: Archivos modulares donde se definen las cadenas de texto para diferentes partes de la aplicación en español.
+  - `src/i18n/en/`: Estructura idéntica al directorio `es/` pero para las traducciones en inglés.
+
+### Cómo Añadir/Modificar Traducciones
+
+1.  **Identificar el archivo correcto:** Localiza el archivo `.ts` apropiado dentro de `src/i18n/es/` y `src/i18n/en/` según la parte de la aplicación a la que pertenece el texto (p.ej., `pages.ts` para textos de una página específica, `components.ts` para componentes genéricos).
+2.  **Añadir la clave y traducción:**
+    - En el archivo correspondiente de `src/i18n/es/`, añade la nueva clave (o modifica una existente) con su traducción al español.
+    - En el archivo correspondiente de `src/i18n/en/`, añade la misma clave con su traducción al inglés.
+    - **Ejemplo de estructura de clave:**
+      ```typescript
+      // en src/i18n/es/pages.ts
+      export default {
+        miPagina: {
+          titulo: 'Mi Página Ejemplo',
+          botonGuardar: 'Guardar Cambios',
+        },
+        // ...otras claves
+      }
+      ```
+3.  **Uso en componentes Vue:**
+    Utiliza el helper `$t` o el composable `useI18n` en tus componentes:
+
+    ```vue
+    <template>
+      <h1>{{ $t('miPagina.titulo') }}</h1>
+      <q-btn :label="$t('miPagina.botonGuardar')" @click="guardar" />
+    </template>
+
+    <script setup>
+    import { useI18n } from 'vue-i18n'
+    const { t } = useI18n()
+
+    function guardar() {
+      // Lógica de guardado
+      console.log(t('miPagina.botonGuardar')) // También usable en script
+    }
+    </script>
+    ```
+
+### Cómo Añadir un Nuevo Idioma (Ej. Francés - `fr`)
+
+1.  **Crear directorio y archivos:**
+    - Crea un nuevo directorio: `src/i18n/fr/`.
+    - Copia el contenido de `src/i18n/en/` (o `src/i18n/es/`) dentro de `src/i18n/fr/`.
+2.  **Traducir:** Traduce todas las cadenas de texto en los archivos dentro de `src/i18n/fr/` al francés.
+3.  **Actualizar `src/i18n/index.ts`:**
+
+    ```typescript
+    import es from './es'
+    import en from './en'
+    import fr from './fr' // Añadir import
+
+    export default {
+      es,
+      en,
+      fr, // Añadir export
+    }
+    ```
+
+4.  **Actualizar `src/boot/i18n.ts`:**
+    - Añade el nuevo código de idioma a `AppSupportedLang` y `appLanguages`:
+      ```typescript
+      export type AppSupportedLang = 'es' | 'en' | 'fr'
+      const appLanguages: AppSupportedLang[] = ['es', 'en', 'fr']
+      ```
+    - Actualiza `quasarLangList` para incluir el paquete de Quasar para el nuevo idioma (ej. `fr.js`):
+      ```typescript
+      const quasarLangList = import.meta.glob(
+        '../../node_modules/quasar/lang/(es|en-US|fr).js' // Añadir 'fr' o el código que use Quasar
+      )
+      ```
+    - Ajusta la lógica en `setQuasarLang` para mapear tu código de idioma al paquete de Quasar si es necesario (similar a como `'en'` mapea a `'en-US'`).
+5.  **Actualizar `src/views/SettingsView.vue`:**
+    - Añade la opción para el nuevo idioma en `langOptions`:
+      ```typescript
+      const langOptions = [
+        { label: t('settingsView.auto'), value: null },
+        { label: 'Español', value: 'es' },
+        { label: 'English', value: 'en' },
+        { label: 'Français', value: 'fr' }, // Añadir nueva opción
+      ]
+      ```
+6.  **Probar:** Verifica que el nuevo idioma se pueda seleccionar y que los textos se muestren correctamente.
+
+Asegúrate de que los nuevos archivos JSON para el _market_ de asistentes y plugins (ej. `public/json/assistants.fr.json`, `public/json/plugins.fr.json`) también se creen si es necesario.
 
 ---
 
