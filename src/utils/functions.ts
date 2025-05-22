@@ -201,7 +201,7 @@ function removeUndefinedProps(obj) {
   if (typeof obj !== 'object' || obj === null) return
 
   for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
       if (typeof obj[key] === 'object' && obj[key] !== null) {
         removeUndefinedProps(obj[key])
       }
@@ -235,7 +235,7 @@ function hash53(str: string, seed = 0) {
   return cyrb53(str, seed).toString(16)
 }
 
-function removeDuplicates(arr: any[]) {
+function removeDuplicates<T>(arr: T[]): T[] {
   return Array.from(new Set(arr))
 }
 

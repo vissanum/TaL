@@ -32,7 +32,7 @@ export function useInstallPlugin() {
       } else {
         try {
           manifest = JSON.parse(source)
-        } catch (err) {
+        } catch (_err) {
           $q.notify({
             message: t('installPlugin.formatError'),
             color: 'negative',

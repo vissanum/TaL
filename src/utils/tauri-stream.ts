@@ -1,4 +1,3 @@
-/* eslint-disable */
 // Modified from https://github.com/ChatGPTNextWeb/NextChat/blob/main/app/utils/stream.ts
 
 // using tauri command to send request

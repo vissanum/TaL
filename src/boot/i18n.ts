@@ -9,16 +9,17 @@ import { localData } from 'src/utils/local-data'
 export type MessageLanguages = keyof typeof messages
 export type MessageSchema = (typeof messages)['en']
 
-/* eslint-disable @typescript-eslint/no-empty-interface */
 declare module 'vue-i18n' {
   // Define el esquema global de mensajes para el autocompletado y la seguridad de tipos
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface DefineLocaleMessage extends MessageSchema {}
 
   // Puedes definir aquí también formatos de fecha/hora y número si los usas
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface DefineDateTimeFormat {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface DefineNumberFormat {}
 }
-/* eslint-enable @typescript-eslint/no-empty-interface */
 
 const quasarLangList = import.meta.glob(
   '../../node_modules/quasar/lang/(es|en-US).js'

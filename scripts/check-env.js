@@ -55,11 +55,6 @@ function checkCommand(toolName, command, versionRegex = null) {
     ) {
       version = rawOutput.split(' ')[1]
     } else if (
-      toolName.includes('Rust (cargo)') &&
-      rawOutput.startsWith('cargo')
-    ) {
-      version = rawOutput.split(' ')[1]
-    } else if (
       toolName.includes('Rust (rustfmt)') &&
       rawOutput.startsWith('rustfmt')
     ) {
@@ -82,7 +77,7 @@ function checkCommand(toolName, command, versionRegex = null) {
 
     printCheck(toolName, 'OK', version)
     return true
-  } catch (error) {
+  } catch (_error) {
     // console.error(`Error ejecutando ${command}: ${error.stderr || error.message}`); // Para depuración
     printCheck(toolName, 'NO ENCONTRADO')
     return false
@@ -101,7 +96,7 @@ function checkNvm() {
     const versionToDisplay = versionMatch ? versionMatch[0] : rawOutput
     printCheck(toolName, 'OK', versionToDisplay)
     return true
-  } catch (error) {
+  } catch (_error) {
     if (process.env.NVM_DIR) {
       printCheck(
         toolName,
@@ -133,7 +128,7 @@ function checkDpkgPackage(packageName) {
     )
     printCheck(toolName, 'OK', 'Instalado')
     return true
-  } catch (error) {
+  } catch (_error) {
     printCheck(
       toolName,
       'NO ENCONTRADO',

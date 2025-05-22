@@ -1184,7 +1184,7 @@ async function stream(target, insert = false) {
               infos: pluginInfos,
             }),
         })
-      } catch (e) {
+      } catch (_e) {
         $q.notify({
           message: t('dialogView.pluginPromptParseFailed', { title: p.title }),
           color: 'negative',

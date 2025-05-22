@@ -193,7 +193,7 @@ export default createComponent({
 
           if (
             props.type === 'number' &&
-            temp.hasOwnProperty('value') === true
+            Object.prototype.hasOwnProperty.call(temp, 'value') === true
           ) {
             if (typedNumber === true) {
               typedNumber = false
@@ -305,7 +305,10 @@ export default createComponent({
       emitValueFn = () => {
         emitTimer = null
 
-        if (props.type !== 'number' && temp.hasOwnProperty('value') === true) {
+        if (
+          props.type !== 'number' &&
+          Object.prototype.hasOwnProperty.call(temp, 'value') === true
+        ) {
           delete temp.value
         }
 
@@ -410,7 +413,7 @@ export default createComponent({
     }
 
     function getCurValue() {
-      return temp.hasOwnProperty('value') === true
+      return Object.prototype.hasOwnProperty.call(temp, 'value') === true
         ? temp.value
         : innerValue.value !== void 0
           ? innerValue.value
