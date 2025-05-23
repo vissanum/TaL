@@ -105,7 +105,7 @@ export default [
       ...(tseslint.configs.eslintRecommended.rules || {}),
       ...(tseslint.configs.recommended.rules || {}),
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off', // Cambiar a warn cuando de nuevo más adelante
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
@@ -161,7 +161,7 @@ export default [
           caughtErrorsIgnorePattern: '^_',
         },
       ],
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off', // Cambiar a warn cuando de nuevo más adelante
       // Otras reglas específicas de Vue o sobreescrituras de TS para Vue
     },
   },
@@ -200,7 +200,7 @@ export default [
         'warn',
         { argsIgnorePattern: '^_' },
       ],
-      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-explicit-any': 'off', // Cambiar a warn cuando de nuevo más adelante
       'no-undef': 'warn',
     },
   },

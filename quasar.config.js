@@ -99,9 +99,10 @@ export default configure((ctx) => {
             },
             eslint: {
               lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
+              useFlatConfig: true,
             },
           },
-          { server: false },
+          // { server: false },
         ],
         ['unocss/vite'],
       ],
