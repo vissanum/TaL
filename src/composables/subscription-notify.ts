@@ -8,7 +8,6 @@ import { useUserDataStore } from 'src/stores/user-data'
 import { DexieDBURL } from 'src/utils/config'
 import { db } from 'src/utils/db'
 
-
 export function useSubscriptionNotify() {
   if (!DexieDBURL) return
   const user = useObservable(db.cloud.currentUser)
@@ -86,4 +85,8 @@ export function useSubscriptionNotify() {
   until(() => store.ready)
     .toBeTruthy()
     .then(notify)
+    .catch((err) => {
+      console.error('Error en until(() => store.ready).toBeTruthy():', err)
+      // Quizás notificar al usuario de alguna manera si la notificación de subscripción falla
+    })
 }

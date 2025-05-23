@@ -56,7 +56,6 @@ import {
 
 import JsonInputDialog from './JsonInputDialog.vue'
 
-
 const props = defineProps<{
   plugins: Plugin[]
   assistantPlugins: AssistantPlugins
@@ -95,7 +94,13 @@ function handleResult(res: Awaited<ReturnType<typeof callApi>>) {
 }
 function call(plugin: Plugin, api: PluginApi) {
   if (!Object.keys(api.parameters.properties).length) {
-    callApi(plugin, api, {}).then(handleResult)
+    callApi(plugin, api, {})
+      .then(handleResult)
+      .catch((err) => {
+        console.error('Error llamando a la API del plugin (sin args):', err)
+        // Opcional: notificar al usuario si es apropiado
+        this.$q.notify({ type: 'negative', message: 'Error en plugin' }) // Si estás en un método de componente Vue
+      })
   } else {
     const { args } = props.assistantPlugins[plugin.id].infos.find(
       (i) => i.name === api.name
@@ -108,7 +113,12 @@ function call(plugin: Plugin, api: PluginApi) {
         model: args,
       },
     }).onOk((args) => {
-      callApi(plugin, api, args).then(handleResult)
+      callApi(plugin, api, args)
+        .then(handleResult)
+        .catch((err) => {
+          console.error('Error llamando a la API del plugin (con args):', err)
+          // Opcional: notificar al usuario
+        })
     })
   }
 }

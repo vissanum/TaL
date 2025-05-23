@@ -1045,13 +1045,9 @@ async function send() {
   } else {
     const target = chain.value.at(-1)
     await db.messages.update(target, { status: 'default' })
-    until(chain)
-      .changed()
-      .then(() => {
-        nextTick().then(() => {
-          scroll('bottom')
-        })
-      })
+    await until(chain).changed() // Espera a que cambie
+    await nextTick() // Luego espera el nextTick
+    scroll('bottom') // Luego scroll
     await stream(target, false)
   }
   perfs.autoGenTitle && chain.value.length === 4 && genTitle()
@@ -1372,42 +1368,53 @@ const route = useRoute()
 const router = useRouter()
 watch(
   route,
-  (to) => {
-    db.workspaces.update(workspace.value.id, {
-      lastDialogId: props.id,
-    } as Partial<Workspace>)
+  async (to) => {
+    // Hacer el callback async
+    try {
+      await db.workspaces.update(workspace.value.id, {
+        lastDialogId: props.id,
+      } as Partial<Workspace>)
 
-    until(dialog)
-      .toMatch((val) => val?.id === props.id)
-      .then(async () => {
-        focusInput()
-        if (to.hash === '#genTitle') {
-          genTitle()
-          router.replace({ hash: '' })
-        } else if (to.hash === '#copyContent') {
-          copyContent()
-          router.replace({ hash: '' })
+      await until(dialog).toMatch((val) => val?.id === props.id)
+
+      focusInput()
+      if (to.hash === '#genTitle') {
+        await genTitle() // Asumir genTitle es async
+        router.replace({ hash: '' })
+      } else if (to.hash === '#copyContent') {
+        await copyContent() // Asumir copyContent es async
+        router.replace({ hash: '' })
+      }
+      if (to.query.goto) {
+        const { route: gotoRoute, highlight } = JSON.parse(
+          to.query.goto as string
+        ) // Renombrar 'route' para evitar conflicto
+        if (
+          !JSONEqual(
+            gotoRoute,
+            dialog.value.msgRoute.slice(0, gotoRoute.length)
+          )
+        ) {
+          updateChain(gotoRoute)
+          await until(chain).changed()
         }
-        if (to.query.goto) {
-          const { route, highlight } = JSON.parse(to.query.goto as string)
-          if (!JSONEqual(route, dialog.value.msgRoute.slice(0, route.length))) {
-            updateChain(route)
-            await until(chain).changed()
+        await nextTick()
+        const { items } = getEls()
+        if (gotoRoute.length) {
+          const item = items[gotoRoute.length - 1]
+          if (highlight) {
+            const mark = new Mark(item)
+            mark.unmark()
+            mark.mark(highlight)
           }
-          await nextTick()
-          const { items } = getEls()
-          if (route.length) {
-            const item = items[route.length - 1]
-            if (highlight) {
-              const mark = new Mark(item)
-              mark.unmark()
-              mark.mark(highlight)
-            }
-            item.querySelector('mark[data-markjs]')?.scrollIntoView()
-          }
-          router.replace({ query: {} })
+          item.querySelector('mark[data-markjs]')?.scrollIntoView()
         }
-      })
+        router.replace({ query: {} })
+      }
+    } catch (err) {
+      console.error('Error en watch(route):', err)
+      // Notificación de error al usuario si es apropiado
+    }
   },
   { immediate: true }
 )

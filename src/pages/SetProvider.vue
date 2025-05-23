@@ -11,7 +11,6 @@ import { useOpenLastWorkspace } from 'src/composables/open-last-workspace'
 import { useUserPerfsStore } from 'src/stores/user-perfs'
 import { ProviderSchema } from 'src/utils/types'
 
-
 const route = useRoute()
 const userPerfsStore = useUserPerfsStore()
 const $q = useQuasar()
@@ -54,5 +53,17 @@ until(() => userPerfsStore.ready)
     } finally {
       openLastWorkspace()
     }
+    return null // Para promise/always-return
+  })
+  .catch((err) => {
+    console.error(
+      'Error en until(() => userPerfsStore.ready).toBeTruthy():',
+      err
+    )
+    // Manejo de error para la promesa `until`
+    $q.notify({
+      message: 'Error inicializando la página de proveedor.',
+      color: 'negative',
+    })
   })
 </script>

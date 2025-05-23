@@ -18,8 +18,6 @@ import { useProvidersStore } from 'src/stores/providers'
 import { Provider } from 'src/utils/types'
 import { dialogOptions } from 'src/utils/values'
 
-
-
 const props = defineProps<{
   provider: Provider
 }>()
@@ -51,13 +49,12 @@ function getModelList() {
       }).onOk((val) => {
         models.value = val
       })
+      return null // Para promise/always-return
     })
+    // Similar al anterior, la promesa original de .getModelList() también necesita un .catch
     .catch((err) => {
-      console.error(err)
-      $q.notify({
-        message: t('getModelList.getModelListFailed'),
-        color: 'negative',
-      })
+      console.error('Error obteniendo lista de modelos:', err)
+      $q.notify({ message: 'Error al cargar modelos', color: 'negative' })
     })
 }
 </script>

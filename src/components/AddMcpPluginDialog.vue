@@ -161,10 +161,10 @@ defineEmits([...useDialogPluginComponent.emits])
 const loading = ref(false)
 const { install } = useInstallPlugin()
 const $q = useQuasar()
-function add() {
-  loading.value = true
-  if (!stdioOptions.cwd) delete stdioOptions.cwd
-  const manifest: McpPluginManifest = {
+// EN src/components/AddMcpPluginDialog.vue
+async function add() {
+  // Convertir a async
+  const manifestObject: McpPluginManifest = {
     id: hash53(type.value === 'stdio' ? stdioOptions.command : sseOptions.url),
     title: title.value,
     transport:
@@ -172,20 +172,19 @@ function add() {
         ? { type: 'stdio', ...toRaw(stdioOptions) }
         : { type: 'sse', ...toRaw(sseOptions) },
   }
-  install(manifest)
-    .then(() => {
-      onDialogOK()
+  loading.value = true
+  try {
+    await install(manifestObject)
+    onDialogOK()
+  } catch (err) {
+    console.error(err)
+    $q.notify({
+      message: `${t('addMcpPluginDialog.installFailed')}: ${err.message || err}`,
+      color: 'negative',
     })
-    .catch((err) => {
-      console.error(err)
-      $q.notify({
-        message: `${t('addMcpPluginDialog.installFailed')}: ${err.message}`,
-        color: 'negative',
-      })
-    })
-    .finally(() => {
-      loading.value = false
-    })
+  } finally {
+    loading.value = false
+  }
 }
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =

@@ -118,31 +118,34 @@ const filterList = computed(() => {
 const $q = useQuasar()
 const loading = ref(false)
 const { t, locale } = useI18n()
-function load() {
+async function load() {
+  // Convertir a async
   loading.value = true
-  fetch(`/json/plugins.${locale.value}.json`)
-    .then((res) => res.json())
-    .then((data) => {
-      list.push(...data)
+  try {
+    const response = await fetch(`/json/plugins.${locale.value}.json`)
+    if (!response.ok) {
+      // Manejar errores HTTP explícitamente
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const data = await response.json()
+    list.push(...data)
+  } catch (err) {
+    console.error(err)
+    $q.notify({
+      message: t('pluginsMarket.loadError'),
+      color: 'err-c',
+      textColor: 'on-err-c',
+      actions: [
+        {
+          label: t('pluginsMarket.retry'),
+          color: 'on-sur',
+          handler: load,
+        },
+      ],
     })
-    .catch((err) => {
-      console.error(err)
-      $q.notify({
-        message: t('pluginsMarket.loadError'),
-        color: 'err-c',
-        textColor: 'on-err-c',
-        actions: [
-          {
-            label: t('pluginsMarket.retry'),
-            color: 'on-sur',
-            handler: load,
-          },
-        ],
-      })
-    })
-    .finally(() => {
-      loading.value = false
-    })
+  } finally {
+    loading.value = false
+  }
 }
 load()
 

@@ -11,7 +11,6 @@ import {
 } from '@modelcontextprotocol/sdk/types.js'
 import { EventSource, type ErrorEvent, type EventSourceInit } from 'eventsource'
 
-
 export class SseError extends Error {
   constructor(
     public readonly code: number | undefined,
@@ -146,7 +145,9 @@ export class SSEClientTransport implements Transport {
 
       this._eventSource.onerror = (event) => {
         if (event.code === 401 && this._authProvider) {
-          this._authThenStart().then(resolve, reject)
+          this._authThenStart()
+            .then(resolve, reject) // Esto ya maneja tanto resolve como reject.
+            .catch(reject)
           return
         }
 

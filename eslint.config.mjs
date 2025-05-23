@@ -2,6 +2,8 @@
 import js from '@eslint/js'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import pluginImport from 'eslint-plugin-import'
+import pluginN from 'eslint-plugin-n'
+import pluginPromise from 'eslint-plugin-promise'
 import pluginVue from 'eslint-plugin-vue'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
@@ -30,11 +32,11 @@ export default [
     ],
   },
 
-  // Configuración Base de ESLint para JavaScript (js.configs.recommended)
+  //1. Configuración Base de ESLint para JavaScript (js.configs.recommended)
   // Este se aplica a .js y .mjs. Si package.json es type:module, asume sourceType:module.
   js.configs.recommended,
 
-  // Configuración para archivos CommonJS (.cjs)
+  //2. Configuración para archivos CommonJS (.cjs)
   {
     files: ['**/*.cjs'],
     languageOptions: {
@@ -44,7 +46,7 @@ export default [
     rules: { '@typescript-eslint/no-var-requires': 'off', 'no-undef': 'off' },
   },
 
-  // Configuración ESPECÍFICA para archivos .js que SON Módulos ES
+  //3. Configuración ESPECÍFICA para archivos .js que SON Módulos ES
   // Esto incluye quasar.config.js y tus scripts si usan import/export.
   // Debe venir DESPUÉS de js.configs.recommended para asegurar que sourceType: 'module' se aplica.
   {
@@ -82,7 +84,7 @@ export default [
   // El bloque js.configs.recommended ya debería cubrirlo adecuadamente si no necesitas
   // nada específico más allá de los globals de Node (que se pueden añadir en un bloque global).
 
-  // Configuración Principal para TypeScript (archivos .ts, .tsx, .d.ts en `src/`)
+  //4. Configuración Principal para TypeScript (archivos .ts, .tsx, .d.ts en `src/`)
   {
     files: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.d.ts'],
     plugins: { '@typescript-eslint': tseslint.plugin },
@@ -90,7 +92,7 @@ export default [
       parser: tseslint.parser,
       parserOptions: {
         project: ['./tsconfig.json', './tsconfig.vue-tsc.json'],
-        tsconfigRootDir: import.meta.dirname, // Correcto si eslint.config.mjs está en root
+        // tsconfigRootDir: import.meta.dirname, // Correcto si eslint.config.mjs está en root
         extraFileExtensions: ['.vue'],
       },
       globals: {
@@ -119,7 +121,7 @@ export default [
     },
   },
 
-  // Configuración para Vue.js (Archivos .vue en `src`)
+  //5. Configuración para Vue.js (Archivos .vue en `src`)
   {
     files: ['src/**/*.vue'],
     plugins: { vue: pluginVue, '@typescript-eslint': tseslint.plugin },
@@ -128,7 +130,7 @@ export default [
       parserOptions: {
         parser: tseslint.parser,
         project: ['./tsconfig.json', './tsconfig.vue-tsc.json'],
-        tsconfigRootDir: import.meta.dirname,
+        // tsconfigRootDir: import.meta.dirname,
         extraFileExtensions: ['.vue'],
         sourceType: 'module',
       },
@@ -165,7 +167,7 @@ export default [
       // Otras reglas específicas de Vue o sobreescrituras de TS para Vue
     },
   },
-  // Configuración para archivos JavaScript en `src/components/global` (ej. AInput.js)
+  //6. Configuración para archivos JavaScript en `src/components/global` (ej. AInput.js)
   {
     files: ['src/components/global/**/*.js'],
     languageOptions: {
@@ -185,7 +187,7 @@ export default [
     },
   },
 
-  // Configuración para Archivos de Documentación (docs/)
+  //7. Configuración para Archivos de Documentación (docs/)
   {
     files: ['docs/**/*.ts', 'docs/**/*.js', 'docs/**/*.mjs'],
     languageOptions: {
@@ -205,6 +207,91 @@ export default [
     },
   },
 
+  // 8. Configuración para eslint-plugin-n (Reglas específicas para Node.js)
+  {
+    // Aplicar a archivos de configuración y scripts que son módulos ES y se ejecutan en Node.js
+    files: [
+      'eslint.config.mjs',
+      'postcss.config.mjs',
+      'quasar.config.js',
+      'uno.config.ts', // Aunque es TS, se ejecuta en entorno Node por Vite/UnoCSS
+      'scripts/**/*.js', // Todos los scripts .js en la carpeta scripts
+      // Si tienes configuración de VitePress en .js, .mjs o .ts, añádelos aquí también:
+      'docs/.vitepress/config.{js,ts,mjs}',
+      'docs/.vitepress/theme/index.ts', // Partes de este archivo pueden ejecutarse en Node durante el build de VitePress
+    ],
+    // Usamos la configuración recomendada para módulos ES de eslint-plugin-n
+    ...pluginN.configs['flat/recommended-module'],
+    rules: {
+      // Sobrescribimos o afinamos reglas específicas de `eslint-plugin-n` aquí.
+      // Es importante mantener las reglas originales de 'flat/recommended-module' si no se especifican aquí.
+      ...(pluginN.configs['flat/recommended-module'].rules || {}), // Mantenemos las reglas base recomendadas
+
+      // Configuración para 'n/no-unpublished-import':
+      // Permite la importación de devDependencies en estos archivos de configuración/scripts.
+      'n/no-unpublished-import': [
+        'error',
+        {
+          allowModules: [
+            // Para eslint.config.mjs
+            'globals',
+            '@eslint/js',
+            'typescript-eslint',
+            'eslint-plugin-vue',
+            'vue-eslint-parser',
+            'eslint-config-prettier',
+            'eslint-plugin-import',
+            'eslint-plugin-n',
+
+            // Para uno.config.ts
+            '@unocss/preset-rem-to-px',
+            'unocss',
+            // ('@material/material-color-utilities' es una dependency)
+
+            // Para postcss.config.mjs (asumiendo que importa autoprefixer)
+            'autoprefixer',
+
+            // Para VitePress (docs/.vitepress/*)
+            'vitepress',
+
+            // DevDependencies generales que podrían ser importadas en quasar.config.js u otros scripts
+            // Aunque actualmente no se importan directamente en quasar.config.js, es bueno tenerlos si cambias eso
+            // '@intlify/unplugin-vue-i18n/vite', // o solo '@intlify/unplugin-vue-i18n' dependiendo de la importación
+            // 'vite-plugin-checker',
+            // Otros paquetes de Quasar si se importan directamente (quasar/wrappers es de 'quasar' (dependency))
+            // '@quasar/app-vite', // Si se importara directamente
+          ],
+        },
+      ],
+      'n/no-extraneous-import': [
+        'error',
+        {
+          allowModules: ['@eslint/js'], // Permitir la importación de @eslint/js
+        },
+      ],
+
+      // Ejemplo de otra regla que podrías querer ajustar:
+      // 'n/no-extraneous-import': 'off', // si `no-unpublished-import` es muy restrictivo o quieres manejarlo diferente.
+      // 'n/no-process-exit': 'off', // si en algún script necesitas explícitamente process.exit()
+    },
+  },
+
+  // 9. Configuración para eslint-plugin-promise
+  {
+    // Aplicar a todos los archivos donde se puedan usar Promesas
+    files: ['**/*.{js,mjs,cjs,ts,vue}'],
+    // Usamos la configuración recomendada para "flat config" de eslint-plugin-promise
+    // Esta configuración ya incluye `plugins: { promise: pluginPromise }` y las reglas.
+    ...pluginPromise.configs['flat/recommended'],
+    // Puedes añadir sobreescrituras o personalizaciones de reglas de 'eslint-plugin-promise' aquí si es necesario
+    // rules: {
+    //   ...(pluginPromise.configs['flat/recommended'].rules || {}), // Para mantener las reglas base si solo quieres añadir/modificar
+    //   'promise/always-return': 'warn', // Ejemplo de modificar una regla específica
+    // }
+    // Por ahora, vamos a usar las recomendadas tal cual.
+  },
+
+  // 10. Configuración para eslint-plugin-import)
   {
     files: ['**/*.{js,mjs,cjs,ts,vue}'], // Aplicar a todos los archivos de script y Vue
     plugins: {
@@ -297,6 +384,6 @@ export default [
     },
   },
 
-  // Prettier (Debe ir al final)
+  //11. Prettier (Debe ir al final)
   eslintConfigPrettier,
 ]

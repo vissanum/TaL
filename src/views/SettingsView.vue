@@ -528,6 +528,7 @@ function exportData() {
   exportDB(db)
     .then((blob) => {
       exportFile('aiaw_user_db.json', blob)
+      return null // Para promise/always-return
     })
     .catch((err) => {
       console.error(err)
