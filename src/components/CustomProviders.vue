@@ -48,13 +48,15 @@
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
-import AAvatar from './AAvatar.vue'
-import { useProvidersStore } from 'src/stores/providers'
 import { useI18n } from 'vue-i18n'
-import MenuItem from './MenuItem.vue'
 import { useRouter } from 'vue-router'
-import { CustomProvider } from 'src/utils/types'
+
+import { useProvidersStore } from 'src/stores/providers'
 import { useUserPerfsStore } from 'src/stores/user-perfs'
+import { CustomProvider } from 'src/utils/types'
+
+import AAvatar from './AAvatar.vue'
+import MenuItem from './MenuItem.vue'
 
 const { t } = useI18n()
 

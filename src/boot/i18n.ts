@@ -1,10 +1,14 @@
-import { boot } from 'quasar/wrappers'
-import { createI18n } from 'vue-i18n'
-import messages from 'src/i18n'
 import { Quasar } from 'quasar'
-import type { QuasarLanguage } from 'quasar'
+import { boot } from 'quasar/wrappers'
 import { watch, Ref } from 'vue'
+import { createI18n } from 'vue-i18n'
+
+import messages from 'src/i18n'
 import { localData } from 'src/utils/local-data'
+
+import type { QuasarLanguage } from 'quasar'
+
+
 
 export type MessageLanguages = keyof typeof messages
 export type MessageSchema = (typeof messages)['en']

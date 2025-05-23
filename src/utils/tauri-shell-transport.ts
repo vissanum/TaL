@@ -1,10 +1,10 @@
-import { Command, Child } from '@tauri-apps/plugin-shell'
 import {
   serializeMessage,
   deserializeMessage,
 } from '@modelcontextprotocol/sdk/shared/stdio.js'
 import { Transport } from '@modelcontextprotocol/sdk/shared/transport.js'
 import { JSONRPCMessage } from '@modelcontextprotocol/sdk/types.js'
+import { Command, Child } from '@tauri-apps/plugin-shell'
 
 /**
  * 读取缓冲器（基于字符串实现），用于将连续的标准输出流数据按行分割，解析为 JSON-RPC 消息。

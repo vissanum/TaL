@@ -1,16 +1,16 @@
-import { EventSource, type ErrorEvent, type EventSourceInit } from 'eventsource'
-
-import { Transport } from '@modelcontextprotocol/sdk/shared/transport.js'
-import {
-  JSONRPCMessage,
-  JSONRPCMessageSchema,
-} from '@modelcontextprotocol/sdk/types.js'
 import {
   auth,
   AuthResult,
   OAuthClientProvider,
   UnauthorizedError,
 } from '@modelcontextprotocol/sdk/client/auth.js'
+import { Transport } from '@modelcontextprotocol/sdk/shared/transport.js'
+import {
+  JSONRPCMessage,
+  JSONRPCMessageSchema,
+} from '@modelcontextprotocol/sdk/types.js'
+import { EventSource, type ErrorEvent, type EventSourceInit } from 'eventsource'
+
 
 export class SseError extends Error {
   constructor(

@@ -68,17 +68,21 @@
 </template>
 
 <script setup lang="ts">
-import { usePluginsStore } from 'src/stores/plugins'
-import { AssistantToolContent } from 'src/utils/types'
-import { computed, ComputedRef, inject } from 'vue'
-import AAvatar from './AAvatar.vue'
-import { engine } from 'src/utils/template-engine'
 import { MdPreview } from 'md-editor-v3'
-import { wrapCode } from 'src/utils/functions'
-import MessageImage from './MessageImage.vue'
-import MessageAudio from './MessageAudio.vue'
-import { useMdPreviewProps } from 'src/composables/md-preview-props'
+import { computed, ComputedRef, inject } from 'vue'
 import { useI18n } from 'vue-i18n'
+
+import { useMdPreviewProps } from 'src/composables/md-preview-props'
+import { usePluginsStore } from 'src/stores/plugins'
+import { wrapCode } from 'src/utils/functions'
+import { engine } from 'src/utils/template-engine'
+import { AssistantToolContent } from 'src/utils/types'
+
+import AAvatar from './AAvatar.vue'
+import MessageAudio from './MessageAudio.vue'
+import MessageImage from './MessageImage.vue'
+
+
 
 const { t } = useI18n()
 

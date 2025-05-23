@@ -116,19 +116,21 @@
 </template>
 
 <script setup>
-import WorkspaceNav from 'src/components/WorkspaceNav.vue'
-import { useUiStateStore } from 'src/stores/ui-state'
+import { useQuasar } from 'quasar'
+import { VueDraggable } from 'vue-draggable-plus'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
+
 import AccountBtn from 'src/components/AccountBtn.vue'
 import DarkSwitchBtn from 'src/components/DarkSwitchBtn.vue'
 import MenuItem from 'src/components/MenuItem.vue'
-import { DexieDBURL } from 'src/utils/config'
-import { useQuasar } from 'quasar'
-import version from 'src/version.json'
-import { useI18n } from 'vue-i18n'
+import WorkspaceNav from 'src/components/WorkspaceNav.vue'
 import { useOpenLastWorkspace } from 'src/composables/open-last-workspace'
+import { useUiStateStore } from 'src/stores/ui-state'
+import { DexieDBURL } from 'src/utils/config'
 import { IsWeb } from 'src/utils/platform-api'
-import { VueDraggable } from 'vue-draggable-plus'
+import version from 'src/version.json'
+
 
 defineOptions({
   name: 'MainLayout',

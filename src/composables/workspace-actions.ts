@@ -1,13 +1,15 @@
-import { toRaw } from 'vue'
-import { useWorkspacesStore } from 'src/stores/workspaces'
 import { useQuasar } from 'quasar'
-import { dialogOptions } from 'src/utils/values'
+import { toRaw } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import PickAvatarDialog from 'src/components/PickAvatarDialog.vue'
 import SelectWorkspaceDialog from 'src/components/SelectWorkspaceDialog.vue'
-import { genId } from 'src/utils/functions'
 import { useAssistantsStore } from 'src/stores/assistants'
+import { useWorkspacesStore } from 'src/stores/workspaces'
 import { db } from 'src/utils/db'
-import { useI18n } from 'vue-i18n'
+import { genId } from 'src/utils/functions'
+import { dialogOptions } from 'src/utils/values'
+
 
 export function useWorkspaceActions() {
   const workspacesStore = useWorkspacesStore()

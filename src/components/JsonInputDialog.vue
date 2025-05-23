@@ -34,11 +34,13 @@
 </template>
 
 <script setup lang="ts">
-import { useDialogPluginComponent } from 'quasar'
-import { PluginSchema } from '@lobehub/chat-plugin-sdk'
-import JsonInput from './JsonInput.vue'
-import { computed, ref } from 'vue'
 import { Schema, Validator } from '@cfworker/json-schema'
+import { PluginSchema } from '@lobehub/chat-plugin-sdk'
+import { useDialogPluginComponent } from 'quasar'
+import { computed, ref } from 'vue'
+
+import JsonInput from './JsonInput.vue'
+
 
 const props = defineProps<{
   title: string

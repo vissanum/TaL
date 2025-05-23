@@ -1,5 +1,7 @@
 import { watch, reactive, toRaw, ref } from 'vue'
+
 import { db } from 'src/utils/db'
+
 import { useLiveQuery } from './live-query'
 
 export function persistentReactive<T extends object>(key: string, value: T) {

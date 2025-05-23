@@ -1,5 +1,11 @@
-import Dexie from 'dexie'
+import { Dexie } from 'dexie'
+import { dexieCloud, DexieCloudTable } from 'dexie-cloud-addon'
+
+import { i18n } from 'src/boot/i18n'
+
+import { DexieDBURL } from './config'
 import { defaultAvatar, genId } from './functions'
+import { AssistantDefaultPrompt, ExampleWsIndexContent } from './templates'
 import {
   Workspace,
   Folder,
@@ -13,10 +19,6 @@ import {
   StoredItem,
   CustomProvider,
 } from './types'
-import { AssistantDefaultPrompt, ExampleWsIndexContent } from './templates'
-import dexieCloud, { DexieCloudTable } from 'dexie-cloud-addon'
-import { DexieDBURL } from './config'
-import { i18n } from 'src/boot/i18n'
 
 type Db = Dexie & {
   workspaces: DexieCloudTable<Workspace | Folder, 'id'>

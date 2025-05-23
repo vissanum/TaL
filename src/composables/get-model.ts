@@ -1,17 +1,18 @@
-import { computed } from 'vue'
-import { useUserPerfsStore } from 'src/stores/user-perfs'
-import { Model, Provider } from 'src/utils/types'
 import { useObservable } from '@vueuse/rxjs'
-import { db } from 'src/utils/db'
-import { DexieDBURL, LitellmBaseURL } from 'src/utils/config'
 import {
   LanguageModel,
   wrapLanguageModel,
   extractReasoningMiddleware,
 } from 'ai'
+import { computed } from 'vue'
+
+import { useProvidersStore } from 'src/stores/providers'
+import { useUserPerfsStore } from 'src/stores/user-perfs'
+import { DexieDBURL, LitellmBaseURL } from 'src/utils/config'
+import { db } from 'src/utils/db'
 import { AuthropicCors, FormattingReenabled } from 'src/utils/middlewares'
 import { fetch } from 'src/utils/platform-api'
-import { useProvidersStore } from 'src/stores/providers'
+import { Model, Provider } from 'src/utils/types'
 
 const FormattingModels = ['o1', 'o3-mini', 'o3-mini-2025-01-31']
 

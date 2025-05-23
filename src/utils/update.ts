@@ -1,15 +1,18 @@
+import { invoke } from '@tauri-apps/api/core'
+import { relaunch as tauriRelaunch } from '@tauri-apps/plugin-process'
 import {
   check as tauriCheckUpdate,
   type Update as TauriUpdateManifest,
   type DownloadEvent,
 } from '@tauri-apps/plugin-updater'
-import { relaunch as tauriRelaunch } from '@tauri-apps/plugin-process'
-import { fetch, IsTauri, TauriPlatform } from './platform-api' // IsWeb eliminado
-import version from 'src/version.json'
 import { Loading, Notify, type QNotifyAction } from 'quasar' // QNotifyAction se mantiene
+
 import { i18n } from 'src/boot/i18n'
+import version from 'src/version.json'
+
 import { localData } from './local-data' // Se mantiene, se usará
-import { invoke } from '@tauri-apps/api/core'
+import { fetch, IsTauri, TauriPlatform } from './platform-api' // IsWeb eliminado
+
 
 // TODO: TaL - Esta URL debe apuntar al repositorio de releases de TaL para la auto-actualización.
 const BaseURL = 'https://github.com/NitroRCr/AIaW/releases/latest/download'

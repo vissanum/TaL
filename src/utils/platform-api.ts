@@ -1,10 +1,10 @@
 // Imports de Tauri y relacionados (se mantienen)
-import { fetch as tauriFetch } from './tauri-stream'
 import { readText as tauriClipboardReadText } from '@tauri-apps/plugin-clipboard-manager' // Renombrado para evitar colisión
 import { platform as tauriNativePlatform } from '@tauri-apps/plugin-os' // Renombrado para evitar colisión
-
 // Imports de Quasar/Web (se mantienen)
 import { exportFile as webExportFile } from 'quasar'
+
+import { fetch as tauriFetch } from './tauri-stream'
 
 // Imports de Capacitor eliminados
 

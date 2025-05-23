@@ -1,8 +1,9 @@
+import { Ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 import { db } from 'src/utils/db'
 import { genId } from 'src/utils/functions'
 import { Artifact, Workspace } from 'src/utils/types'
-import { Ref } from 'vue'
-import { useRouter } from 'vue-router'
 
 export function useCreateArtifact(workspace: Ref<Workspace>) {
   const router = useRouter()

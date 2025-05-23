@@ -41,6 +41,9 @@
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
+import { computed, inject, Ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import { useCallApi } from 'src/composables/call-api'
 import {
   ApiResultItem,
@@ -50,9 +53,9 @@ import {
   PluginApi,
   Workspace,
 } from 'src/utils/types'
-import { computed, inject, Ref } from 'vue'
+
 import JsonInputDialog from './JsonInputDialog.vue'
-import { useI18n } from 'vue-i18n'
+
 
 const props = defineProps<{
   plugins: Plugin[]

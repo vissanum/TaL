@@ -1,5 +1,6 @@
-import { AvatarImage, StoredItem } from 'src/utils/types'
 import { onUnmounted, Ref, ref, watch } from 'vue'
+
+import { AvatarImage, StoredItem } from 'src/utils/types'
 
 const objectURLs: {
   [id: string]: { url: string; active: number }

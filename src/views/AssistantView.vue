@@ -421,25 +421,26 @@
 </template>
 
 <script setup lang="ts">
-import { syncRef } from 'src/composables/sync-ref'
-import { useAssistantsStore } from 'src/stores/assistants'
-import { computed, inject, toRaw } from 'vue'
-import ProviderInputItems from 'src/components/ProviderInputItems.vue'
-import PromptVarEditor from 'src/components/PromptVarEditor.vue'
-import { Assistant } from 'src/utils/types'
-import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
-import AAvatar from 'src/components/AAvatar.vue'
 import { copyToClipboard, useQuasar } from 'quasar'
-import PickAvatarDialog from 'src/components/PickAvatarDialog.vue'
-import ModelInputItems from 'src/components/ModelInputItems.vue'
-import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
+import { computed, inject, toRaw } from 'vue'
+
+import AAvatar from 'src/components/AAvatar.vue'
 import ATip from 'src/components/ATip.vue'
-import { useLocateId } from 'src/composables/locate-id'
-import { blobToBase64, pageFhStyle } from 'src/utils/functions'
-import { useSetTitle } from 'src/composables/set-title'
-import { db } from 'src/utils/db'
 import EnablePluginsItems from 'src/components/EnablePluginsItems.vue'
+import ModelInputItems from 'src/components/ModelInputItems.vue'
+import PickAvatarDialog from 'src/components/PickAvatarDialog.vue'
+import PromptVarEditor from 'src/components/PromptVarEditor.vue'
+import ProviderInputItems from 'src/components/ProviderInputItems.vue'
+import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
+import { useLocateId } from 'src/composables/locate-id'
+import { useSetTitle } from 'src/composables/set-title'
+import { syncRef } from 'src/composables/sync-ref'
+import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
+import { useAssistantsStore } from 'src/stores/assistants'
+import { db } from 'src/utils/db'
+import { blobToBase64, pageFhStyle } from 'src/utils/functions'
 import { exportFile } from 'src/utils/platform-api'
+import { Assistant } from 'src/utils/types'
 
 const props = defineProps<{
   id: string

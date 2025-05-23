@@ -21,11 +21,13 @@
 </template>
 
 <script setup lang="ts">
-import { Subprovider } from 'src/utils/types'
-import ProviderInputItems from './ProviderInputItems.vue'
-import ModelsInput from './ModelsInput.vue'
-import GetModelList from './GetModelList.vue'
 import { computed } from 'vue'
+
+import { Subprovider } from 'src/utils/types'
+
+import GetModelList from './GetModelList.vue'
+import ModelsInput from './ModelsInput.vue'
+import ProviderInputItems from './ProviderInputItems.vue'
 
 const subprovider = defineModel<Subprovider>()
 

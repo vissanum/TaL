@@ -360,6 +360,18 @@
 </template>
 
 <script setup lang="ts">
+import { until } from '@vueuse/core'
+import {
+  streamText,
+  CoreMessage,
+  generateText,
+  tool,
+  jsonSchema,
+  StreamTextResult,
+  GenerateTextResult,
+} from 'ai'
+import Mark from 'mark.js'
+import { throttle, useQuasar } from 'quasar'
 import {
   computed,
   inject,
@@ -372,8 +384,41 @@ import {
   watch,
   nextTick,
 } from 'vue'
-import { db } from 'src/utils/db'
+import { useI18n } from 'vue-i18n'
+import { useRoute, useRouter } from 'vue-router'
+
+import AbortableBtn from 'src/components/AbortableBtn.vue'
+import AddInfoBtn from 'src/components/AddInfoBtn.vue'
+import AssistantItem from 'src/components/AssistantItem.vue'
+import ATip from 'src/components/ATip.vue'
+import AutocompleteInput from 'src/components/AutocompleteInput.vue'
+import EnablePluginsMenu from 'src/components/EnablePluginsMenu.vue'
+import MessageFile from 'src/components/MessageFile.vue'
+import MessageImage from 'src/components/MessageImage.vue'
+import MessageItem from 'src/components/MessageItem.vue'
+import ModelItem from 'src/components/ModelItem.vue'
+import ModelOptionsBtn from 'src/components/ModelOptionsBtn.vue'
+import ParseFilesDialog from 'src/components/ParseFilesDialog.vue'
+import PromptVarInput from 'src/components/PromptVarInput.vue'
+import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
+import { useCallApi } from 'src/composables/call-api'
+import { useCreateArtifact } from 'src/composables/create-artifact'
+import { useCreateDialog } from 'src/composables/create-dialog'
+import { useGetModel } from 'src/composables/get-model'
+import { useListenKey } from 'src/composables/listen-key'
 import { useLiveQueryWithDeps } from 'src/composables/live-query'
+import { useSetTitle } from 'src/composables/set-title'
+import { syncRef } from 'src/composables/sync-ref'
+import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
+import { useAssistantsStore } from 'src/stores/assistants'
+import { usePluginsStore } from 'src/stores/plugins'
+import { useProvidersStore } from 'src/stores/providers'
+import { useUiStateStore } from 'src/stores/ui-state'
+import { useUserDataStore } from 'src/stores/user-data'
+import { useUserPerfsStore } from 'src/stores/user-perfs'
+import artifactsPlugin from 'src/utils/artifacts-plugin'
+import { MaxMessageFileSizeMB } from 'src/utils/config'
+import { db } from 'src/utils/db'
 import {
   almostEqual,
   displayLength,
@@ -387,18 +432,9 @@ import {
   wrapCode,
   wrapQuote,
 } from 'src/utils/functions'
-import { useAssistantsStore } from 'src/stores/assistants'
-import {
-  streamText,
-  CoreMessage,
-  generateText,
-  tool,
-  jsonSchema,
-  StreamTextResult,
-  GenerateTextResult,
-} from 'ai'
-import { throttle, useQuasar } from 'quasar'
-import AssistantItem from 'src/components/AssistantItem.vue'
+import { scaleBlob } from 'src/utils/image-process'
+import sessions from 'src/utils/sessions'
+import { engine } from 'src/utils/template-engine'
 import {
   DialogContent,
   ExtractArtifactPrompt,
@@ -407,8 +443,6 @@ import {
   NameArtifactPrompt,
   PluginsPrompt,
 } from 'src/utils/templates'
-import sessions from 'src/utils/sessions'
-import PromptVarInput from 'src/components/PromptVarInput.vue'
 import {
   MessageContent,
   PluginApi,
@@ -425,40 +459,7 @@ import {
   ConvertArtifactOptions,
   AssistantMessageContent,
 } from 'src/utils/types'
-import { usePluginsStore } from 'src/stores/plugins'
-import MessageItem from 'src/components/MessageItem.vue'
-import { scaleBlob } from 'src/utils/image-process'
-import MessageImage from 'src/components/MessageImage.vue'
-import { engine } from 'src/utils/template-engine'
-import { useCallApi } from 'src/composables/call-api'
-import { until } from '@vueuse/core'
-import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
-import { syncRef } from 'src/composables/sync-ref'
-import { useUserPerfsStore } from 'src/stores/user-perfs'
-import ModelItem from 'src/components/ModelItem.vue'
-import ParseFilesDialog from 'src/components/ParseFilesDialog.vue'
-import MessageFile from 'src/components/MessageFile.vue'
 import { dialogOptions, InputTypes, models } from 'src/utils/values'
-import { useUserDataStore } from 'src/stores/user-data'
-import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
-import { useRoute, useRouter } from 'vue-router'
-import AbortableBtn from 'src/components/AbortableBtn.vue'
-import { MaxMessageFileSizeMB } from 'src/utils/config'
-import ATip from 'src/components/ATip.vue'
-import { useListenKey } from 'src/composables/listen-key'
-import { useSetTitle } from 'src/composables/set-title'
-import { useCreateArtifact } from 'src/composables/create-artifact'
-import artifactsPlugin from 'src/utils/artifacts-plugin'
-import ModelOptionsBtn from 'src/components/ModelOptionsBtn.vue'
-import AddInfoBtn from 'src/components/AddInfoBtn.vue'
-import { useI18n } from 'vue-i18n'
-import Mark from 'mark.js'
-import { useCreateDialog } from 'src/composables/create-dialog'
-import EnablePluginsMenu from 'src/components/EnablePluginsMenu.vue'
-import { useGetModel } from 'src/composables/get-model'
-import { useUiStateStore } from 'src/stores/ui-state'
-import AutocompleteInput from 'src/components/AutocompleteInput.vue'
-import { useProvidersStore } from 'src/stores/providers'
 
 const { t, locale } = useI18n()
 

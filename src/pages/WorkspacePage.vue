@@ -118,25 +118,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref, watch } from 'vue'
-import AssistantsExpansion from 'src/components/AssistantsExpansion.vue'
-import ArtifactsExpansion from 'src/components/ArtifactsExpansion.vue'
-import { useWorkspacesStore } from 'src/stores/workspaces'
-import { useLiveQueryWithDeps } from 'src/composables/live-query'
-import { db } from 'src/utils/db'
-import { Workspace, Dialog, Artifact } from 'src/utils/types'
-import { useUserDataStore } from 'src/stores/user-data'
 import { useQuasar } from 'quasar'
-import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
-import { artifactUnsaved, isPlatformEnabled } from 'src/utils/functions'
+import { computed, provide, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import EditArtifact from 'src/views/EditArtifact.vue'
-import { useCloseArtifact } from 'src/composables/close-artifact'
-import ArtifactItemMenu from 'src/components/ArtifactItemMenu.vue'
-import DragableSeparator from 'src/components/DragableSeparator.vue'
+
 import ArtifactItemIcon from 'src/components/ArtifactItemIcon.vue'
-import { useUserPerfsStore } from 'src/stores/user-perfs'
+import ArtifactItemMenu from 'src/components/ArtifactItemMenu.vue'
+import ArtifactsExpansion from 'src/components/ArtifactsExpansion.vue'
+import AssistantsExpansion from 'src/components/AssistantsExpansion.vue'
 import DialogsExpansion from 'src/components/DialogsExpansion.vue'
+import DragableSeparator from 'src/components/DragableSeparator.vue'
+import { useCloseArtifact } from 'src/composables/close-artifact'
+import { useLiveQueryWithDeps } from 'src/composables/live-query'
+import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
+import { useUserDataStore } from 'src/stores/user-data'
+import { useUserPerfsStore } from 'src/stores/user-perfs'
+import { useWorkspacesStore } from 'src/stores/workspaces'
+import { db } from 'src/utils/db'
+import { artifactUnsaved, isPlatformEnabled } from 'src/utils/functions'
+import { Workspace, Dialog, Artifact } from 'src/utils/types'
+import EditArtifact from 'src/views/EditArtifact.vue'
 
 const props = defineProps<{
   id: string

@@ -53,9 +53,10 @@
 <script setup lang="ts">
 import { importInto } from 'dexie-export-import'
 import { useDialogPluginComponent, useQuasar } from 'quasar'
-import { db } from 'src/utils/db'
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+
+import { db } from 'src/utils/db'
 
 const { t } = useI18n()
 const file = ref<File>(null)

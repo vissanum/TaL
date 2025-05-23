@@ -5,8 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import { useAvatarImage } from 'src/composables/avatar-image'
 import { toRef } from 'vue'
+
+import { useAvatarImage } from 'src/composables/avatar-image'
 
 const props = defineProps<{
   id: string

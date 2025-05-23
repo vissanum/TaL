@@ -1,3 +1,32 @@
+import { Client as GradioClient } from '@gradio/client'
+import {
+  createHeadersWithPluginSettings,
+  LobeChatPluginManifest,
+  PluginSchema,
+} from '@lobehub/chat-plugin-sdk'
+import {
+  CallToolResult,
+  GetPromptResult,
+  ReadResourceResult,
+} from '@modelcontextprotocol/sdk/types.js'
+import {
+  Boolean as TBoolean,
+  Number as TNumber,
+  Object as TObject,
+  Optional as TOptional,
+  String as TString,
+} from '@sinclair/typebox'
+import { Parser } from 'expr-eval'
+
+import { i18n } from 'src/boot/i18n'
+
+import artifacts from './artifacts-plugin'
+import { AudioEncoderSupported, extractAudioBlob } from './audio-process'
+import { corsFetch } from './cors-fetch'
+import docParsePlugin from './doc-parse-plugin'
+import { base64ToArrayBuffer, defaultAvatar, parseSeconds } from './functions'
+import { getClient } from './mcp-client'
+import { fetch, IsTauri } from './platform-api'
 import {
   GradioFixedInput,
   GradioManifestEndpoint,
@@ -12,34 +41,7 @@ import {
   McpPluginManifest,
   Avatar,
 } from './types'
-import { base64ToArrayBuffer, defaultAvatar, parseSeconds } from './functions'
-import {
-  createHeadersWithPluginSettings,
-  LobeChatPluginManifest,
-  PluginSchema,
-} from '@lobehub/chat-plugin-sdk'
-import {
-  Boolean as TBoolean,
-  Number as TNumber,
-  Object as TObject,
-  Optional as TOptional,
-  String as TString,
-} from '@sinclair/typebox'
-import { Client as GradioClient } from '@gradio/client'
-import { AudioEncoderSupported, extractAudioBlob } from './audio-process'
-import { Parser } from 'expr-eval'
-import { corsFetch } from './cors-fetch'
-import artifacts from './artifacts-plugin'
-import {
-  CallToolResult,
-  GetPromptResult,
-  ReadResourceResult,
-} from '@modelcontextprotocol/sdk/types.js'
-import { fetch, IsTauri } from './platform-api'
-import { getClient } from './mcp-client'
-import { i18n } from 'src/boot/i18n'
 import webSearchPlugin from './web-search-plugin'
-import docParsePlugin from './doc-parse-plugin'
 
 const { t } = i18n.global
 

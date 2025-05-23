@@ -9,8 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import { ShortcutKey } from 'src/utils/types'
 import { computed } from 'vue'
+
+import { ShortcutKey } from 'src/utils/types'
 
 const model = defineModel<ShortcutKey>()
 const listener = (ev: KeyboardEvent) => {

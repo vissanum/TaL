@@ -5,8 +5,9 @@
 // 1. invoke('stream_fetch', {url, method, headers, body}), get response with headers.
 // 2. listen event: `stream-response` multi times to get body
 
-import { listen } from '@tauri-apps/api/event'
 import { invoke } from '@tauri-apps/api/core'
+import { listen } from '@tauri-apps/api/event'
+
 import { IsTauri } from './platform-api'
 
 type ResponseEvent = {

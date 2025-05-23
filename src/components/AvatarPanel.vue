@@ -21,9 +21,11 @@
 </template>
 
 <script setup lang="ts">
-import { Avatar } from 'src/utils/types'
-import AAvatar from './AAvatar.vue'
 import { computed } from 'vue'
+
+import { Avatar } from 'src/utils/types'
+
+import AAvatar from './AAvatar.vue'
 
 const props = defineProps<{
   title?: string

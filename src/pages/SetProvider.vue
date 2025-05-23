@@ -4,11 +4,13 @@
 import { Validator } from '@cfworker/json-schema'
 import { until } from '@vueuse/core'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
+
+import { useOpenLastWorkspace } from 'src/composables/open-last-workspace'
 import { useUserPerfsStore } from 'src/stores/user-perfs'
 import { ProviderSchema } from 'src/utils/types'
-import { useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import { useOpenLastWorkspace } from 'src/composables/open-last-workspace'
+
 
 const route = useRoute()
 const userPerfsStore = useUserPerfsStore()

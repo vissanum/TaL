@@ -19,15 +19,16 @@
 </template>
 
 <script setup lang="ts">
+import { MdPreview } from 'md-editor-v3'
 import { computed, Ref, inject, toRaw } from 'vue'
-import { Workspace } from 'src/utils/types'
+
+import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
+import { useMdPreviewProps } from 'src/composables/md-preview-props'
+import { useSetTitle } from 'src/composables/set-title'
 import { syncRef } from 'src/composables/sync-ref'
 import { useWorkspacesStore } from 'src/stores/workspaces'
-import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
-import { MdPreview } from 'md-editor-v3'
 import { engine } from 'src/utils/template-engine'
-import { useSetTitle } from 'src/composables/set-title'
-import { useMdPreviewProps } from 'src/composables/md-preview-props'
+import { Workspace } from 'src/utils/types'
 
 defineEmits(['toggle-drawer'])
 

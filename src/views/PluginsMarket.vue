@@ -83,17 +83,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
 import { useQuasar } from 'quasar'
-import { caselessIncludes, pageFhStyle } from 'src/utils/functions'
-import AAvatar from 'src/components/AAvatar.vue'
-import ATip from 'src/components/ATip.vue'
-import PluginTypeBadge from 'src/components/PluginTypeBadge.vue'
-import AddMcpPluginDialog from 'src/components/AddMcpPluginDialog.vue'
-import { useInstallPlugin } from 'src/composables/install-plugin'
-import InstallPluginBtn from 'src/components/InstallPluginBtn.vue'
+import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+
+import AAvatar from 'src/components/AAvatar.vue'
+import AddMcpPluginDialog from 'src/components/AddMcpPluginDialog.vue'
+import ATip from 'src/components/ATip.vue'
+import InstallPluginBtn from 'src/components/InstallPluginBtn.vue'
+import PluginTypeBadge from 'src/components/PluginTypeBadge.vue'
+import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
+import { useInstallPlugin } from 'src/composables/install-plugin'
+import { caselessIncludes, pageFhStyle } from 'src/utils/functions'
 import { clipboardReadText, IsTauri } from 'src/utils/platform-api'
 
 defineEmits(['toggle-drawer'])

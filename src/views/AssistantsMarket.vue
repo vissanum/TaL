@@ -86,19 +86,22 @@
 </template>
 
 <script setup lang="ts">
+import { Validator } from '@cfworker/json-schema'
+import { useQuasar } from 'quasar'
 import { computed, reactive, ref, toRaw } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
-import { useQuasar } from 'quasar'
-import { MarketAssistantSchema } from 'src/utils/types'
-import { Validator } from '@cfworker/json-schema'
-import { caselessIncludes, pageFhStyle } from 'src/utils/functions'
+
+
+
 import AAvatar from 'src/components/AAvatar.vue'
-import { useAssistantsStore } from 'src/stores/assistants'
-import { AssistantDefaultPrompt } from 'src/utils/templates'
-import { defaultModelSettings } from 'src/utils/db'
 import SelectWorkspaceDialog from 'src/components/SelectWorkspaceDialog.vue'
+import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
+import { useAssistantsStore } from 'src/stores/assistants'
+import { defaultModelSettings } from 'src/utils/db'
+import { caselessIncludes, pageFhStyle } from 'src/utils/functions'
 import { clipboardReadText } from 'src/utils/platform-api'
+import { AssistantDefaultPrompt } from 'src/utils/templates'
+import { MarketAssistantSchema } from 'src/utils/types'
 
 const { t } = useI18n()
 defineEmits(['toggle-drawer'])

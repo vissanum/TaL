@@ -30,6 +30,7 @@
 
 <script setup lang="ts">
 import { PluginSchema } from '@lobehub/chat-plugin-sdk'
+
 import UnifiedInput from './UnifiedInput.vue'
 
 defineProps<{

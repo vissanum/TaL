@@ -9,8 +9,9 @@
 
 <script setup lang="ts">
 import { useObservable } from '@vueuse/rxjs'
-import { db } from 'src/utils/db'
 import { useRouter } from 'vue-router'
+
+import { db } from 'src/utils/db'
 
 const user = useObservable(db.cloud.currentUser)
 

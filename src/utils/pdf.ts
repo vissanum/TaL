@@ -1,10 +1,11 @@
+import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/build/pdf.mjs'
 import {
   type DocumentInitParameters,
   type PDFDocumentProxy,
   type TextItem,
 } from 'pdfjs-dist/types/src/display/api'
+
 import { webpSupported } from './image-process'
-import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/build/pdf.mjs'
 
 export async function getDocumentProxy(
   data: DocumentInitParameters['data'],

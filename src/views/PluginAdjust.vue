@@ -103,18 +103,20 @@
 </template>
 
 <script setup lang="ts">
-import { syncRef } from 'src/composables/sync-ref'
-import { useAssistantsStore } from 'src/stores/assistants'
 import { computed, toRaw } from 'vue'
-import { usePluginsStore } from 'src/stores/plugins'
-import { Assistant, PluginApi } from 'src/utils/types'
+import { useI18n } from 'vue-i18n'
+
+import HintCard from 'src/components/HintCard.vue'
 import JsonInput from 'src/components/JsonInput.vue'
 import PromptVarInput from 'src/components/PromptVarInput.vue'
-import HintCard from 'src/components/HintCard.vue'
-import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
 import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
 import { useSetTitle } from 'src/composables/set-title'
-import { useI18n } from 'vue-i18n'
+import { syncRef } from 'src/composables/sync-ref'
+import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
+import { useAssistantsStore } from 'src/stores/assistants'
+import { usePluginsStore } from 'src/stores/plugins'
+import { Assistant, PluginApi } from 'src/utils/types'
+
 
 defineEmits(['toggle-drawer'])
 

@@ -69,14 +69,16 @@
 
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import { useOrder } from 'src/composables/order'
 import {
   StripeFee,
   SyncServicePrice,
   SyncServicePriceUSD,
 } from 'src/utils/config'
-import { computed, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
+
 import PayMethodItem from './PayMethodItem.vue'
 
 defineEmits([...useDialogPluginComponent.emits])

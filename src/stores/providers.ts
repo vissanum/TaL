@@ -1,5 +1,8 @@
 import { Object as TObject } from '@sinclair/typebox'
 import { defineStore } from 'pinia'
+import { computed, Ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import { useLiveQuery } from 'src/composables/live-query'
 import { db } from 'src/utils/db'
 import { genId, removeDuplicates } from 'src/utils/functions'
@@ -8,8 +11,6 @@ import {
   modelOptions as baseModelOptions,
   ProviderTypes,
 } from 'src/utils/values'
-import { computed, Ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 
 export const useProvidersStore = defineStore('providers', () => {
   const providers: Ref<CustomProvider[]> = useLiveQuery(

@@ -1,8 +1,10 @@
 import { Hct, hexFromArgb } from '@material/material-color-utilities'
-import { Artifact, Avatar, PlatformEnabled } from './types'
 import { Platform } from 'quasar'
+
 import { i18n } from 'src/boot/i18n'
+
 import { UsdToCnyRate } from './config'
+import { Artifact, Avatar, PlatformEnabled } from './types'
 
 function randomHash(digits = 64) {
   const array = new Uint8Array(digits / 8)

@@ -220,11 +220,11 @@
 </template>
 
 <script setup lang="ts">
+import PlatformEnabledInput from 'src/components/PlatformEnabledInput.vue'
+import ShortcutKeyInput from 'src/components/ShortcutKeyInput.vue'
+import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
 import { useUserPerfsStore } from 'src/stores/user-perfs'
 import { pageFhStyle } from 'src/utils/functions'
-import ShortcutKeyInput from 'src/components/ShortcutKeyInput.vue'
-import PlatformEnabledInput from 'src/components/PlatformEnabledInput.vue'
-import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
 
 const { perfs } = useUserPerfsStore()
 

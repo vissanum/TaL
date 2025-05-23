@@ -67,17 +67,20 @@
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
+import { inject, Ref, toRef } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+import { useCreateDialog } from 'src/composables/create-dialog'
+import { useListenKey } from 'src/composables/listen-key'
+import { useUserPerfsStore } from 'src/stores/user-perfs'
 import { db } from 'src/utils/db'
 import { isPlatformEnabled } from 'src/utils/functions'
 import { Dialog, Workspace } from 'src/utils/types'
 import { dialogOptions } from 'src/utils/values'
-import { inject, Ref, toRef } from 'vue'
-import { useI18n } from 'vue-i18n'
-import SelectWorkspaceDialog from './SelectWorkspaceDialog.vue'
-import { useCreateDialog } from 'src/composables/create-dialog'
+
 import MenuItem from './MenuItem.vue'
-import { useUserPerfsStore } from 'src/stores/user-perfs'
-import { useListenKey } from 'src/composables/listen-key'
+import SelectWorkspaceDialog from './SelectWorkspaceDialog.vue'
+
 
 const { t } = useI18n()
 const workspace: Ref<Workspace> = inject('workspace')

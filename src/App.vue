@@ -3,12 +3,13 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+
 import { useFirstVisit } from './composables/first-visit'
 import { useLoginDialogs } from './composables/login-dialogs'
 import { useSetTheme } from './composables/set-theme'
 import { useSubscriptionNotify } from './composables/subscription-notify'
-import { onMounted } from 'vue'
 import { checkUpdate, ready } from './utils/update'
 
 defineOptions({

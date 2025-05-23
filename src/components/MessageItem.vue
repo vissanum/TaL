@@ -314,7 +314,7 @@
 
 <script setup lang="ts">
 import { MdPreview, MdCatalog } from 'md-editor-v3'
-import { db } from 'src/utils/db'
+import { copyToClipboard, useQuasar } from 'quasar'
 import {
   computed,
   ComputedRef,
@@ -325,6 +325,21 @@ import {
   ref,
   watchEffect,
 } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+
+import { useMdPreviewProps } from 'src/composables/md-preview-props'
+import { useAssistantsStore } from 'src/stores/assistants'
+import { useUserPerfsStore } from 'src/stores/user-perfs'
+import { db } from 'src/utils/db'
+import {
+  escapeRegex,
+  genId,
+  idDateString,
+  isPlatformEnabled,
+  textBeginning,
+  wrapCode,
+} from 'src/utils/functions'
 import sessions from 'src/utils/sessions'
 import {
   MessageContent,
@@ -334,31 +349,23 @@ import {
   AssistantMessageContent,
   ConvertArtifactOptions,
 } from 'src/utils/types'
-import CopyBtn from './CopyBtn.vue'
-import AAvatar from './AAvatar.vue'
-import { useAssistantsStore } from 'src/stores/assistants'
-import { useUserPerfsStore } from 'src/stores/user-perfs'
-import MessageImage from './MessageImage.vue'
-import ToolContent from './ToolContent.vue'
-import { copyToClipboard, useQuasar } from 'quasar'
-import { useRouter } from 'vue-router'
-import PickAvatarDialog from './PickAvatarDialog.vue'
-import MessageFile from './MessageFile.vue'
-import {
-  escapeRegex,
-  genId,
-  idDateString,
-  isPlatformEnabled,
-  textBeginning,
-  wrapCode,
-} from 'src/utils/functions'
-import MenuItem from './MenuItem.vue'
-import MessageInfoDialog from './MessageInfoDialog.vue'
-import TextareaDialog from './TextareaDialog.vue'
-import { useMdPreviewProps } from 'src/composables/md-preview-props'
-import ConvertArtifactDialog from './ConvertArtifactDialog.vue'
-import { useI18n } from 'vue-i18n'
 import { dialogOptions } from 'src/utils/values'
+
+import AAvatar from './AAvatar.vue'
+import ConvertArtifactDialog from './ConvertArtifactDialog.vue'
+import CopyBtn from './CopyBtn.vue'
+import MenuItem from './MenuItem.vue'
+import MessageFile from './MessageFile.vue'
+import MessageImage from './MessageImage.vue'
+import MessageInfoDialog from './MessageInfoDialog.vue'
+import PickAvatarDialog from './PickAvatarDialog.vue'
+import TextareaDialog from './TextareaDialog.vue'
+import ToolContent from './ToolContent.vue'
+
+
+
+
+
 
 const props = defineProps<{
   message: Message

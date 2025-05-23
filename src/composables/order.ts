@@ -1,9 +1,10 @@
 import { useQuasar } from 'quasar'
+import { Ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import { BudgetBaseURL } from 'src/utils/config'
 import { db } from 'src/utils/db'
 import { OrderItem } from 'src/utils/types'
-import { Ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 
 export function useOrder(loading: Ref<boolean>, onDialogOK: (res) => void) {
   const $q = useQuasar()

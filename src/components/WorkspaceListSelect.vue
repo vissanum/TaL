@@ -22,7 +22,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import { useWorkspacesStore } from 'src/stores/workspaces'
+
 import WorkspaceListItem from './WorkspaceListItem.vue'
 
 defineProps<{

@@ -35,14 +35,18 @@
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
-import { dialogOptions } from 'src/utils/values'
-import MenuItem from './MenuItem.vue'
-import SelectWorkspaceDialog from './SelectWorkspaceDialog.vue'
-import { Artifact } from 'src/utils/types'
+import { useI18n } from 'vue-i18n'
+
 import { db } from 'src/utils/db'
 import { artifactUnsaved, saveArtifactChanges } from 'src/utils/functions'
-import { useI18n } from 'vue-i18n'
 import { exportFile } from 'src/utils/platform-api'
+import { Artifact } from 'src/utils/types'
+import { dialogOptions } from 'src/utils/values'
+
+import MenuItem from './MenuItem.vue'
+import SelectWorkspaceDialog from './SelectWorkspaceDialog.vue'
+
+
 
 const $q = useQuasar()
 const { t } = useI18n()

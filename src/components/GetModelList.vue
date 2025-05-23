@@ -10,12 +10,15 @@
 </template>
 
 <script setup lang="ts">
+import { useQuasar } from 'quasar'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+import { useProvidersStore } from 'src/stores/providers'
 import { Provider } from 'src/utils/types'
 import { dialogOptions } from 'src/utils/values'
-import { useQuasar } from 'quasar'
-import { useI18n } from 'vue-i18n'
-import { useProvidersStore } from 'src/stores/providers'
-import { computed } from 'vue'
+
+
 
 const props = defineProps<{
   provider: Provider

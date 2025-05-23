@@ -26,8 +26,9 @@
 
 <script setup lang="ts">
 import { Screen } from 'quasar'
-import { useUserDataStore } from 'src/stores/user-data'
 import { computed } from 'vue'
+
+import { useUserDataStore } from 'src/stores/user-data'
 
 const props = defineProps<{
   tipKey: string

@@ -50,11 +50,13 @@
 </template>
 
 <script setup lang="ts">
+import { toRaw } from 'vue'
+
 import { syncRef } from 'src/composables/sync-ref'
 import { useAssistantsStore } from 'src/stores/assistants'
 import { usePluginsStore } from 'src/stores/plugins'
 import { AssistantPlugin, Plugin, Assistant } from 'src/utils/types'
-import { toRaw } from 'vue'
+
 import AAvatar from './AAvatar.vue'
 import PluginTypeBadge from './PluginTypeBadge.vue'
 

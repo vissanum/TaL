@@ -121,17 +121,20 @@
 
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
-import { Avatar } from 'src/utils/types'
 import { ref, watch } from 'vue'
-import AvatarPanel from './AvatarPanel.vue'
+
 import { useUserPerfsStore } from 'src/stores/user-perfs'
-import AAvatar from './AAvatar.vue'
-import HueSlider from './HueSlider.vue'
-import ImageInputArea from './ImageInputArea.vue'
+import { db } from 'src/utils/db'
 import { genId } from 'src/utils/functions'
 import { cropSquareBlob } from 'src/utils/image-process'
-import { db } from 'src/utils/db'
+import { Avatar } from 'src/utils/types'
 import { materialSymbols } from 'src/utils/values'
+
+import AAvatar from './AAvatar.vue'
+import AvatarPanel from './AvatarPanel.vue'
+import HueSlider from './HueSlider.vue'
+import ImageInputArea from './ImageInputArea.vue'
+
 
 const props = defineProps<{
   defaultTab: string
