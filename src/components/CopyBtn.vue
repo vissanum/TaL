@@ -2,11 +2,11 @@
   <q-btn :icon="icon" @click="copy" :title="$t('copyBtn.title')" />
 </template>
 <script setup>
-import { copyToClipboard } from 'quasar'
+import { copyToClipboard, Notify } from 'quasar'
 import { ref } from 'vue'
-// import { useI18n } from 'vue-i18n'
+import { useI18n } from 'vue-i18n'
 
-// const { t } = useI18n()
+const { t } = useI18n()
 
 const props = defineProps({
   value: {
@@ -17,15 +17,19 @@ const props = defineProps({
 
 const icon = ref('sym_o_content_copy')
 
-async function copy() {
-  try {
-    await copyToClipboard(props.value)
-    icon.value = 'sym_o_check'
-    setTimeout(() => {
-      icon.value = 'sym_o_content_copy'
-    }, 2000)
-  } catch (err) {
-    console.error('Error al copiar:', err)
-  }
+function copy() {
+  copyToClipboard(props.value)
+    .then(() => {
+      icon.value = 'sym_o_check'
+      setTimeout(() => {
+        icon.value = 'sym_o_content_copy'
+      }, 2000)
+    })
+    .catch(() => {
+      Notify.create({
+        message: t('copyBtn.copyFailed'),
+        color: 'negative',
+      })
+    })
 }
 </script>

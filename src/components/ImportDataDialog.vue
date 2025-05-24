@@ -53,10 +53,9 @@
 <script setup lang="ts">
 import { importInto } from 'dexie-export-import'
 import { useDialogPluginComponent, useQuasar } from 'quasar'
+import { db } from 'src/utils/db'
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-
-import { db } from 'src/utils/db'
 
 const { t } = useI18n()
 const file = ref<File>(null)
@@ -71,29 +70,32 @@ defineEmits([...useDialogPluginComponent.emits])
 
 const $q = useQuasar()
 const loading = ref(false)
-async function importData() {
+function importData() {
+  const { force, overwrite, clear } = options
   loading.value = true
-  try {
-    await importInto(db, file.value, {
-      acceptMissingTables: options.force, // Usar options.force
-      acceptVersionDiff: options.force, // Usar options.force
-      overwriteValues: options.overwrite, // Usar options.overwrite
-      clearTablesBeforeImport: options.clear, // Usar options.clear
+  importInto(db, file.value, {
+    acceptMissingTables: force,
+    acceptVersionDiff: force,
+    overwriteValues: overwrite,
+    clearTablesBeforeImport: clear,
+  })
+    .then(() => {
+      $q.notify({
+        message: t('importDataDialog.importSuccess'),
+        color: 'positive',
+      })
+      onDialogOK()
     })
-    $q.notify({
-      message: t('importDataDialog.importSuccess'), // t() aquí
-      color: 'positive',
+    .catch((e) => {
+      console.error(e)
+      $q.notify({
+        message: t('importDataDialog.importFailed', { message: e.message }),
+        color: 'negative',
+      })
     })
-    onDialogOK()
-  } catch (e) {
-    console.error(e)
-    $q.notify({
-      message: t('importDataDialog.importFailed', { message: e.message }), // t() aquí
-      color: 'negative',
+    .finally(() => {
+      loading.value = false
     })
-  } finally {
-    loading.value = false
-  }
 }
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =

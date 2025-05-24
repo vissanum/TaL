@@ -1,12 +1,11 @@
 import { until } from '@vueuse/core'
 import { useObservable } from '@vueuse/rxjs'
 import { useQuasar } from 'quasar'
-import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
-
 import { useUserDataStore } from 'src/stores/user-data'
 import { DexieDBURL } from 'src/utils/config'
 import { db } from 'src/utils/db'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 export function useSubscriptionNotify() {
   if (!DexieDBURL) return
@@ -85,8 +84,4 @@ export function useSubscriptionNotify() {
   until(() => store.ready)
     .toBeTruthy()
     .then(notify)
-    .catch((err) => {
-      console.error('Error en until(() => store.ready).toBeTruthy():', err)
-      // Quizás notificar al usuario de alguna manera si la notificación de subscripción falla
-    })
 }

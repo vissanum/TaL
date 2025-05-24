@@ -11,16 +11,9 @@ export function useAvatarImage(imageId: Ref<string>) {
     imageId,
     (to) => {
       if (to) {
-        db.avatarImages
-          .get(to)
-          .then((i) => {
-            image.value = i
-            return null // Para promise/always-return
-          })
-          .catch((err) => {
-            console.error(`Error obteniendo avatarImage para id ${to}:`, err)
-            image.value = null // O manejar el estado de error como sea apropiado
-          })
+        db.avatarImages.get(to).then((i) => {
+          image.value = i
+        })
       } else {
         image.value = null
       }

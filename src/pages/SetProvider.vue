@@ -4,12 +4,11 @@
 import { Validator } from '@cfworker/json-schema'
 import { until } from '@vueuse/core'
 import { useQuasar } from 'quasar'
-import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
-
-import { useOpenLastWorkspace } from 'src/composables/open-last-workspace'
 import { useUserPerfsStore } from 'src/stores/user-perfs'
 import { ProviderSchema } from 'src/utils/types'
+import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { useOpenLastWorkspace } from 'src/composables/open-last-workspace'
 
 const route = useRoute()
 const userPerfsStore = useUserPerfsStore()
@@ -53,17 +52,5 @@ until(() => userPerfsStore.ready)
     } finally {
       openLastWorkspace()
     }
-    return null // Para promise/always-return
-  })
-  .catch((err) => {
-    console.error(
-      'Error en until(() => userPerfsStore.ready).toBeTruthy():',
-      err
-    )
-    // Manejo de error para la promesa `until`
-    $q.notify({
-      message: 'Error inicializando la página de proveedor.',
-      color: 'negative',
-    })
   })
 </script>

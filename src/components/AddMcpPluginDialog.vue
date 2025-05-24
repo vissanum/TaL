@@ -129,14 +129,12 @@
 <script setup lang="ts">
 import { useDialogPluginComponent, useQuasar } from 'quasar'
 import { computed, reactive, ref, toRaw } from 'vue'
-import { useI18n } from 'vue-i18n'
-
 import VarsInput from 'src/components/VarsInput.vue'
 import { useInstallPlugin } from 'src/composables/install-plugin'
-import { hash53 } from 'src/utils/functions'
-import { IsTauri } from 'src/utils/platform-api'
 import { McpPluginManifest } from 'src/utils/types'
-
+import { hash53 } from 'src/utils/functions'
+import { useI18n } from 'vue-i18n'
+import { IsTauri } from 'src/utils/platform-api'
 import ATip from './ATip.vue'
 
 const { t } = useI18n()
@@ -161,10 +159,10 @@ defineEmits([...useDialogPluginComponent.emits])
 const loading = ref(false)
 const { install } = useInstallPlugin()
 const $q = useQuasar()
-// EN src/components/AddMcpPluginDialog.vue
-async function add() {
-  // Convertir a async
-  const manifestObject: McpPluginManifest = {
+function add() {
+  loading.value = true
+  if (!stdioOptions.cwd) delete stdioOptions.cwd
+  const manifest: McpPluginManifest = {
     id: hash53(type.value === 'stdio' ? stdioOptions.command : sseOptions.url),
     title: title.value,
     transport:
@@ -172,19 +170,20 @@ async function add() {
         ? { type: 'stdio', ...toRaw(stdioOptions) }
         : { type: 'sse', ...toRaw(sseOptions) },
   }
-  loading.value = true
-  try {
-    await install(manifestObject)
-    onDialogOK()
-  } catch (err) {
-    console.error(err)
-    $q.notify({
-      message: `${t('addMcpPluginDialog.installFailed')}: ${err.message || err}`,
-      color: 'negative',
+  install(manifest)
+    .then(() => {
+      onDialogOK()
     })
-  } finally {
-    loading.value = false
-  }
+    .catch((err) => {
+      console.error(err)
+      $q.notify({
+        message: `${t('addMcpPluginDialog.installFailed')}: ${err.message}`,
+        color: 'negative',
+      })
+    })
+    .finally(() => {
+      loading.value = false
+    })
 }
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =

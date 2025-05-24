@@ -13,14 +13,13 @@
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
-import { ref } from 'vue'
-// import { useI18n } from 'vue-i18n'
-
 import { useInstallPlugin } from 'src/composables/install-plugin'
 import { usePluginsStore } from 'src/stores/plugins'
 import { PluginManifest } from 'src/utils/types'
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-// const { t } = useI18n()
+const { t } = useI18n()
 
 const props = defineProps<{
   id: string
@@ -31,18 +30,18 @@ const store = usePluginsStore()
 const { install } = useInstallPlugin()
 const loading = ref(false)
 const $q = useQuasar()
-async function installIt() {
+function installIt() {
   loading.value = true
-  try {
-    await install(props.manifest)
-    // Posiblemente una notificación de éxito aquí si 'install' no la da
-  } catch (err) {
-    console.error(err)
-    $q.notify({
-      /* ... */
+  install(props.manifest)
+    .catch((err) => {
+      console.error(err)
+      $q.notify({
+        message: `${t('installPluginBtn.installFailed')}${err.message}`,
+        color: 'negative',
+      })
     })
-  } finally {
-    loading.value = false
-  }
+    .finally(() => {
+      loading.value = false
+    })
 }
 </script>

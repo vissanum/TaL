@@ -41,9 +41,6 @@
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
-import { computed, inject, Ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-
 import { useCallApi } from 'src/composables/call-api'
 import {
   ApiResultItem,
@@ -53,8 +50,9 @@ import {
   PluginApi,
   Workspace,
 } from 'src/utils/types'
-
+import { computed, inject, Ref } from 'vue'
 import JsonInputDialog from './JsonInputDialog.vue'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   plugins: Plugin[]
@@ -94,13 +92,7 @@ function handleResult(res: Awaited<ReturnType<typeof callApi>>) {
 }
 function call(plugin: Plugin, api: PluginApi) {
   if (!Object.keys(api.parameters.properties).length) {
-    callApi(plugin, api, {})
-      .then(handleResult)
-      .catch((err) => {
-        console.error('Error llamando a la API del plugin (sin args):', err)
-        // Opcional: notificar al usuario si es apropiado
-        this.$q.notify({ type: 'negative', message: 'Error en plugin' }) // Si estás en un método de componente Vue
-      })
+    callApi(plugin, api, {}).then(handleResult)
   } else {
     const { args } = props.assistantPlugins[plugin.id].infos.find(
       (i) => i.name === api.name
@@ -113,12 +105,7 @@ function call(plugin: Plugin, api: PluginApi) {
         model: args,
       },
     }).onOk((args) => {
-      callApi(plugin, api, args)
-        .then(handleResult)
-        .catch((err) => {
-          console.error('Error llamando a la API del plugin (con args):', err)
-          // Opcional: notificar al usuario
-        })
+      callApi(plugin, api, args).then(handleResult)
     })
   }
 }

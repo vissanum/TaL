@@ -9,10 +9,6 @@ function useLocateId(ready: Ref<unknown>) {
       .toBeTruthy()
       .then(() => {
         route.hash && document.querySelector(route.hash)?.scrollIntoView()
-        return null // Para promise/always-return
-      })
-      .catch((err) => {
-        console.error('Error en until(ready).toBeTruthy():', err)
       })
   })
 }
