@@ -18,7 +18,7 @@ importers:
         specifier: npm:@jsr/bradenmacdonald__s3-lite-client@^0.8.0
         version: '@jsr/bradenmacdonald__s3-lite-client@0.8.0'
       '@cfworker/json-schema':
-        specifier: 4.1.1
+        specifier: ^4.1.1
         version: 4.1.1
       '@chenfengyuan/vue-qrcode':
         specifier: ^2.0.0
@@ -39,35 +39,35 @@ importers:
         specifier: ^1.17.0
         version: 1.17.0
       '@sinclair/typebox':
-        specifier: 0.34.33
+        specifier: ^0.34.33
         version: 0.34.33
       '@tauri-apps/plugin-clipboard-manager':
-        specifier: ~2.2.2
+        specifier: ^2.2.2
         version: 2.2.2
       '@tauri-apps/plugin-opener':
-        specifier: ~2.2.7
+        specifier: ^2.2.7
         version: 2.2.7
       '@tauri-apps/plugin-os':
-        specifier: ~2.2.1
+        specifier: ^2.2.1
         version: 2.2.1
       '@tauri-apps/plugin-process':
-        specifier: ~2.2.1
+        specifier: ^2.2.1
         version: 2.2.1
       '@tauri-apps/plugin-shell':
-        specifier: ~2.2.1
+        specifier: ^2.2.1
         version: 2.2.1
       '@tauri-apps/plugin-updater':
-        specifier: 2.7.1
+        specifier: ^2.7.1
         version: 2.7.1
       '@tauri-apps/plugin-window-state':
-        specifier: ~2.2.2
+        specifier: ^2.2.2
         version: 2.2.2
       '@vueuse/core':
-        specifier: ^11.3.0
-        version: 11.3.0(vue@3.5.14(typescript@5.8.3))
+        specifier: ^13.2.0
+        version: 13.2.0(vue@3.5.14(typescript@5.8.3))
       '@vueuse/rxjs':
-        specifier: ^11.3.0
-        version: 11.3.0(rxjs@7.8.2)(vue@3.5.14(typescript@5.8.3))
+        specifier: ^13.2.0
+        version: 13.2.0(rxjs@7.8.2)(vue@3.5.14(typescript@5.8.3))
       ai:
         specifier: ^4.3.16
         version: 4.3.16(react@18.3.1)(zod@3.25.28)
@@ -148,7 +148,7 @@ importers:
         version: 3.25.28
     devDependencies:
       '@intlify/unplugin-vue-i18n':
-        specifier: 6.0.8
+        specifier: ^6.0.8
         version: 6.0.8(@vue/compiler-dom@3.5.14)(eslint@9.27.0(jiti@2.4.2))(rollup@4.41.1)(typescript@5.8.3)(vue-i18n@11.1.4(vue@3.5.14(typescript@5.8.3)))(vue@3.5.14(typescript@5.8.3))
       '@quasar/app-vite':
         specifier: ^2.2.0
@@ -160,22 +160,22 @@ importers:
         specifier: ^2.5.0
         version: 2.5.0
       '@types/node':
-        specifier: 22.15.21
+        specifier: ^22.15.21
         version: 22.15.21
       '@typescript-eslint/eslint-plugin':
-        specifier: 8.32.1
+        specifier: ^8.32.1
         version: 8.32.1(@typescript-eslint/parser@8.32.1(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
       '@typescript-eslint/parser':
-        specifier: 8.32.1
+        specifier: ^8.32.1
         version: 8.32.1(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
       '@unocss/preset-rem-to-px':
-        specifier: 66.1.2
+        specifier: ^66.1.2
         version: 66.1.2
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
       eslint:
-        specifier: 9.27.0
+        specifier: ^9.27.0
         version: 9.27.0(jiti@2.4.2)
       eslint-config-prettier:
         specifier: ^10.1.5
@@ -187,13 +187,13 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0(eslint-plugin-import@2.31.0)(eslint@9.27.0(jiti@2.4.2))
       eslint-plugin-import:
-        specifier: 2.31.0
+        specifier: ^2.31.0
         version: 2.31.0(@typescript-eslint/parser@8.32.1(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-typescript@4.4.0)(eslint@9.27.0(jiti@2.4.2))
       eslint-plugin-n:
-        specifier: 17.18.0
+        specifier: ^17.18.0
         version: 17.18.0(eslint@9.27.0(jiti@2.4.2))
       eslint-plugin-promise:
-        specifier: 7.2.1
+        specifier: ^7.2.1
         version: 7.2.1(eslint@9.27.0(jiti@2.4.2))
       eslint-plugin-vue:
         specifier: ^10.1.0
@@ -208,13 +208,13 @@ importers:
         specifier: ^3.5.3
         version: 3.5.3
       typescript:
-        specifier: 5.8.3
+        specifier: ^5.8.3
         version: 5.8.3
       typescript-eslint:
-        specifier: 8.32.1
+        specifier: ^8.32.1
         version: 8.32.1(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
       unocss:
-        specifier: 66.1.2
+        specifier: ^66.1.2
         version: 66.1.2(postcss@8.5.3)(vite@5.4.19(@types/node@22.15.21)(sass-embedded@1.89.0)(terser@5.39.2))(vue@3.5.14(typescript@5.8.3))
       vite-plugin-checker:
         specifier: ^0.9.3
@@ -1691,9 +1691,6 @@ packages:
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
-  '@types/web-bluetooth@0.0.20':
-    resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
-
   '@types/web-bluetooth@0.0.21':
     resolution: {integrity: sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==}
 
@@ -1998,11 +1995,13 @@ packages:
   '@vue/shared@3.5.14':
     resolution: {integrity: sha512-oXTwNxVfc9EtP1zzXAlSlgARLXNC84frFYkS0HHz0h3E4WZSP9sywqjqzGCP9Y34M8ipNmd380pVgmMuwELDyQ==}
 
-  '@vueuse/core@11.3.0':
-    resolution: {integrity: sha512-7OC4Rl1f9G8IT6rUfi9JrKiXy4bfmHhZ5x2Ceojy0jnd3mHNEvV4JaRygH362ror6/NZ+Nl+n13LPzGiPN8cKA==}
-
   '@vueuse/core@12.8.2':
     resolution: {integrity: sha512-HbvCmZdzAu3VGi/pWYm5Ut+Kd9mn1ZHnn4L5G8kOQTPs/IwIAmJoBrmYk2ckLArgMXZj0AW3n5CAejLUO+PhdQ==}
+
+  '@vueuse/core@13.2.0':
+    resolution: {integrity: sha512-n5TZoIAxbWAQ3PqdVPDzLgIRQOujFfMlatdI+f7ditSmoEeNpPBvp7h2zamzikCmrhFIePAwdEQB6ENccHr7Rg==}
+    peerDependencies:
+      vue: ^3.5.0
 
   '@vueuse/integrations@12.8.2':
     resolution: {integrity: sha512-fbGYivgK5uBTRt7p5F3zy6VrETlV9RtZjBqd1/HxGdjdckBgBM4ugP8LHpjolqTj14TXTxSK1ZfgPbHYyGuH7g==}
@@ -2045,22 +2044,25 @@ packages:
       universal-cookie:
         optional: true
 
-  '@vueuse/metadata@11.3.0':
-    resolution: {integrity: sha512-pwDnDspTqtTo2HwfLw4Rp6yywuuBdYnPYDq+mO38ZYKGebCUQC/nVj/PXSiK9HX5otxLz8Fn7ECPbjiRz2CC3g==}
-
   '@vueuse/metadata@12.8.2':
     resolution: {integrity: sha512-rAyLGEuoBJ/Il5AmFHiziCPdQzRt88VxR+Y/A/QhJ1EWtWqPBBAxTAFaSkviwEuOEZNtW8pvkPgoCZQ+HxqW1A==}
 
-  '@vueuse/rxjs@11.3.0':
-    resolution: {integrity: sha512-aPPJo9LyS6CNeiNV4tVfmkLa0vccUTipfqPwFXu44zTwgU3VUAJVMM7JiACxUDRoDLSiJn2CC3LJj4OsIbsYqQ==}
+  '@vueuse/metadata@13.2.0':
+    resolution: {integrity: sha512-kPpzuQCU0+D8DZCzK0iPpIcXI+6ufWSgwnjJ6//GNpEn+SHViaCtR+XurzORChSgvpHO9YC8gGM97Y1kB+UabA==}
+
+  '@vueuse/rxjs@13.2.0':
+    resolution: {integrity: sha512-Z4EuqEo8oDVe7iINZRwrqGl8+ZbiXqhpzinbszDvD0FIPiSmfhG2+JYEUU+8/1D7puDKx9BEaz026MVCcbspAQ==}
     peerDependencies:
       rxjs: '>=6.0.0'
-
-  '@vueuse/shared@11.3.0':
-    resolution: {integrity: sha512-P8gSSWQeucH5821ek2mn/ciCk+MS/zoRKqdQIM3bHq6p7GXDAJLmnRRKmF5F65sAVJIfzQlwR3aDzwCn10s8hA==}
+      vue: ^3.5.0
 
   '@vueuse/shared@12.8.2':
     resolution: {integrity: sha512-dznP38YzxZoNloI0qpEfpkms8knDtaoQ6Y/sfS0L7Yki4zh40LFHEhur0odJC6xTHG5dxWVPiUWBXn+wCG2s5w==}
+
+  '@vueuse/shared@13.2.0':
+    resolution: {integrity: sha512-vx9ZPDF5HcU9up3Jgt3G62dMUfZEdk6tLyBAHYAG4F4n73vpaA7J5hdncDI/lS9Vm7GA/FPlbOmh9TrDZROTpg==}
+    peerDependencies:
+      vue: ^3.5.0
 
   '@xmldom/xmldom@0.8.10':
     resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==}
@@ -7153,8 +7155,6 @@ snapshots:
 
   '@types/unist@3.0.3': {}
 
-  '@types/web-bluetooth@0.0.20': {}
-
   '@types/web-bluetooth@0.0.21': {}
 
   '@types/wicg-file-system-access@2020.9.8': {}
@@ -7560,16 +7560,6 @@ snapshots:
 
   '@vue/shared@3.5.14': {}
 
-  '@vueuse/core@11.3.0(vue@3.5.14(typescript@5.8.3))':
-    dependencies:
-      '@types/web-bluetooth': 0.0.20
-      '@vueuse/metadata': 11.3.0
-      '@vueuse/shared': 11.3.0(vue@3.5.14(typescript@5.8.3))
-      vue-demi: 0.14.10(vue@3.5.14(typescript@5.8.3))
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
-
   '@vueuse/core@12.8.2(typescript@5.8.3)':
     dependencies:
       '@types/web-bluetooth': 0.0.21
@@ -7578,6 +7568,13 @@ snapshots:
       vue: 3.5.14(typescript@5.8.3)
     transitivePeerDependencies:
       - typescript
+
+  '@vueuse/core@13.2.0(vue@3.5.14(typescript@5.8.3))':
+    dependencies:
+      '@types/web-bluetooth': 0.0.21
+      '@vueuse/metadata': 13.2.0
+      '@vueuse/shared': 13.2.0(vue@3.5.14(typescript@5.8.3))
+      vue: 3.5.14(typescript@5.8.3)
 
   '@vueuse/integrations@12.8.2(axios@1.9.0)(focus-trap@7.6.4)(qrcode@1.5.4)(typescript@5.8.3)':
     dependencies:
@@ -7591,31 +7588,25 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/metadata@11.3.0': {}
-
   '@vueuse/metadata@12.8.2': {}
 
-  '@vueuse/rxjs@11.3.0(rxjs@7.8.2)(vue@3.5.14(typescript@5.8.3))':
-    dependencies:
-      '@vueuse/shared': 11.3.0(vue@3.5.14(typescript@5.8.3))
-      rxjs: 7.8.2
-      vue-demi: 0.14.10(vue@3.5.14(typescript@5.8.3))
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
+  '@vueuse/metadata@13.2.0': {}
 
-  '@vueuse/shared@11.3.0(vue@3.5.14(typescript@5.8.3))':
+  '@vueuse/rxjs@13.2.0(rxjs@7.8.2)(vue@3.5.14(typescript@5.8.3))':
     dependencies:
-      vue-demi: 0.14.10(vue@3.5.14(typescript@5.8.3))
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
+      '@vueuse/shared': 13.2.0(vue@3.5.14(typescript@5.8.3))
+      rxjs: 7.8.2
+      vue: 3.5.14(typescript@5.8.3)
 
   '@vueuse/shared@12.8.2(typescript@5.8.3)':
     dependencies:
       vue: 3.5.14(typescript@5.8.3)
     transitivePeerDependencies:
       - typescript
+
+  '@vueuse/shared@13.2.0(vue@3.5.14(typescript@5.8.3))':
+    dependencies:
+      vue: 3.5.14(typescript@5.8.3)
 
   '@xmldom/xmldom@0.8.10': {}
 
