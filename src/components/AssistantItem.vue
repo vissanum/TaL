@@ -23,6 +23,7 @@
 
 <script setup lang="ts">
 import { Assistant } from 'src/utils/types'
+
 import AAvatar from './AAvatar.vue'
 
 defineProps<{

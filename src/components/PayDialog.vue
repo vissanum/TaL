@@ -39,6 +39,7 @@
 
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
+
 import CopyBtn from './CopyBtn.vue'
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =

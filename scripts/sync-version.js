@@ -114,7 +114,7 @@ async function updateVersions() {
     )
   } catch (error) {
     console.error('Error actualizando versiones:', error)
-    process.exit(1) // Salir con código de error para que falle en CI/CD si es necesario
+    throw error
   }
 }
 

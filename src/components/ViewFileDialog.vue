@@ -67,13 +67,16 @@
 <script setup lang="ts">
 import { MdPreview } from 'md-editor-v3'
 import { useDialogPluginComponent } from 'quasar'
+import { computed } from 'vue'
+
+import { useMdPreviewProps } from 'src/composables/md-preview-props'
 import { wrapCode, wrapQuote } from 'src/utils/functions'
+import { exportFile } from 'src/utils/platform-api'
 import { StoredItem } from 'src/utils/types'
 import { codeExtensions } from 'src/utils/values'
-import { computed } from 'vue'
+
 import CopyBtn from './CopyBtn.vue'
-import { useMdPreviewProps } from 'src/composables/md-preview-props'
-import { exportFile } from 'src/utils/platform-api'
+
 
 const props = defineProps<{
   file: StoredItem

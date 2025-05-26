@@ -1,5 +1,22 @@
 // Modified from QInput, replace key-composition with a custom one
 
+
+import useMask, { useMaskProps } from 'quasar/src/components/input/use-mask.js'
+import useField, {
+  useFieldState,
+  useFieldProps,
+  useFieldEmits,
+  fieldValueIsFilled,
+} from 'quasar/src/composables/private.use-field/use-field.js'
+import useFileFormDomProps from 'quasar/src/composables/private.use-file/use-file-dom-props.js'
+import {
+  useFormProps,
+  useFormInputNameAttr,
+} from 'quasar/src/composables/use-form/private.use-form.js'
+import { stop } from 'quasar/src/utils/event/event.js'
+import { createComponent } from 'quasar/src/utils/private.create/create.js'
+import { addFocusFn } from 'quasar/src/utils/private.focus/focus-manager.js'
+import { injectProp } from 'quasar/src/utils/private.inject-obj-prop/inject-obj-prop.js'
 import {
   h,
   ref,
@@ -11,24 +28,7 @@ import {
   getCurrentInstance,
 } from 'vue'
 
-import useField, {
-  useFieldState,
-  useFieldProps,
-  useFieldEmits,
-  fieldValueIsFilled,
-} from 'quasar/src/composables/private.use-field/use-field.js'
-import useMask, { useMaskProps } from 'quasar/src/components/input/use-mask.js'
-import {
-  useFormProps,
-  useFormInputNameAttr,
-} from 'quasar/src/composables/use-form/private.use-form.js'
-import useFileFormDomProps from 'quasar/src/composables/private.use-file/use-file-dom-props.js'
 import useKeyComposition from 'src/composables/key-composition.ts'
-
-import { createComponent } from 'quasar/src/utils/private.create/create.js'
-import { stop } from 'quasar/src/utils/event/event.js'
-import { addFocusFn } from 'quasar/src/utils/private.focus/focus-manager.js'
-import { injectProp } from 'quasar/src/utils/private.inject-obj-prop/inject-obj-prop.js'
 
 export default createComponent({
   name: 'AInput',
@@ -193,7 +193,7 @@ export default createComponent({
 
           if (
             props.type === 'number' &&
-            temp.hasOwnProperty('value') === true
+            Object.prototype.hasOwnProperty.call(temp, 'value') === true
           ) {
             if (typedNumber === true) {
               typedNumber = false
@@ -305,7 +305,10 @@ export default createComponent({
       emitValueFn = () => {
         emitTimer = null
 
-        if (props.type !== 'number' && temp.hasOwnProperty('value') === true) {
+        if (
+          props.type !== 'number' &&
+          Object.prototype.hasOwnProperty.call(temp, 'value') === true
+        ) {
           delete temp.value
         }
 
@@ -410,7 +413,7 @@ export default createComponent({
     }
 
     function getCurValue() {
-      return temp.hasOwnProperty('value') === true
+      return Object.prototype.hasOwnProperty.call(temp, 'value') === true
         ? temp.value
         : innerValue.value !== void 0
           ? innerValue.value

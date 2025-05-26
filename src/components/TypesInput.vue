@@ -62,9 +62,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import LazyInput from './LazyInput.vue'
 import { QInput } from 'quasar'
+import { computed } from 'vue'
+
+import LazyInput from './LazyInput.vue'
 
 const props = defineProps<{
   type: 'string' | 'array' | 'number' | 'boolean'

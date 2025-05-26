@@ -48,8 +48,9 @@
 
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
-import { VueDraggable } from 'vue-draggable-plus'
 import { ref } from 'vue'
+import { VueDraggable } from 'vue-draggable-plus'
+
 import ModelItem from './ModelItem.vue'
 
 const props = defineProps<{

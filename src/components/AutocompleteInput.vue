@@ -17,8 +17,9 @@
 </template>
 
 <script setup lang="ts">
-import { useFilterOptions } from 'src/composables/filter-options'
 import { toRef } from 'vue'
+
+import { useFilterOptions } from 'src/composables/filter-options'
 
 const props = defineProps<{
   options: string[]

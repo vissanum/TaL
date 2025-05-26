@@ -1,9 +1,10 @@
-import { usePluginsStore } from 'src/stores/plugins'
 import { Schema, Validator } from '@cfworker/json-schema'
-import { ApiResultItem, Plugin, PluginApi } from 'src/utils/types'
-import { removeUndefinedProps } from 'src/utils/functions'
 import { toRaw } from 'vue'
 import { useI18n } from 'vue-i18n'
+
+import { usePluginsStore } from 'src/stores/plugins'
+import { removeUndefinedProps } from 'src/utils/functions'
+import { ApiResultItem, Plugin, PluginApi } from 'src/utils/types'
 
 export function useCallApi({ workspace, dialog }) {
   const pluginsStore = usePluginsStore()

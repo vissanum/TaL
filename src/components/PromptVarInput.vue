@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import { PromptVar, PromptVarValue } from 'src/utils/types'
+
 import UnifiedInput from './UnifiedInput.vue'
 
 const props = defineProps<{

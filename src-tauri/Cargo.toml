@@ -1,7 +1,7 @@
 [package]
 name = "tal_app"
 version = "0.1.0"
-description = "Backend de la aplicación TaL (Tu asistente Local)"
+description = "TaL / Tu asistente Local"
 authors = ["Vissanum<vissanumweb@gmail.com>"]
 license = "BSD-3-Clause license"
 repository = "https://github.com/vissanum/TaL"
@@ -15,25 +15,25 @@ name = "app_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2.0.4", features = [] }
+tauri-build = { version = "2.2.0", features = [] } # Actualizado de 2.0.4
 
 [dependencies]
 serde_json = "1.0"
 dotenvy = "0.15"
-serde = { version = "1.0", features = ["derive"] }
-log = "0.4"
-tauri = { version = "2.2.4", features = [] }
-tauri-plugin-log = "2.0.0-rc"
+serde = { version = "1.0.219", features = ["derive"] }
+log = "0.4.27"
+tauri = { version = "2.5.1", features = [] } # Actualizado de 2.2.4
+tauri-plugin-log = "2.4.0" # Actualizado de 2.0.0-rc
 tauri-plugin-shell = "2"
-tauri-plugin-os = "2"
-tauri-plugin-clipboard-manager = "2"
-tauri-plugin-process = "2"
+tauri-plugin-os = "2.2.1" # Actualizado de 2
+tauri-plugin-clipboard-manager = "2.2.2" # Actualizado de 2
+tauri-plugin-process = "2.2.1" # Actualizado de 2
 futures-util = "0.3.31"
-reqwest = "0.12.12"
-bytes = { version = "1.10.0", features = ["serde"] }
-tauri-plugin-opener = "2"
+reqwest = "0.12.15"
+bytes = { version = "1.10.1", features = ["serde"] }
+tauri-plugin-opener = "2.2.7" # Actualizado de 2
 fix-path-env = { git = "https://github.com/tauri-apps/fix-path-env-rs" }
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
-tauri-plugin-updater = "2"
-tauri-plugin-window-state = "2"
+tauri-plugin-updater = "2.7.1" # Actualizado de 2
+tauri-plugin-window-state = "2.2.2" # Actualizado de 2

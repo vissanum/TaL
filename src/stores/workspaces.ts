@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
+import { useI18n } from 'vue-i18n'
+
 import { useLiveQuery } from 'src/composables/live-query'
 import { db } from 'src/utils/db'
 import { genId } from 'src/utils/functions'
-import { Folder, Workspace } from 'src/utils/types'
 import { DefaultWsIndexContent } from 'src/utils/templates'
-import { useI18n } from 'vue-i18n'
+import { Folder, Workspace } from 'src/utils/types'
 
 export const useWorkspacesStore = defineStore('workspaces', () => {
   const workspaces = useLiveQuery(() => db.workspaces.toArray(), {

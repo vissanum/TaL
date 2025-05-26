@@ -10,10 +10,11 @@
 </template>
 
 <script setup lang="ts">
-import { Avatar } from 'src/utils/types'
 import { computed } from 'vue'
+
 import AAvatar from 'src/components/AAvatar.vue'
 import { defaultAvatar } from 'src/utils/functions'
+import { Avatar } from 'src/utils/types'
 
 const props = defineProps<{
   model: string

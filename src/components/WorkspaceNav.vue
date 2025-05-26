@@ -29,11 +29,14 @@
 </template>
 
 <script setup lang="ts">
-import { useWorkspacesStore } from 'src/stores/workspaces'
-import WorkspaceListSelect from './WorkspaceListSelect.vue'
-import { useWorkspaceActions } from 'src/composables/workspace-actions'
 import { useRouter } from 'vue-router'
+
+import { useWorkspaceActions } from 'src/composables/workspace-actions'
+import { useWorkspacesStore } from 'src/stores/workspaces'
 import { Workspace } from 'src/utils/types'
+
+import WorkspaceListSelect from './WorkspaceListSelect.vue'
+
 
 const { addWorkspace, addFolder } = useWorkspaceActions()
 

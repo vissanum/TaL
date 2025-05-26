@@ -1,15 +1,16 @@
+import { Validator } from '@cfworker/json-schema'
+import { useQuasar } from 'quasar'
+import { toRaw } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import { usePluginsStore } from 'src/stores/plugins'
+import { fetch } from 'src/utils/platform-api'
 import {
   GradioPluginManifestSchema,
   HuggingPluginManifestSchema,
   LobePluginManifestSchema,
   McpPluginManifestSchema,
 } from 'src/utils/types'
-import { Validator } from '@cfworker/json-schema'
-import { toRaw } from 'vue'
-import { useQuasar } from 'quasar'
-import { useI18n } from 'vue-i18n'
-import { fetch } from 'src/utils/platform-api'
 
 export function useInstallPlugin() {
   const store = usePluginsStore()
@@ -32,7 +33,7 @@ export function useInstallPlugin() {
       } else {
         try {
           manifest = JSON.parse(source)
-        } catch (err) {
+        } catch (_err) {
           $q.notify({
             message: t('installPlugin.formatError'),
             color: 'negative',

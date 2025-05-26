@@ -1,15 +1,15 @@
 import { LobeChatPluginManifest } from '@lobehub/chat-plugin-sdk'
 import { defineStore } from 'pinia'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import { useLiveQuery } from 'src/composables/live-query'
 import { persistentReactive } from 'src/composables/persistent-reactive'
+import artifacts from 'src/utils/artifacts-plugin'
 import { db } from 'src/utils/db'
-import {
-  GradioPluginManifest,
-  HuggingPluginManifest,
-  InstalledPlugin,
-  McpPluginManifest,
-  PluginsData,
-} from 'src/utils/types'
+import docParsePlugin from 'src/utils/doc-parse-plugin'
+import { genId } from 'src/utils/functions'
+import { IsTauri } from 'src/utils/platform-api'
 import {
   buildLobePlugin,
   timePlugin,
@@ -28,13 +28,14 @@ import {
   dumpMcpPlugin,
   buildMcpPlugin,
 } from 'src/utils/plugins'
-import { computed } from 'vue'
-import { genId } from 'src/utils/functions'
-import artifacts from 'src/utils/artifacts-plugin'
-import { IsTauri } from 'src/utils/platform-api'
-import { useI18n } from 'vue-i18n'
+import {
+  GradioPluginManifest,
+  HuggingPluginManifest,
+  InstalledPlugin,
+  McpPluginManifest,
+  PluginsData,
+} from 'src/utils/types'
 import webSearchPlugin from 'src/utils/web-search-plugin'
-import docParsePlugin from 'src/utils/doc-parse-plugin'
 
 export const usePluginsStore = defineStore('plugins', () => {
   const installed = useLiveQuery(() => db.installedPluginsV2.toArray(), {

@@ -61,12 +61,13 @@
 </template>
 
 <script setup lang="ts">
+import Mark from 'mark.js'
 import { QList, useDialogPluginComponent } from 'quasar'
+import { nextTick, watch, ref, watchEffect } from 'vue'
+
 import { db } from 'src/utils/db'
 import { caselessIncludes, escapeRegex } from 'src/utils/functions'
 import { Dialog } from 'src/utils/types'
-import { nextTick, watch, ref, watchEffect } from 'vue'
-import Mark from 'mark.js'
 
 const props = defineProps<{
   workspaceId: string

@@ -17,10 +17,12 @@
 </template>
 
 <script setup lang="ts">
-import { useFilterOptions } from 'src/composables/filter-options'
-import ModelItem from './ModelItem.vue'
-import { useProvidersStore } from 'src/stores/providers'
 import { toRef } from 'vue'
+
+import { useFilterOptions } from 'src/composables/filter-options'
+import { useProvidersStore } from 'src/stores/providers'
+
+import ModelItem from './ModelItem.vue'
 
 const model = defineModel<string[]>()
 

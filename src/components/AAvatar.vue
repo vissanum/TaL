@@ -26,9 +26,11 @@
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
+import { computed } from 'vue'
+
 import { hctToHex } from 'src/utils/functions'
 import { Avatar } from 'src/utils/types'
-import { computed } from 'vue'
+
 import ImageAvatar from './ImageAvatar.vue'
 
 const props = defineProps<{

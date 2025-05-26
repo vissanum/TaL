@@ -189,24 +189,26 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useUiStateStore } from 'src/stores/ui-state'
 import { useObservable } from '@vueuse/rxjs'
-import { db } from 'src/utils/db'
 import { useQuasar } from 'quasar'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+
+import PayDialog from 'src/components/PayDialog.vue'
 import SubscribeDialog from 'src/components/SubscribeDialog.vue'
+import TopupDialog from 'src/components/TopupDialog.vue'
+import { useUiStateStore } from 'src/stores/ui-state'
+import { useUserPerfsStore } from 'src/stores/user-perfs'
 import {
   BudgetBaseURL,
   LitellmBaseURL,
   SyncServicePrice,
   SyncServicePriceUSD,
 } from 'src/utils/config'
-import TopupDialog from 'src/components/TopupDialog.vue'
-import { useRouter } from 'vue-router'
-import PayDialog from 'src/components/PayDialog.vue'
-import { useUserPerfsStore } from 'src/stores/user-perfs'
+import { db } from 'src/utils/db'
 import { localePrice, pageFhStyle } from 'src/utils/functions'
-import { useI18n } from 'vue-i18n'
+
 
 const { t } = useI18n()
 

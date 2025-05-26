@@ -1,9 +1,11 @@
 import { createOpenAI } from '@ai-sdk/openai'
-import { Model, ProviderType } from './types'
-import { Object, String } from '@sinclair/typebox'
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible'
+import { Object, String } from '@sinclair/typebox'
+
 import { i18n } from 'src/boot/i18n'
+
 import { fetch } from './platform-api'
+import { Model, ProviderType } from './types'
 
 const { t } = i18n.global
 

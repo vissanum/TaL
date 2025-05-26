@@ -87,17 +87,19 @@
 </template>
 
 <script setup lang="ts">
+import { useQuasar } from 'quasar'
+import { computed, inject, ref, Ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+import SelectFileBtn from 'src/components/SelectFileBtn.vue'
+import { useCloseArtifact } from 'src/composables/close-artifact'
+import { useCreateArtifact } from 'src/composables/create-artifact'
 import { caselessIncludes, getFileExt, isTextFile } from 'src/utils/functions'
 import { Artifact, Workspace } from 'src/utils/types'
-import { computed, inject, ref, Ref } from 'vue'
-import { useCloseArtifact } from 'src/composables/close-artifact'
-import ArtifactItemMenu from './ArtifactItemMenu.vue'
-import ArtifactItemIcon from './ArtifactItemIcon.vue'
-import SelectFileBtn from 'src/components/SelectFileBtn.vue'
-import { useCreateArtifact } from 'src/composables/create-artifact'
-import { useQuasar } from 'quasar'
 import { dialogOptions } from 'src/utils/values'
-import { useI18n } from 'vue-i18n'
+
+import ArtifactItemIcon from './ArtifactItemIcon.vue'
+import ArtifactItemMenu from './ArtifactItemMenu.vue'
 import ATip from './ATip.vue'
 
 const artifacts: Ref<Artifact[]> = inject('artifacts')

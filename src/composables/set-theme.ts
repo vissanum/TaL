@@ -5,9 +5,10 @@ import {
   TonalPalette,
 } from '@material/material-color-utilities'
 import { Dark } from 'quasar'
-import { useUserPerfsStore } from 'src/stores/user-perfs'
-import { useUiStateStore } from 'src/stores/ui-state'
 import { watchEffect } from 'vue'
+
+import { useUiStateStore } from 'src/stores/ui-state'
+import { useUserPerfsStore } from 'src/stores/user-perfs'
 // import { IsCapacitor } from 'src/utils/platform-api'
 // import { StatusBar, Style } from '@capacitor/status-bar'
 // import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support'

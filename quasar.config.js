@@ -3,9 +3,10 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
-import { configure } from 'quasar/wrappers'
-import { fileURLToPath } from 'node:url'
 import { copyFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+
+import { configure } from 'quasar/wrappers'
 
 export default configure((ctx) => {
   return {
@@ -38,7 +39,7 @@ export default configure((ctx) => {
     build: {
       target: {
         browser: ['es2022', 'firefox115', 'chrome115', 'safari15'],
-        node: 'node20',
+        node: 'node22',
       },
 
       vueRouterMode: 'history', // available values: 'hash', 'history'
@@ -98,9 +99,10 @@ export default configure((ctx) => {
             },
             eslint: {
               lintCommand: 'eslint "./**/*.{js,ts,mjs,cjs,vue}"',
+              useFlatConfig: true,
             },
           },
-          { server: false },
+          // { server: false },
         ],
         ['unocss/vite'],
       ],

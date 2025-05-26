@@ -127,15 +127,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-import { useUiStateStore } from 'src/stores/ui-state'
 import { useObservable } from '@vueuse/rxjs'
-import { db } from 'src/utils/db'
 import { useQuasar } from 'quasar'
-import { LitellmBaseURL, UsdToCnyRate } from 'src/utils/config'
-import { useRouter } from 'vue-router'
+import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+
 import ModelItem from 'src/components/ModelItem.vue'
+import { useUiStateStore } from 'src/stores/ui-state'
+import { LitellmBaseURL, UsdToCnyRate } from 'src/utils/config'
+import { db } from 'src/utils/db'
 
 const user = useObservable(db.cloud.currentUser)
 const router = useRouter()

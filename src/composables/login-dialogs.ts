@@ -1,10 +1,12 @@
-import { useQuasar } from 'quasar'
 import { useObservable } from '@vueuse/rxjs'
-import { db } from 'src/utils/db'
+import { useQuasar } from 'quasar'
 import { watch } from 'vue'
-import { dialogOptions } from 'src/utils/values'
-import { DexieDBURL } from 'src/utils/config'
 import { useI18n } from 'vue-i18n'
+
+import { DexieDBURL } from 'src/utils/config'
+import { db } from 'src/utils/db'
+import { dialogOptions } from 'src/utils/values'
+
 
 export function useLoginDialogs() {
   if (!DexieDBURL) return

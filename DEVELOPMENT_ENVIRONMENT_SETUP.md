@@ -121,17 +121,14 @@ Se recomienda [Visual Studio Code (VSCode)](https://code.visualstudio.com/) como
     Este archivo recomienda las extensiones listadas arriba a cualquier persona que abra el proyecto en VSCode. Su contenido debería ser similar a:
 
     ```json
-    // .vscode/extensions.json
     {
       "recommendations": [
-        // Esenciales
         "dbaeumer.vscode-eslint",
         "editorconfig.editorconfig",
         "Vue.volar",
         "esbenp.prettier-vscode",
         "rust-lang.rust-analyzer",
         "tauri-apps.tauri-vscode",
-        // Adicionales
         "foxundermoon.dependi",
         "wayou.vscode-todo-highlight",
         "GitHub.vscode-github-actions",
@@ -150,20 +147,17 @@ Se recomienda [Visual Studio Code (VSCode)](https://code.visualstudio.com/) como
   - **`.vscode/settings.json`:**
     Este archivo define configuraciones específicas del espacio de trabajo, como el formateador por defecto y el formateo al guardar. El contenido actual del proyecto es un buen punto de partida y se encuentra en `.vscode/settings.json`. Un ejemplo de su estructura es:
     ```json
-    // .vscode/settings.json
     {
       "editor.formatOnSave": true,
-      "editor.defaultFormatter": "esbenp.prettier-vscode", // Prettier como global por defecto
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"
       },
       "eslint.validate": ["javascript", "typescript", "vue"],
-      // ... (otras configuraciones como las que ya tienes para rust-analyzer) ...
       "[rust]": {
         "editor.defaultFormatter": "rust-lang.rust-analyzer",
         "editor.formatOnSave": true
       }
-      // ... (resto de tu configuración actual de settings.json) ...
     }
     ```
     _(Nota: Se recomienda mantener el archivo `.vscode/settings.json` del repositorio actualizado con las configuraciones que beneficien al equipo, como las relativas a formateadores y linters)._

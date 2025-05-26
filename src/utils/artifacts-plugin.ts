@@ -1,9 +1,12 @@
 import { Array as TArray, Object, Optional, String } from '@sinclair/typebox'
-import { Artifact, Plugin, PluginApi, PluginData } from './types'
-import { engine } from './template-engine'
+
+import { i18n } from 'src/boot/i18n'
+
 import { db } from './db'
 import { saveArtifactChanges } from './functions'
-import { i18n } from 'src/boot/i18n'
+import { engine } from './template-engine'
+import { Artifact, Plugin, PluginApi, PluginData } from './types'
+
 
 const pluginId = 'aiaw-artifacts'
 

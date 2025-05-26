@@ -1,5 +1,5 @@
-import { watch, reactive } from 'vue'
 import { LocalStorage } from 'quasar'
+import { watch, reactive } from 'vue'
 
 export function localReactive<T extends object>(key: string, value: T) {
   const val = reactive({

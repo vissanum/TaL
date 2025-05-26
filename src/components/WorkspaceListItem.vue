@@ -106,10 +106,12 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+
+import { useWorkspaceActions } from 'src/composables/workspace-actions'
 import { useWorkspacesStore } from 'src/stores/workspaces'
 import { Folder, Workspace } from 'src/utils/types'
+
 import AAvatar from './AAvatar.vue'
-import { useWorkspaceActions } from 'src/composables/workspace-actions'
 import MenuItem from './MenuItem.vue'
 
 const props = defineProps<{

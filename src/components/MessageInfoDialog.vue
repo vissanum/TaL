@@ -71,9 +71,10 @@
 
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
+import { computed } from 'vue'
+
 import { idDateString } from 'src/utils/functions'
 import { Message } from 'src/utils/types'
-import { computed } from 'vue'
 
 const props = defineProps<{
   message: Message

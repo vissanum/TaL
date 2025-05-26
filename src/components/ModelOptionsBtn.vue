@@ -26,8 +26,9 @@ import {
   Unsafe,
 } from '@sinclair/typebox'
 import { computed, watch } from 'vue'
-import JsonInput from './JsonInput.vue'
 import { useI18n } from 'vue-i18n'
+
+import JsonInput from './JsonInput.vue'
 
 const { t } = useI18n()
 

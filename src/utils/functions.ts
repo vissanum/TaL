@@ -1,8 +1,10 @@
 import { Hct, hexFromArgb } from '@material/material-color-utilities'
-import { Artifact, Avatar, PlatformEnabled } from './types'
 import { Platform } from 'quasar'
+
 import { i18n } from 'src/boot/i18n'
+
 import { UsdToCnyRate } from './config'
+import { Artifact, Avatar, PlatformEnabled } from './types'
 
 function randomHash(digits = 64) {
   const array = new Uint8Array(digits / 8)
@@ -201,7 +203,7 @@ function removeUndefinedProps(obj) {
   if (typeof obj !== 'object' || obj === null) return
 
   for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
       if (typeof obj[key] === 'object' && obj[key] !== null) {
         removeUndefinedProps(obj[key])
       }
@@ -235,7 +237,7 @@ function hash53(str: string, seed = 0) {
   return cyrb53(str, seed).toString(16)
 }
 
-function removeDuplicates(arr: any[]) {
+function removeDuplicates<T>(arr: T[]): T[] {
   return Array.from(new Set(arr))
 }
 

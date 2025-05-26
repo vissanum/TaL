@@ -97,16 +97,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { usePluginsStore } from 'src/stores/plugins'
-import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
-import AAvatar from 'src/components/AAvatar.vue'
 import { useQuasar } from 'quasar'
-import PickAvatarDialog from 'src/components/PickAvatarDialog.vue'
-import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
-import ListInput from 'src/components/ListInput.vue'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+import AAvatar from 'src/components/AAvatar.vue'
 import JsonInput from 'src/components/JsonInput.vue'
+import ListInput from 'src/components/ListInput.vue'
+import PickAvatarDialog from 'src/components/PickAvatarDialog.vue'
+import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
 import { useSetTitle } from 'src/composables/set-title'
+import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
+import { usePluginsStore } from 'src/stores/plugins'
 
 const props = defineProps<{
   id: string
@@ -134,7 +136,6 @@ function pickAvatar() {
   })
 }
 
-import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 useSetTitle(
   computed(

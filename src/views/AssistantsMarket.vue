@@ -86,19 +86,20 @@
 </template>
 
 <script setup lang="ts">
+import { Validator } from '@cfworker/json-schema'
+import { useQuasar } from 'quasar'
 import { computed, reactive, ref, toRaw } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
-import { useQuasar } from 'quasar'
-import { MarketAssistantSchema } from 'src/utils/types'
-import { Validator } from '@cfworker/json-schema'
-import { caselessIncludes, pageFhStyle } from 'src/utils/functions'
+
 import AAvatar from 'src/components/AAvatar.vue'
-import { useAssistantsStore } from 'src/stores/assistants'
-import { AssistantDefaultPrompt } from 'src/utils/templates'
-import { defaultModelSettings } from 'src/utils/db'
 import SelectWorkspaceDialog from 'src/components/SelectWorkspaceDialog.vue'
+import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
+import { useAssistantsStore } from 'src/stores/assistants'
+import { defaultModelSettings } from 'src/utils/db'
+import { caselessIncludes, pageFhStyle } from 'src/utils/functions'
 import { clipboardReadText } from 'src/utils/platform-api'
+import { AssistantDefaultPrompt } from 'src/utils/templates'
+import { MarketAssistantSchema } from 'src/utils/types'
 
 const { t } = useI18n()
 defineEmits(['toggle-drawer'])
@@ -119,31 +120,35 @@ const filterList = computed(() =>
 const $q = useQuasar()
 const loading = ref(false)
 const { locale } = useI18n()
-function load() {
+async function load() {
+  // Convertir a async
   loading.value = true
-  fetch(`/json/assistants.${locale.value}.json`)
-    .then((res) => res.json())
-    .then((data) => {
-      list.push(...data)
+  try {
+    const response = await fetch(`/json/assistants.${locale.value}.json`)
+    if (!response.ok) {
+      // Manejar errores HTTP explícitamente
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const data = await response.json()
+    list.push(...data)
+    // No es necesario `return null` aquí porque `always-return` no aplica a `async` funciones de la misma manera.
+  } catch (err) {
+    console.error(err)
+    $q.notify({
+      message: t('assistantsMarket.loadError'),
+      color: 'err-c',
+      textColor: 'on-err-c',
+      actions: [
+        {
+          label: t('assistantsMarket.retry'),
+          color: 'on-sur',
+          handler: load, // El handler puede seguir siendo la función original
+        },
+      ],
     })
-    .catch((err) => {
-      console.error(err)
-      $q.notify({
-        message: t('assistantsMarket.loadError'),
-        color: 'err-c',
-        textColor: 'on-err-c',
-        actions: [
-          {
-            label: t('assistantsMarket.retry'),
-            color: 'on-sur',
-            handler: load,
-          },
-        ],
-      })
-    })
-    .finally(() => {
-      loading.value = false
-    })
+  } finally {
+    loading.value = false
+  }
 }
 load()
 
@@ -197,9 +202,8 @@ function add(item, workspaceId) {
       description,
     })
     .then(() => {
-      $q.notify({
-        message: t('assistantsMarket.added'),
-      })
+      $q.notify({ message: t('assistantsMarket.added') })
+      return null // Para promise/always-return
     })
     .catch((err) => {
       console.error(err)
@@ -220,7 +224,7 @@ async function clipboardImport() {
   try {
     const text = await clipboardReadText()
     addToGlobal(JSON.parse(text))
-  } catch (err) {
+  } catch (_err) {
     $q.notify({
       message: t('assistantsMarket.importError'),
       color: 'negative',

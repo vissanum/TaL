@@ -67,19 +67,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, Ref, inject, toRaw } from 'vue'
-import { Workspace } from 'src/utils/types'
-import { useAssistantsStore } from 'src/stores/assistants'
-import { syncRef } from 'src/composables/sync-ref'
-import { useWorkspacesStore } from 'src/stores/workspaces'
-import AssistantItem from 'src/components/AssistantItem.vue'
-import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
-import AAvatar from 'src/components/AAvatar.vue'
 import { useQuasar } from 'quasar'
+import { computed, Ref, inject, toRaw } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+import AAvatar from 'src/components/AAvatar.vue'
+import AssistantItem from 'src/components/AssistantItem.vue'
 import PickAvatarDialog from 'src/components/PickAvatarDialog.vue'
 import VarsInput from 'src/components/VarsInput.vue'
+import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
 import { useSetTitle } from 'src/composables/set-title'
-import { useI18n } from 'vue-i18n'
+import { syncRef } from 'src/composables/sync-ref'
+import { useAssistantsStore } from 'src/stores/assistants'
+import { useWorkspacesStore } from 'src/stores/workspaces'
+import { Workspace } from 'src/utils/types'
+
 
 const { t } = useI18n()
 

@@ -1,6 +1,8 @@
 import { MdPreviewProps } from 'md-editor-v3'
 import { defineStore } from 'pinia'
 import { Dark, extend } from 'quasar'
+import { watchEffect } from 'vue'
+
 import { persistentReactive } from 'src/composables/persistent-reactive'
 import {
   Avatar,
@@ -10,7 +12,6 @@ import {
   ShortcutKey,
 } from 'src/utils/types'
 import { models } from 'src/utils/values'
-import { watchEffect } from 'vue'
 
 interface Perfs {
   darkMode: boolean | 'auto'

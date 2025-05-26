@@ -83,17 +83,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
 import { useQuasar } from 'quasar'
-import { caselessIncludes, pageFhStyle } from 'src/utils/functions'
-import AAvatar from 'src/components/AAvatar.vue'
-import ATip from 'src/components/ATip.vue'
-import PluginTypeBadge from 'src/components/PluginTypeBadge.vue'
-import AddMcpPluginDialog from 'src/components/AddMcpPluginDialog.vue'
-import { useInstallPlugin } from 'src/composables/install-plugin'
-import InstallPluginBtn from 'src/components/InstallPluginBtn.vue'
+import { computed, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+
+import AAvatar from 'src/components/AAvatar.vue'
+import AddMcpPluginDialog from 'src/components/AddMcpPluginDialog.vue'
+import ATip from 'src/components/ATip.vue'
+import InstallPluginBtn from 'src/components/InstallPluginBtn.vue'
+import PluginTypeBadge from 'src/components/PluginTypeBadge.vue'
+import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
+import { useInstallPlugin } from 'src/composables/install-plugin'
+import { caselessIncludes, pageFhStyle } from 'src/utils/functions'
 import { clipboardReadText, IsTauri } from 'src/utils/platform-api'
 
 defineEmits(['toggle-drawer'])
@@ -117,31 +118,34 @@ const filterList = computed(() => {
 const $q = useQuasar()
 const loading = ref(false)
 const { t, locale } = useI18n()
-function load() {
+async function load() {
+  // Convertir a async
   loading.value = true
-  fetch(`/json/plugins.${locale.value}.json`)
-    .then((res) => res.json())
-    .then((data) => {
-      list.push(...data)
+  try {
+    const response = await fetch(`/json/plugins.${locale.value}.json`)
+    if (!response.ok) {
+      // Manejar errores HTTP explícitamente
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const data = await response.json()
+    list.push(...data)
+  } catch (err) {
+    console.error(err)
+    $q.notify({
+      message: t('pluginsMarket.loadError'),
+      color: 'err-c',
+      textColor: 'on-err-c',
+      actions: [
+        {
+          label: t('pluginsMarket.retry'),
+          color: 'on-sur',
+          handler: load,
+        },
+      ],
     })
-    .catch((err) => {
-      console.error(err)
-      $q.notify({
-        message: t('pluginsMarket.loadError'),
-        color: 'err-c',
-        textColor: 'on-err-c',
-        actions: [
-          {
-            label: t('pluginsMarket.retry'),
-            color: 'on-sur',
-            handler: load,
-          },
-        ],
-      })
-    })
-    .finally(() => {
-      loading.value = false
-    })
+  } finally {
+    loading.value = false
+  }
 }
 load()
 

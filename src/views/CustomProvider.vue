@@ -66,20 +66,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, toRaw } from 'vue'
-import { useProvidersStore } from 'src/stores/providers'
-import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
-import AAvatar from 'src/components/AAvatar.vue'
 import { useQuasar } from 'quasar'
-import PickAvatarDialog from 'src/components/PickAvatarDialog.vue'
-import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
-import { useSetTitle } from 'src/composables/set-title'
+import { computed, toRaw } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { CustomProvider } from 'src/utils/types'
+
+import AAvatar from 'src/components/AAvatar.vue'
+import PickAvatarDialog from 'src/components/PickAvatarDialog.vue'
 import ProviderInputItems from 'src/components/ProviderInputItems.vue'
 import SubproviderInput from 'src/components/SubproviderInput.vue'
+import ViewCommonHeader from 'src/components/ViewCommonHeader.vue'
+import { useSetTitle } from 'src/composables/set-title'
 import { syncRef } from 'src/composables/sync-ref'
+import ErrorNotFound from 'src/pages/ErrorNotFound.vue'
+import { useProvidersStore } from 'src/stores/providers'
 import { genId, pageFhStyle } from 'src/utils/functions'
+import { CustomProvider } from 'src/utils/types'
 
 const props = defineProps<{
   id: string

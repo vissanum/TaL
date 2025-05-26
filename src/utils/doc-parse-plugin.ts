@@ -1,11 +1,12 @@
-import { i18n } from 'src/boot/i18n'
-import { Plugin, ApiResultItem, PluginData } from './types'
 import { Object as TObject, String as TString } from '@sinclair/typebox'
+import { unzipSync, strFromU8 } from 'fflate'
+import { Dialog } from 'quasar'
+
+import { i18n } from 'src/boot/i18n'
 
 import { DocParseBaseURL } from './config'
-import { unzipSync, strFromU8 } from 'fflate'
 import { parsePageRange } from './functions'
-import { Dialog } from 'quasar'
+import { Plugin, ApiResultItem, PluginData } from './types'
 
 async function parseDoc(
   file: Blob,

@@ -19,9 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref } from 'vue'
-import InstalledPlugins from 'src/components/InstalledPlugins.vue'
 import { useQuasar } from 'quasar'
+import { computed, provide, ref } from 'vue'
+
+import InstalledPlugins from 'src/components/InstalledPlugins.vue'
 
 const drawerOpen = ref(false)
 const drawerBreakpoint = 960
