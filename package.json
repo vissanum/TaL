@@ -56,7 +56,7 @@
     "dexie": "^4.0.11",
     "dexie-cloud-addon": "^4.0.11",
     "dexie-export-import": "^4.1.4",
-    "eventsource": "^3.0.7",
+    "eventsource": "^4.0.0",
     "expr-eval": "^2.0.2",
     "fflate": "^0.8.2",
     "html-to-image": "^1.11.13",
