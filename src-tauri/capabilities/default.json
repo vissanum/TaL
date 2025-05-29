@@ -1,58 +1,62 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
-  "identifier": "default",
-  "description": "enables the default permissions",
+  "identifier": "default-capability",
+  "description": "Default capabilities for TaL, including core, OS, dialog, clipboard, notifications, and essential file system access.",
   "windows": ["main"],
   "permissions": [
     "core:default",
-    {
-      "identifier": "shell:allow-spawn",
-      "allow": [
-        {
-          "name": "cmd",
-          "cmd": "cmd",
-          "args": true
-        },
-        {
-          "name": "sh",
-          "cmd": "sh",
-          "args": true
-        }
-      ]
-    },
-    {
-      "identifier": "shell:allow-stdin-write",
-      "allow": [
-        {
-          "name": "cmd",
-          "cmd": "cmd",
-          "args": true
-        },
-        {
-          "name": "sh",
-          "cmd": "sh",
-          "args": true
-        }
-      ]
-    },
-    {
-      "identifier": "shell:allow-kill",
-      "allow": [
-        {
-          "name": "cmd",
-          "cmd": "cmd",
-          "args": true
-        },
-        {
-          "name": "sh",
-          "cmd": "sh",
-          "args": true
-        }
-      ]
-    },
-    "shell:allow-open",
     "os:default",
+    "shell:allow-open",
+    "dialog:default",
     "clipboard-manager:allow-read-text",
-    "process:allow-restart"
+    "clipboard-manager:allow-write-text",
+    "notification:default",
+    "process:allow-restart",
+    {
+      "identifier": "fs:allow-read-file",
+      "allow": [
+        { "path": "$APPCONFIG/**" },
+        { "path": "$APPDATA/**" },
+        { "path": "$APPLOCALDATA/**" },
+        { "path": "$APPLOG/**" },
+        { "path": "$RESOURCE/**" },
+        { "path": "$DOWNLOAD/**" }
+      ]
+    },
+    {
+      "identifier": "fs:allow-write-file",
+      "allow": [
+        { "path": "$APPCONFIG/**" },
+        { "path": "$APPDATA/**" },
+        { "path": "$APPLOCALDATA/**" },
+        { "path": "$APPLOG/**" },
+        { "path": "$DOWNLOAD/**" }
+      ]
+    },
+    {
+      "identifier": "fs:allow-read-dir",
+      "allow": [
+        { "path": "$APPCONFIG/**" },
+        { "path": "$APPDATA/**" },
+        { "path": "$APPLOCALDATA/**" },
+        { "path": "$APPLOG/**" },
+        { "path": "$RESOURCE/**" },
+        { "path": "$DOWNLOAD/**" }
+      ]
+    },
+    {
+      "identifier": "fs:allow-exists",
+      "allow": [
+        { "path": "$APPCONFIG/**" },
+        { "path": "$APPDATA/**" },
+        { "path": "$APPLOCALDATA/**" },
+        { "path": "$APPLOG/**" },
+        { "path": "$RESOURCE/**" },
+        { "path": "$DOWNLOAD/**" },
+        { "path": "$DESKTOP/**" },
+        { "path": "$DOCUMENT/**" },
+        { "path": "$HOME/**" }
+      ]
+    }
   ]
 }

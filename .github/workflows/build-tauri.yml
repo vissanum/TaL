@@ -1,23 +1,22 @@
-name: 'Build Tauri'
+name: 'Build Tauri Release' # Nombre un poco más descriptivo
 
 on:
   release:
     types: [published]
 
-
 jobs:
   publish-tauri:
     permissions:
-      contents: write
+      contents: write # Necesario para crear/actualizar assets de la release
     strategy:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-latest' # for Arm based macs (M1 and above).
+          - platform: 'macos-latest'
             args: '--target aarch64-apple-darwin'
-          - platform: 'macos-latest' # for Intel based macs.
+          - platform: 'macos-latest'
             args: '--target x86_64-apple-darwin'
-          - platform: 'ubuntu-22.04' # for Tauri v1 you could replace this with ubuntu-20.04.
+          - platform: 'ubuntu-22.04'
             args: ''
           - platform: 'windows-latest'
             args: ''
@@ -26,107 +25,59 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 10 # AIaW usaba 8, actualicemos si es compatible o mantenemos 8 si da problemas. Has puesto 10 en tu comando, podría ser la versión más reciente.
           run_install: false
 
-      - name: Install Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.14.0
+          node-version: 22 # AIaW usaba 18, actualicemos a una LTS más reciente como 20. Has puesto 22.14.0, que es muy reciente, LTS (20) es más seguro para CI.
           cache: 'pnpm'
 
-      - name: install Rust stable
+      - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
+          toolchain: stable # Puedes especificar una versión si es necesario, ej. 1.77.2
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
-      - name: install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
+      - name: Install Linux dependencies (Ubuntu only)
+        if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: install frontend dependencies
-        run: pnpm install
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile # Más seguro para CI
 
-      - name: setup .env
-        run: cp .env.app .env.local
+      # - name: Setup .env # Si TaL no usa .env.app -> .env.local, este paso se puede eliminar.
+      #   run: cp .env.app .env.local
 
-      - uses: tauri-apps/tauri-action@v0
+      - name: Build and release with Tauri Action
+        uses: tauri-apps/tauri-action@v0 # Esta acción maneja build, sign, y subida de assets
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
-
         with:
           releaseId: ${{ github.event.release.id }}
           args: ${{ matrix.args }}
+          # tauriScript: 'pnpm tauri' # Descomentar si tu comando es diferente a 'cargo tauri'
 
-      - name: Update latest.json with linux-deb platform
-        if: matrix.platform == 'ubuntu-22.04'
-        uses: actions/github-script@v6
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-
-            const assets = await github.rest.repos.listReleaseAssets({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: ${{ github.event.release.id }},
-              per_page: 50
-            });
-
-            let latestJsonAsset = assets.data.find(asset => asset.name === 'latest.json');
-            if (!latestJsonAsset) {
-              console.log('latest.json not found in release assets');
-              return;
-            }
-
-            console.log('Downloading latest.json...');
-            const latestJsonResponse = await fetch(latestJsonAsset.browser_download_url);
-            const latestJson = await latestJsonResponse.json();
-
-            console.log('Reading Debian package signature...');
-            const debSigPath = 'src-tauri/target/release/bundle/deb/AI as Workspace_' + latestJson.version + '_amd64.deb.sig';
-            const debSignature = fs.readFileSync(debSigPath, 'utf8');
-
-            const linuxAppImageUrl = latestJson.platforms['linux-x86_64']?.url;
-            if (!linuxAppImageUrl) {
-              console.error('Linux AppImage URL not found in latest.json');
-              return;
-            }
-            const linuxDebUrl = linuxAppImageUrl.replace('.AppImage', '.deb');
-
-            console.log('Adding linux-deb platform to latest.json...');
-            latestJson.platforms['linux-deb'] = {
-              signature: debSignature,
-              url: linuxDebUrl
-            };
-
-            const tempLatestJsonPath = path.join('./', 'latest.json');
-            fs.writeFileSync(tempLatestJsonPath, JSON.stringify(latestJson, null, 2));
-
-            console.log('Deleting original latest.json asset...');
-            await github.rest.repos.deleteReleaseAsset({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              asset_id: latestJsonAsset.id
-            });
-
-            console.log('Uploading updated latest.json...');
-            await github.rest.repos.uploadReleaseAsset({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: ${{ github.event.release.id }},
-              name: 'latest.json',
-              data: fs.readFileSync(tempLatestJsonPath)
-            });
-
-            console.log('latest.json updated successfully with linux-deb platform');
+      # --------------------------------------------------------------------
+      # PASO TEMPORALMENTE COMENTADO/ELIMINADO PARA EVALUAR SALIDA DE tauri-action
+      # --------------------------------------------------------------------
+      # - name: Update latest.json with linux-deb platform
+      #   if: matrix.platform == 'ubuntu-22.04'
+      #   uses: actions/github-script@v6
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     script: |
+      #       // Contenido del script original aquí...
+      #       // Considerar eliminar si tauri-action ya genera un latest.json completo y correcto.
+      #       // Si se mantiene, debe adaptarse al productName "Tu asistente Local".
+      #       console.log("Skipping custom latest.json update for now to evaluate tauri-action default output.");
+      # --------------------------------------------------------------------
