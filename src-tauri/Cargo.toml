@@ -15,25 +15,28 @@ name = "app_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2.2.0", features = [] } # Actualizado de 2.0.4
+tauri-build = { version = "2.2.0", features = [] }
 
 [dependencies]
 serde_json = "1.0"
 dotenvy = "0.15"
 serde = { version = "1.0.219", features = ["derive"] }
 log = "0.4.27"
-tauri = { version = "2.5.1", features = [] } # Actualizado de 2.2.4
-tauri-plugin-log = "2.4.0" # Actualizado de 2.0.0-rc
+tauri = { version = "2.5.1", features = [] }
+tauri-plugin-log = "2.4.0"
 tauri-plugin-shell = "2"
-tauri-plugin-os = "2.2.1" # Actualizado de 2
-tauri-plugin-clipboard-manager = "2.2.2" # Actualizado de 2
-tauri-plugin-process = "2.2.1" # Actualizado de 2
+tauri-plugin-os = "2.2.1"
+tauri-plugin-clipboard-manager = "2.2.2"
+tauri-plugin-process = "2.2.1"
 futures-util = "0.3.31"
-reqwest = "0.12.15"
+reqwest = "0.12.18"
 bytes = { version = "1.10.1", features = ["serde"] }
-tauri-plugin-opener = "2.2.7" # Actualizado de 2
+tauri-plugin-opener = "2.2.7"
 fix-path-env = { git = "https://github.com/tauri-apps/fix-path-env-rs" }
+tauri-plugin-dialog = "2.2.2"
+tauri-plugin-notification = "2.2.2"
+tauri-plugin-fs = "2.3.0"
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
-tauri-plugin-updater = "2.7.1" # Actualizado de 2
-tauri-plugin-window-state = "2.2.2" # Actualizado de 2
+tauri-plugin-updater = "2.7.1"
+tauri-plugin-window-state = "2.2.2"

@@ -1,5 +1,4 @@
 {
-  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Tu asistente Local",
   "version": "0.1.0",
   "identifier": "com.tuasistentelocal.app",
@@ -12,6 +11,7 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "Tu asistente Local",
         "width": 1150,
         "height": 750,
@@ -19,8 +19,11 @@
         "fullscreen": false
       }
     ],
+    "withGlobalTauri": true,
     "security": {
-      "csp": null
+      "capabilities": ["default-capability", "desktop-capability"],
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ipc://localhost; media-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; worker-src 'self' blob:;",
+      "devCsp": "default-src 'self' ws:; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: http: https:; font-src 'self' data:; connect-src 'self' ipc://localhost ws://localhost:*; media-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; worker-src 'self' blob:;"
     }
   },
   "bundle": {
@@ -32,15 +35,17 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ],
-    "createUpdaterArtifacts": true
+    ]
   },
   "plugins": {
     "updater": {
-      "pubkey": "pendiente_de_generar //TODO: Pendiente generar pubkey para updater.",
+      "active": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDlBMzlDODMxRjYwOThEMDUKUldRRmpRbjJNY2c1bWh1dEllRDlPTGlESEE3NTI4aEJ2TnBGeXBnU3FHYnRENkRId3dMRnVCbzQK",
       "endpoints": [
         "https://github.com/vissanum/TaL/releases/latest/download/latest.json"
-      ]
+      ],
+      "dialog": true,
+      "checkInterval": "1d"
     }
   }
 }
