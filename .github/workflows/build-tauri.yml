@@ -1,4 +1,4 @@
-name: 'Build Tauri Release' # Nombre un poco más descriptivo
+name: 'Build Tauri Release'
 
 on:
   release:
@@ -7,7 +7,7 @@ on:
 jobs:
   publish-tauri:
     permissions:
-      contents: write # Necesario para crear/actualizar assets de la release
+      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -28,19 +28,19 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10 # AIaW usaba 8, actualicemos si es compatible o mantenemos 8 si da problemas. Has puesto 10 en tu comando, podría ser la versión más reciente.
+          version: 10
           run_install: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22 # AIaW usaba 18, actualicemos a una LTS más reciente como 20. Has puesto 22.14.0, que es muy reciente, LTS (20) es más seguro para CI.
+          node-version: 22
           cache: 'pnpm'
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: stable # Puedes especificar una versión si es necesario, ej. 1.77.2
+          toolchain: stable
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: Install Linux dependencies (Ubuntu only)
@@ -50,13 +50,13 @@ jobs:
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install frontend dependencies
-        run: pnpm install --frozen-lockfile # Más seguro para CI
+        run: pnpm install --frozen-lockfile
 
       # - name: Setup .env # Si TaL no usa .env.app -> .env.local, este paso se puede eliminar.
       #   run: cp .env.app .env.local
 
       - name: Build and release with Tauri Action
-        uses: tauri-apps/tauri-action@v0 # Esta acción maneja build, sign, y subida de assets
+        uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
@@ -64,7 +64,7 @@ jobs:
         with:
           releaseId: ${{ github.event.release.id }}
           args: ${{ matrix.args }}
-          # tauriScript: 'pnpm tauri' # Descomentar si tu comando es diferente a 'cargo tauri'
+          includeUpdaterJson: true
 
       # --------------------------------------------------------------------
       # PASO TEMPORALMENTE COMENTADO/ELIMINADO PARA EVALUAR SALIDA DE tauri-action
