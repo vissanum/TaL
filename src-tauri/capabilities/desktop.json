@@ -1,6 +1,8 @@
 {
+  "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "desktop-capability",
-  "platforms": ["macOS", "windows", "linux"],
+  "description": "Enables desktop-specific features like application updater and window state management.",
   "windows": ["main"],
-  "permissions": ["updater:default", "updater:default", "window-state:default"]
+  "platforms": ["macOS", "windows", "linux"],
+  "permissions": ["updater:default", "window-state:default"]
 }
