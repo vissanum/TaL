@@ -1,4 +1,4 @@
-name: 'Build Tauri'
+name: 'Build Tauri Release'
 
 on:
   release:
@@ -7,7 +7,7 @@ on:
 jobs:
   publish-tauri:
     permissions:
-      contents: write # Necesario para crear/actualizar assets de la release
+      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -28,19 +28,19 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10 # AIaW usaba 8, actualicemos si es compatible o mantenemos 8 si da problemas. Has puesto 10 en tu comando, podría ser la versión más reciente.
+          version: 9 # O la versión que estés usando y sea estable
           run_install: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.14.0
+          node-version: 20 # LTS
           cache: 'pnpm'
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
+          toolchain: stable
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: Install Linux dependencies (Ubuntu only)
@@ -49,13 +49,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: install frontend dependencies
-        run: pnpm install
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
 
-      # - name: Setup .env # Si TaL no usa .env.app -> .env.local, este paso se puede eliminar.
+      # - name: Setup .env # Eliminar si no es necesario para TaL
       #   run: cp .env.app .env.local
 
-      - uses: tauri-apps/tauri-action@v0
+      - name: Build and release with Tauri Action
+        uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
@@ -63,68 +64,18 @@ jobs:
         with:
           releaseId: ${{ github.event.release.id }}
           args: ${{ matrix.args }}
+          includeUpdaterJson: true # Seamos explícitos, aunque es el default
+          # updaterJsonName: "latest.json" # Ya es el default
 
-      - name: Update latest.json with linux-deb platform
-        if: matrix.platform == 'ubuntu-22.04'
-        uses: actions/github-script@v6
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-
-            const assets = await github.rest.repos.listReleaseAssets({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: ${{ github.event.release.id }},
-              per_page: 50
-            });
-
-            let latestJsonAsset = assets.data.find(asset => asset.name === 'latest.json');
-            if (!latestJsonAsset) {
-              console.log('latest.json not found in release assets');
-              return;
-            }
-
-            console.log('Downloading latest.json...');
-            const latestJsonResponse = await fetch(latestJsonAsset.browser_download_url);
-            const latestJson = await latestJsonResponse.json();
-
-            console.log('Reading Debian package signature...');
-            const debSigPath = 'src-tauri/target/release/bundle/deb/AI as Workspace_' + latestJson.version + '_amd64.deb.sig';
-            const debSignature = fs.readFileSync(debSigPath, 'utf8');
-
-            const linuxAppImageUrl = latestJson.platforms['linux-x86_64']?.url;
-            if (!linuxAppImageUrl) {
-              console.error('Linux AppImage URL not found in latest.json');
-              return;
-            }
-            const linuxDebUrl = linuxAppImageUrl.replace('.AppImage', '.deb');
-
-            console.log('Adding linux-deb platform to latest.json...');
-            latestJson.platforms['linux-deb'] = {
-              signature: debSignature,
-              url: linuxDebUrl
-            };
-
-            const tempLatestJsonPath = path.join('./', 'latest.json');
-            fs.writeFileSync(tempLatestJsonPath, JSON.stringify(latestJson, null, 2));
-
-            console.log('Deleting original latest.json asset...');
-            await github.rest.repos.deleteReleaseAsset({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              asset_id: latestJsonAsset.id
-            });
-
-            console.log('Uploading updated latest.json...');
-            await github.rest.repos.uploadReleaseAsset({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: ${{ github.event.release.id }},
-              name: 'latest.json',
-              data: fs.readFileSync(tempLatestJsonPath)
-            });
-
-            console.log('latest.json updated successfully with linux-deb platform');
+      # Script personalizado para actualizar latest.json (MANTENER COMENTADO POR AHORA)
+      # Si el latest.json generado por tauri-action es incompleto,
+      # el siguiente paso será activar y adaptar este script.
+      # - name: Update latest.json with linux-deb details (if needed)
+      #   if: matrix.platform == 'ubuntu-22.04' # O ejecutarlo una sola vez después de todas las builds
+      #   uses: actions/github-script@v6
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     script: |
+      #       console.log("Custom latest.json update step is currently disabled.");
+      #       // Aquí iría la lógica adaptada del script si es necesaria
