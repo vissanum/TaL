@@ -116,7 +116,7 @@ jobs:
               }
             }
 
-            const productNameForFile = "Tu asistente Local"; // Nombre exacto como en los archivos generados
+            const productNameForFile = "TaL"; // Nombre exacto como en los archivos generados
             const versionForFile = app_version;
 
             // --- Linux x86_64 (AppImage y Deb, generados en ESTE runner de ubuntu-22.04) ---
