@@ -52,13 +52,6 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
 
-      # - name: Setup .env # Si TaL no usa .env.app -> .env.local, este paso se puede eliminar.
-      #   run: cp .env.app .env.local
-
-      # ... (resto del workflow igual hasta el paso de tauri-action) ...
-
-      # ... (pasos anteriores del workflow: checkout, setup pnpm, setup node, install rust, install linux deps, install frontend deps) ...
-
       - name: Build and release with Tauri Action
         id: tauri_action_build
         uses: tauri-apps/tauri-action@v0
@@ -72,30 +65,27 @@ jobs:
           includeUpdaterJson: true # Default es true, pero lo dejamos explícito
 
       - name: Create/Update latest.json with all artifacts
-        # Este script se ejecutará solo una vez, preferiblemente en un job separado
-        # que dependa de la matriz. Por ahora, se ejecuta en el job de Linux.
-        if: matrix.platform == 'ubuntu-22.04'
+        if: matrix.platform == 'ubuntu-22.04' # Esta condición YAML controla la ejecución del paso
         uses: actions/github-script@v7
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # El script usará el 'github' context que ya está autenticado
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_ID: ${{ github.event.release.id }}
-          RAW_TAG_NAME: ${{ github.event.release.tag_name }} # Pasamos el tag completo
+          RAW_TAG_NAME: ${{ github.event.release.tag_name }}
         with:
           script: |
             const fs = require('fs');
             const path = require('path');
-            // 'github' y 'context' son provistos automáticamente por actions/github-script
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const release_id = parseInt(process.env.RELEASE_ID);
             const raw_tag_name = process.env.RAW_TAG_NAME;
-            const app_version = raw_tag_name.startsWith('v') ? raw_tag_name.substring(1) : raw_tag_name; // Procesamos el tag aquí
+            const app_version = raw_tag_name.startsWith('v') ? raw_tag_name.substring(1) : raw_tag_name;
 
             console.log(`Generating latest.json for version ${app_version} (from tag ${raw_tag_name}), release ID: ${release_id}`);
 
             const latestJson = {
               version: app_version,
-              notes: `Release notes for TaL v${app_version}. See GitHub release for details.`, // Placeholder, se puede mejorar
+              notes: `Release notes for TaL v${app_version}. See GitHub release for details.`,
               pub_date: new Date().toISOString(),
               platforms: {}
             };
@@ -105,7 +95,7 @@ jobs:
               owner,
               repo,
               release_id,
-              per_page: 50 // Aumentar si tienes muchos assets por release
+              per_page: 50
             });
             console.log(`Found ${assets.length} assets in release ID ${release_id}.`);
 
@@ -116,13 +106,7 @@ jobs:
               return asset;
             }
 
-            // Función para leer firmas (simplificada, asume que el script corre en el mismo runner y tiene acceso)
-            // ESTA PARTE ES LA MÁS COMPLICADA DE HACER GENÉRICA SI EL SCRIPT CORRE SOLO UNA VEZ
-            // Y NECESITA ACCESO A ARCHIVOS GENERADOS EN DIFERENTES RUNNERS DE LA MATRIZ.
-            // Por ahora, nos enfocaremos en que funcione para los artefactos del runner actual (Linux).
             function getSignatureFromLocalFile(sigFileNameOnRunner) {
-              // Esta función intentará leer el archivo .sig del disco local del runner.
-              // Esto solo funcionará para los artefactos construidos en ESTE MISMO JOB del runner.
               if (fs.existsSync(sigFileNameOnRunner)) {
                 console.log(`Reading signature from local file: ${sigFileNameOnRunner}`);
                 return fs.readFileSync(sigFileNameOnRunner, 'utf8').trim();
@@ -135,45 +119,45 @@ jobs:
             const productNameForFile = "Tu asistente Local"; // Nombre exacto como en los archivos generados
             const versionForFile = app_version;
 
-            // --- Linux x86_64 (AppImage y Deb, generados en el runner de ubuntu-22.04) ---
-            if (matrix.platform === 'ubuntu-22.04') {
-              const appImageAsset = findAsset(new RegExp(`${productNameForFile.replace(/ /g, '\\.')}_${versionForFile}_amd64\\.AppImage$`));
-              const debAsset = findAsset(new RegExp(`${productNameForFile.replace(/ /g, '\\.')}_${versionForFile}_amd64\\.deb$`));
+            // --- Linux x86_64 (AppImage y Deb, generados en ESTE runner de ubuntu-22.04) ---
+            // No necesitamos el "if (matrix.platform === 'ubuntu-22.04')" aquí dentro,
+            // porque el 'if' del paso ya lo asegura.
+            const appImageAsset_linux = findAsset(new RegExp(`${productNameForFile.replace(/ /g, '\\.')}_${versionForFile}_amd64\\.AppImage$`));
+            const debAsset_linux = findAsset(new RegExp(`${productNameForFile.replace(/ /g, '\\.')}_${versionForFile}_amd64\\.deb$`));
 
-              if (appImageAsset) {
-                const sigPath = path.join('src-tauri', 'target', 'release', 'bundle', 'appimage', `${productNameForFile}_${versionForFile}_amd64.AppImage.sig`);
-                latestJson.platforms["linux-x86_64"] = {
-                  signature: getSignatureFromLocalFile(sigPath),
-                  url: appImageAsset.browser_download_url,
-                  size: appImageAsset.size
-                };
-              }
-              if (debAsset && latestJson.platforms["linux-x86_64"]) { // Añadir info del .deb si existe AppImage
-                const sigPathDeb = path.join('src-tauri', 'target', 'release', 'bundle', 'deb', `${productNameForFile}_${versionForFile}_amd64.deb.sig`);
+            if (appImageAsset_linux) {
+              const sigPath = path.join('src-tauri', 'target', 'release', 'bundle', 'appimage', `${productNameForFile}_${versionForFile}_amd64.AppImage.sig`);
+              latestJson.platforms["linux-x86_64"] = {
+                signature: getSignatureFromLocalFile(sigPath),
+                url: appImageAsset_linux.browser_download_url,
+                size: appImageAsset_linux.size
+              };
+            }
+
+            if (debAsset_linux) {
+              const sigPathDeb = path.join('src-tauri', 'target', 'release', 'bundle', 'deb', `${productNameForFile}_${versionForFile}_amd64.deb.sig`);
+              if (latestJson.platforms["linux-x86_64"]) { // Si ya existe la entrada por el AppImage
                 latestJson.platforms["linux-x86_64"].alt_installers = latestJson.platforms["linux-x86_64"].alt_installers || [];
                 latestJson.platforms["linux-x86_64"].alt_installers.push({
                   type: "deb",
                   signature: getSignatureFromLocalFile(sigPathDeb),
-                  url: debAsset.browser_download_url,
-                  size: debAsset.size
+                  url: debAsset_linux.browser_download_url,
+                  size: debAsset_linux.size
                 });
-              } else if (debAsset) { // Si no hay AppImage, .deb es el principal
-                 const sigPathDeb = path.join('src-tauri', 'target', 'release', 'bundle', 'deb', `${productNameForFile}_${versionForFile}_amd64.deb.sig`);
+              } else { // Si no hay AppImage, .deb es el principal para linux-x86_64
                  latestJson.platforms["linux-x86_64"] = {
                     signature: getSignatureFromLocalFile(sigPathDeb),
-                    url: debAsset.browser_download_url,
-                    size: debAsset.size
+                    url: debAsset_linux.browser_download_url,
+                    size: debAsset_linux.size
                  };
               }
             }
 
             // --- Windows x64 ---
-            // Este bloque necesitaría ejecutarse en el runner de Windows o tener acceso a su .sig
-            // Para el script actual, solo podemos poblar la URL y el tamaño. La firma sería un placeholder.
             const exeAsset = findAsset(new RegExp(`${productNameForFile.replace(/ /g, '\\.')}_${versionForFile}_x64-setup\\.exe$`));
             if (exeAsset) {
               latestJson.platforms["windows-x86_64"] = {
-                signature: "SIGNATURE_FOR_WINDOWS_X64_NEEDS_ACCESS_TO_ITS_SIG_FILE",
+                signature: "SIGNATURE_FOR_WINDOWS_X64_NEEDS_ACCESS_TO_ITS_SIG_FILE_OR_SEPARATE_HANDLING",
                 url: exeAsset.browser_download_url,
                 size: exeAsset.size
               };
@@ -183,7 +167,7 @@ jobs:
             const dmgAarch64Asset = findAsset(new RegExp(`${productNameForFile.replace(/ /g, '\\.')}_${versionForFile}_aarch64\\.dmg$`));
             if (dmgAarch64Asset) {
               latestJson.platforms["darwin-aarch64"] = {
-                signature: "SIGNATURE_FOR_MACOS_AARCH64_NEEDS_ACCESS_TO_ITS_SIG_FILE",
+                signature: "SIGNATURE_FOR_MACOS_AARCH64_NEEDS_ACCESS_TO_ITS_SIG_FILE_OR_SEPARATE_HANDLING",
                 url: dmgAarch64Asset.browser_download_url,
                 size: dmgAarch64Asset.size
               };
@@ -193,7 +177,7 @@ jobs:
             const dmgX64Asset = findAsset(new RegExp(`${productNameForFile.replace(/ /g, '\\.')}_${versionForFile}_x64\\.dmg$`));
             if (dmgX64Asset) {
               latestJson.platforms["darwin-x86_64"] = {
-                signature: "SIGNATURE_FOR_MACOS_X64_NEEDS_ACCESS_TO_ITS_SIG_FILE",
+                signature: "SIGNATURE_FOR_MACOS_X64_NEEDS_ACCESS_TO_ITS_SIG_FILE_OR_SEPARATE_HANDLING",
                 url: dmgX64Asset.browser_download_url,
                 size: dmgX64Asset.size
               };
@@ -201,10 +185,9 @@ jobs:
 
             console.log("Generated latest.json content:", JSON.stringify(latestJson, null, 2));
 
-            const tempLatestJsonPath = path.join('./', 'latest.json'); // Guarda en la raíz del workspace del runner
+            const tempLatestJsonPath = path.join('./', 'latest.json');
             fs.writeFileSync(tempLatestJsonPath, JSON.stringify(latestJson, null, 2));
 
-            // Borrar el 'latest.json' que pudo haber subido tauri-action (si subió alguno)
             const existingLatestJsonAsset = assets.find(asset => asset.name === 'latest.json');
             if (existingLatestJsonAsset) {
               console.log(`Found existing latest.json asset (ID: ${existingLatestJsonAsset.id}), attempting to delete.`);
@@ -216,8 +199,7 @@ jobs:
                 });
                 console.log('Successfully deleted existing latest.json asset.');
               } catch (error) {
-                console.error('Error deleting existing latest.json asset:', error);
-                // Continuar de todas formas, puede que el nuevo upload falle si el nombre choca y este no se borró.
+                console.error('Error deleting existing latest.json asset:', error.message);
               }
             }
 
@@ -229,10 +211,10 @@ jobs:
                 repo,
                 release_id,
                 name: 'latest.json',
-                data: fileData // Enviar el buffer de datos directamente
+                data: fileData
               });
               console.log('latest.json uploaded successfully.');
             } catch (error) {
-              console.error('Error uploading new latest.json:', error);
-              // Podrías añadir un `core.setFailed(error.message);` si quieres que el step falle
+              console.error('Error uploading new latest.json:', error.message);
+              core.setFailed(`Error uploading latest.json: ${error.message}`); // Hacer que el step falle
             }
