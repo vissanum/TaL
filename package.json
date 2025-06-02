@@ -2,7 +2,7 @@
   "name": "tal",
   "version": "0.1.0",
   "description": "TaL (Tu asistente Local): Aplicación de escritorio (Tauri v2, Rust, Quasar/Vue3) con IA local/remota, RAG y foco en privacidad.",
-  "productName": "Tu asistente Local",
+  "productName": "TaL",
   "author": "Vissanum <vissanumweb@gmail.com>",
   "type": "module",
   "private": true,
