@@ -1,6 +1,6 @@
 [package]
 name = "tal_app"
-version = "0.1.0"
+version = "0.1.1"
 description = "TaL / Tu asistente Local"
 authors = ["Vissanum<vissanumweb@gmail.com>"]
 license = "BSD-3-Clause license"
